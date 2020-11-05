@@ -51,7 +51,8 @@ SOURCES += \
         src/cpp/mainwindow.cpp
 
 HEADERS += \
-        src/include/mainwindow.h
+        src/include/mainwindow.h \
+    src/include/asmopencv.h
 
 FORMS += \
         src/forms/mainwindow.ui
