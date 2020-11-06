@@ -48,11 +48,13 @@ CONFIG += c++11
 
 SOURCES += \
         src/cpp/main.cpp \
-        src/cpp/mainwindow.cpp
+        src/cpp/mainwindow.cpp \
+        src/cpp/image.cpp
 
 HEADERS += \
         src/include/mainwindow.h \
-    src/include/asmopencv.h
+    src/include/asmopencv.h \
+    src/include/image.h
 
 FORMS += \
         src/forms/mainwindow.ui
