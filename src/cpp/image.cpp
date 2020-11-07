@@ -30,19 +30,26 @@ Image::Image(const QString image) :
 Image::~Image()
 {
 
-    qDebug() << "Destruyendo Image";
+
+
+    qDebug() << "Destruyendo Image pixmapimage";
+  if (pixmapImage_!= nullptr)
+      delete pixmapImage_;
+
+  qDebug() << "Destruyendo Image image_";
+
+  if (image_ != nullptr)
+    delete image_;
+
+  qDebug() << "Destruyendo Image label";
+   if (label_!= nullptr )
+     delete label_;
+
+    qDebug() << "Destruyendo Image Dock";
 
     if (dock_ != nullptr)
         delete dock_;
 
-    if (label_!= nullptr )
-        delete label_;
-
-    if (pixmapImage_ != nullptr)
-    delete image_;
-
-    if (pixmapImage_!= nullptr)
-        delete pixmapImage_;
     qDebug() << "Destructor Image";
 
 }

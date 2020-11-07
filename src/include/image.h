@@ -9,7 +9,7 @@
 #include <QUrl>
 #include <QDebug>
 
-class Image
+class Image : public QMainWindow
 {
 public:
     Image(QString image);
