@@ -42,7 +42,8 @@ void MainWindow::show_images()
    for (int i =0; i < images_.size(); i++)
      {
          ui->menuVentanas->addAction(images_[i]->dock_->toggleViewAction());
-         images_[i]->dock_->show();
+         //images_[i]->dock_->show();
+         addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,images_[i]->dock_,Qt::Orientation::Vertical);
 
      }
 }
