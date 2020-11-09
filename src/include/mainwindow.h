@@ -9,6 +9,7 @@
 #include <QVector>
 #include <QCloseEvent>
 #include <QDebug>
+#include <QEvent>
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -31,8 +32,9 @@ public:
     ~MainWindow();
 
     void closeEvent(QCloseEvent *event);
-
+    //virtual bool event(QEvent *event);
     void show_images();
+    QString focus_; //nombre de la imagen que tiene le foco actualmente
 
 private slots:
 
@@ -40,9 +42,15 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_actionSaveFile_triggered();
+
+    void on_actionEscala_de_Grises_triggered();
+
+
 private:
     Ui::MainWindow *ui;
     QVector<Image *> images_;
+
 };
 
 #endif // MAINWINDOW_H

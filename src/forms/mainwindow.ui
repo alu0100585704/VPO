@@ -43,7 +43,24 @@
      <string>Ventanas</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuEfectos">
+    <property name="title">
+     <string>Efectos</string>
+    </property>
+    <addaction name="actionEscala_de_Grises"/>
+    <addaction name="actionBrillo"/>
+    <addaction name="actionContraste"/>
+   </widget>
+   <widget class="QMenu" name="menuInformaci_n">
+    <property name="title">
+     <string>Ver</string>
+    </property>
+    <addaction name="actionHistograma_absoluto"/>
+    <addaction name="actionHistograma_Acumulativo"/>
+   </widget>
    <addaction name="menuArchivo"/>
+   <addaction name="menuInformaci_n"/>
+   <addaction name="menuEfectos"/>
    <addaction name="menuVentanas"/>
    <addaction name="menuAyuda"/>
   </widget>
@@ -85,6 +102,31 @@
   <action name="actionAbout">
    <property name="text">
     <string>Acerca de . . .</string>
+   </property>
+  </action>
+  <action name="actionEscala_de_Grises">
+   <property name="text">
+    <string>Escala de Grises</string>
+   </property>
+  </action>
+  <action name="actionBrillo">
+   <property name="text">
+    <string>Brillo y Contraste</string>
+   </property>
+  </action>
+  <action name="actionContraste">
+   <property name="text">
+    <string>Contraste</string>
+   </property>
+  </action>
+  <action name="actionHistograma_absoluto">
+   <property name="text">
+    <string>Histograma Absoluto</string>
+   </property>
+  </action>
+  <action name="actionHistograma_Acumulativo">
+   <property name="text">
+    <string>Histograma Acumulativo</string>
    </property>
   </action>
  </widget>

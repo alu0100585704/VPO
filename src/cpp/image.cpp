@@ -1,39 +1,47 @@
 #include <image.h>
 
-Image::Image(const QString image) :
-    dock_(nullptr),
+Image::Image(const QString image,QWidget * parent) :
+    QDockWidget(image,parent),
+    //dock_(nullptr),
     label_(nullptr),
     image_(nullptr),
-    pixmapImage_(nullptr)
+    pixmapImage_(nullptr),
+    histograma_(256),
+    histograma_acumulado_(256),
+    gray_(false)
 {
-
-    dock_ = new QDockWidget(image);
-    label_ = new QLabel();
+    nameFile_=image;
+    //dock_ = new QDockWidget(image);
+    label_ = new QLabel(this);
     image_ = new QImage(image);
 
     if (image_->isNull())
     {
-        label_->setText("Formato no admitido o ilegible");
+        label_->setText(QString("Formato no admitido o ilegible para el fichero %1").arg(nameFile_));
      }
     else {
 
-        dock_->setContextMenuPolicy(Qt::DefaultContextMenu);
-        dock_->setFloating(false);
-        dock_->setFeatures(QDockWidget::AllDockWidgetFeatures);
-        dock_->setAllowedAreas(Qt::DockWidgetArea::TopDockWidgetArea);
+        setContextMenuPolicy(Qt::DefaultContextMenu);
+        setFloating(false);
+        setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable  | QDockWidget::DockWidgetFloatable);
+
+        //dock_->setAllowedAreas(Qt::DockWidgetArea::TopDockWidgetArea);
 
         pixmapImage_ = new QPixmap(image);
 
 
         //label_->setPixmap(pixmapImage_->fromImage(*image_).scaled(label_->width(),label_->height(),Qt::KeepAspectRatio));
         label_->setPixmap(pixmapImage_->fromImage(*image_));
-        dock_->setMaximumSize(label_->width(),label_->height());
+     //   dock_->setMaximumSize(label_->width(),label_->height());
+        gray_ = image_->isGrayscale();
 
+      setFocusPolicy(Qt::FocusPolicy::WheelFocus);
 
 
     }
 
-dock_->setWidget(label_);
+    setWidget(label_);
+
 }
 
 Image::~Image()
@@ -56,9 +64,16 @@ Image::~Image()
 
     qDebug() << "Destruyendo Image Dock";
 
-    if (dock_ != nullptr)
-        delete dock_;
+    //if (dock_ != nullptr)
+     //   delete dock_;
 
     qDebug() << "Destructor Image";
 
 }
+
+void Image::focusInEvent(QFocusEvent *event)
+{
+    qDebug() << QString("Foco asignado a %1").arg(nameFile_);
+
+}
+

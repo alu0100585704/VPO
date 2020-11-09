@@ -3,7 +3,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    focus_("Sin foco")
 {
     ui->setupUi(this);
 }
@@ -16,6 +17,21 @@ qDebug() << "Destrucyendo mainwindow";
 
 qDebug() << "Destructor mainwindow";
 }
+
+
+/*bool MainWindow::event(QEvent *event)
+{
+  qDebug() << event->type();
+
+  /*
+  for (int i=0;i < images_.size();i++)
+      delete images_[i];
+
+  qDebug() << "destruidas desde closeevent";
+
+    event->accept();
+
+}*/
 
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -32,6 +48,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 }
 
+
+
 void MainWindow::on_actionExit_triggered()
 {
     close();
@@ -41,9 +59,9 @@ void MainWindow::show_images()
 {
    for (int i =0; i < images_.size(); i++)
      {
-         ui->menuVentanas->addAction(images_[i]->dock_->toggleViewAction());
+         ui->menuVentanas->addAction(images_[i]->toggleViewAction());
          //images_[i]->dock_->show();
-         addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,images_[i]->dock_,Qt::Orientation::Vertical);
+         addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,images_[i],Qt::Orientation::Vertical);
 
      }
 }
@@ -60,7 +78,7 @@ void MainWindow::on_actionOpenFiles_triggered()
                 QFile file(filenames[i]);
                  if (file.exists())
                        {
-                        Image *imagen= new Image(filenames[i]);
+                        Image *imagen= new Image(filenames[i],this);
                         images_.push_back(imagen);   
                        }
                 else
@@ -72,3 +90,13 @@ void MainWindow::on_actionOpenFiles_triggered()
 
 }
 
+
+void MainWindow::on_actionSaveFile_triggered()
+{
+
+}
+
+void MainWindow::on_actionEscala_de_Grises_triggered()
+{
+
+}
