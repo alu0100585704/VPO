@@ -59,6 +59,10 @@ HEADERS += \
 FORMS += \
         src/forms/mainwindow.ui
 
+
+RESOURCES += \
+    src/qrc/recursos.qrc
+
 INCLUDEPATH += $$PWD/src/include
 DEPENDPATH += $$PWD/src/include
 
