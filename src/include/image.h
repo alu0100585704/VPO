@@ -41,6 +41,7 @@ public:
   virtual void  focusInEvent(QFocusEvent * event);
 
   bool prepare();
+  void updateImage();
   void calcular_histograma();
   void calcular_histograma_acumulado();
   void toGray8Bits(Image *source, Image *target);

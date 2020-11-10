@@ -65,10 +65,7 @@ bool Image::prepare()
        }
       else {
 
-          *pixmapImage_ = pixmapImage_->fromImage(*image_);
-          label_->setPixmap(*pixmapImage_);
-          label_->setAlignment(Qt::AlignLeft|Qt::AlignTop);
-          label_->setGeometry(0,0,image_->width(),image_->height());
+          updateImage();
       }
 
 
@@ -126,6 +123,14 @@ Image::~Image()
 
 }
 
+void Image::updateImage()
+{
+  *pixmapImage_ = pixmapImage_->fromImage(*image_);
+  label_->setPixmap(*pixmapImage_);
+  label_->setAlignment(Qt::AlignLeft|Qt::AlignTop);
+  label_->setGeometry(0,0,image_->width(),image_->height());
+
+}
 void Image::focusInEvent(QFocusEvent *event)
 {
   parent_->focus_=nameFile_;
@@ -151,13 +156,14 @@ void Image::calcular_histograma()
 
 void Image::toGray8Bits(Image *source, Image *target)
 {
-  for (int i=0; i < source>height();i++) //
-    for (int j=0; i < source->width();j++)
+  for (int i=0; i < source->height_;i++) //
+    for (int j=0; j < source->width_;j++)
       {
-        int gray = (qRed(source->pixel(j,i)) * 0.222) + (qBlue(source->pixel(j,i))*0.071) + (qGreen(source->pixel(j,i))*0.707);
-        target->setPixel(j,i,gray);
+        int gray = (qRed(source->image_->pixel(j,i)) * 0.222) + (qBlue(source->image_->pixel(j,i))*0.071) + (qGreen(source->image_->pixel(j,i))*0.707);
+        target->image_->setPixel(j,i,gray);
 
       }
+  updateImage();
 }
 
 
