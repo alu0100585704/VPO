@@ -1,46 +1,110 @@
 #include <image.h>
+#include <mainwindow.h>
+#include <QRgb>
+#include <QColor>
 
-Image::Image(const QString image,QWidget * parent) :
-    QDockWidget(image,parent),
-    //dock_(nullptr),
-    label_(nullptr),
-    image_(nullptr),
-    pixmapImage_(nullptr),
-    histograma_(256),
-    histograma_acumulado_(256),
-    gray_(false)
+Image::Image(const QString fileImage,MainWindow * parent) :
+      QDockWidget(fileImage,parent),
+  //aqui fileImage también es el titulo de la ventana
+    nameFile_(fileImage),
+    title_(fileImage),
+    image_(new QImage(fileImage)),
+    parent_(parent)
 {
-    nameFile_=image;
-    //dock_ = new QDockWidget(image);
-    label_ = new QLabel(this);
-    image_ = new QImage(image);
+prepare();
+
+}
+
+Image::Image(QString title,QImage *image,MainWindow * parent):
+      QDockWidget(title,parent),
+      image_(image),
+      title_(title),
+      parent_(parent)
+{
+
+prepare();
+}
+
+bool Image::prepare()
+{
+  isGray_=false;
+  histograma_.resize(256);
+  histograma_acumulado_.resize(256);
+
+  label_=new QLabel(this);
+
+  pixmapImage_= new QPixmap();
+  scrollArea_=new QScrollArea(this);
+  scrollAreaWidgetContents_=new QWidget(this);
+  dockWidgetContents_=new QWidget(this);
+  gridLayoutDockWidgetContentsAndScrollArea_ =new QGridLayout(dockWidgetContents_);
+  gridLayoutScrollAreaWidgetContentsAndLabel_=new QGridLayout(scrollAreaWidgetContents_);
+
+
+  ///Preparo Dock widget acoplado pero con posibilidad de ser flotante
+  /// Lo hago dentro de un QLabel que a la vez está dentro de un QScroolArea
+  /// y a la vez dentro de un DockWidget.
+
+    setContextMenuPolicy(Qt::DefaultContextMenu);
+    setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable  | QDockWidget::DockWidgetFloatable);
+    setFloating(false);
+    setFocusPolicy(Qt::FocusPolicy::StrongFocus);
+
+   /* QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    sizePolicy.setHorizontalStretch(0);
+    sizePolicy.setVerticalStretch(0);
+    sizePolicy.setHeightForWidth(this->sizePolicy().hasHeightForWidth());
+
+    setSizePolicy(sizePolicy);*/
+
+    scrollArea_->setWidgetResizable(true);
 
     if (image_->isNull())
-    {
-        label_->setText(QString("Formato no admitido o ilegible para el fichero %1").arg(nameFile_));
-     }
-    else {
+      {
+          label_->setText(QString("Formato no admitido o ilegible para el fichero %1").arg(nameFile_));
+       }
+      else {
 
-        setContextMenuPolicy(Qt::DefaultContextMenu);
-        setFloating(false);
-        setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable  | QDockWidget::DockWidgetFloatable);
-
-        //dock_->setAllowedAreas(Qt::DockWidgetArea::TopDockWidgetArea);
-
-        pixmapImage_ = new QPixmap(image);
+          *pixmapImage_ = pixmapImage_->fromImage(*image_);
+          label_->setPixmap(*pixmapImage_);
+          label_->setAlignment(Qt::AlignLeft|Qt::AlignTop);
+          label_->setGeometry(0,0,image_->width(),image_->height());
+      }
 
 
-        //label_->setPixmap(pixmapImage_->fromImage(*image_).scaled(label_->width(),label_->height(),Qt::KeepAspectRatio));
-        label_->setPixmap(pixmapImage_->fromImage(*image_));
-     //   dock_->setMaximumSize(label_->width(),label_->height());
-        gray_ = image_->isGrayscale();
+    setMinimumHeight(40);
+    setMinimumWidth(40);
+    setMaximumWidth(1024);
+    setMaximumHeight(768);
 
-      setFocusPolicy(Qt::FocusPolicy::WheelFocus);
+      if (image_->width()<1024)
+          setMaximumWidth(image_->width()+5);
+      if (image_->height()<768)
+          setMaximumHeight(image_->height()+25);
 
 
-    }
+          setGeometry(0,0,image_->width(),image_->height());
 
-    setWidget(label_);
+        qDebug() << "ancho" << image_->width() << "alto " << image_->height();
+
+          isGray_ = image_->isGrayscale();
+
+
+
+    gridLayoutScrollAreaWidgetContentsAndLabel_->addWidget(label_,0,0,0,0);
+    gridLayoutDockWidgetContentsAndScrollArea_->addWidget(scrollArea_,0,0,0,0);
+
+    gridLayoutDockWidgetContentsAndScrollArea_->setContentsMargins(0,0,0,0);
+    gridLayoutScrollAreaWidgetContentsAndLabel_->setContentsMargins(0,0,0,0);
+    scrollArea_->setWidget(scrollAreaWidgetContents_);
+    setWidget(dockWidgetContents_);
+
+    //parent_->addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,this,Qt::Orientation::Vertical);
+
+qDebug() << image_->format()<< "Es gris : "<< isGray_ << "valor primer pixel "<< qRed(image_->pixel(0,0)) << ", " << qGreen(image_->pixel(0,0)) << "," << qBlue(image_->pixel(0,0));
+
+width_=image_->width();
+height_=image_->height();
 
 }
 
@@ -58,22 +122,55 @@ Image::~Image()
   if (image_ != nullptr)
     delete image_;
 
-  qDebug() << "Destruyendo Image label";
-   if (label_!= nullptr )
-     delete label_;
-
-    qDebug() << "Destruyendo Image Dock";
-
-    //if (dock_ != nullptr)
-     //   delete dock_;
-
     qDebug() << "Destructor Image";
 
 }
 
 void Image::focusInEvent(QFocusEvent *event)
 {
-    qDebug() << QString("Foco asignado a %1").arg(nameFile_);
+  parent_->focus_=nameFile_;
+  qDebug() << QString("Foco asignado a %1").arg(nameFile_);
+  event->accept();
 
 }
 
+
+
+
+void Image::calcular_histograma()
+{
+  Punto punto;
+ for (int i=0; i < image_->height();i++) //
+   for (int j=0; i < image_->width();j++)
+     {
+       QRgb valor= image_->pixel(j,i);
+
+
+     }
+}
+
+void Image::toGray8Bits(Image *source, Image *target)
+{
+  for (int i=0; i < source>height();i++) //
+    for (int j=0; i < source->width();j++)
+      {
+        int gray = (qRed(source->pixel(j,i)) * 0.222) + (qBlue(source->pixel(j,i))*0.071) + (qGreen(source->pixel(j,i))*0.707);
+        target->setPixel(j,i,gray);
+
+      }
+}
+
+
+Image::Punto::Punto():
+  green_(0),
+  red_(0),
+  blue_(0),
+  grey_(0)
+{
+
+}
+
+Image::Punto::~Punto()
+{
+
+}

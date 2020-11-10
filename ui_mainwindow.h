@@ -12,13 +12,9 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QDockWidget>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
-#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -38,10 +34,6 @@ public:
     QAction *actionHistograma_absoluto;
     QAction *actionHistograma_Acumulativo;
     QWidget *centralWidget;
-    QScrollArea *scrollArea_2;
-    QWidget *scrollAreaWidgetContents_2;
-    QGridLayout *gridLayout_2;
-    QLabel *label_2;
     QMenuBar *menuBar;
     QMenu *menuArchivo;
     QMenu *menuAyuda;
@@ -51,19 +43,12 @@ public:
     QToolBar *mainToolBar;
     QToolBar *toolBar;
     QStatusBar *statusBar;
-    QDockWidget *dockWidget;
-    QWidget *dockWidgetContents;
-    QGridLayout *gridLayout;
-    QScrollArea *scrollArea;
-    QWidget *scrollAreaWidgetContents;
-    QGridLayout *gridLayout_3;
-    QLabel *label;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(546, 537);
+        MainWindow->resize(646, 437);
         actionOpenFiles = new QAction(MainWindow);
         actionOpenFiles->setObjectName(QString::fromUtf8("actionOpenFiles"));
         actionSaveFile = new QAction(MainWindow);
@@ -84,33 +69,10 @@ public:
         actionHistograma_Acumulativo->setObjectName(QString::fromUtf8("actionHistograma_Acumulativo"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        scrollArea_2 = new QScrollArea(centralWidget);
-        scrollArea_2->setObjectName(QString::fromUtf8("scrollArea_2"));
-        scrollArea_2->setGeometry(QRect(9, 9, 251, 241));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(scrollArea_2->sizePolicy().hasHeightForWidth());
-        scrollArea_2->setSizePolicy(sizePolicy);
-        scrollArea_2->setWidgetResizable(true);
-        scrollAreaWidgetContents_2 = new QWidget();
-        scrollAreaWidgetContents_2->setObjectName(QString::fromUtf8("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 338, 222));
-        gridLayout_2 = new QGridLayout(scrollAreaWidgetContents_2);
-        gridLayout_2->setSpacing(6);
-        gridLayout_2->setContentsMargins(11, 11, 11, 11);
-        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
-        label_2 = new QLabel(scrollAreaWidgetContents_2);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setPixmap(QPixmap(QString::fromUtf8(":/Recursos/Images/bogart2.bmp")));
-
-        gridLayout_2->addWidget(label_2, 0, 0, 1, 1);
-
-        scrollArea_2->setWidget(scrollAreaWidgetContents_2);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 546, 21));
+        menuBar->setGeometry(QRect(0, 0, 646, 21));
         menuArchivo = new QMenu(menuBar);
         menuArchivo->setObjectName(QString::fromUtf8("menuArchivo"));
         menuAyuda = new QMenu(menuBar);
@@ -131,36 +93,6 @@ public:
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
-        dockWidget = new QDockWidget(MainWindow);
-        dockWidget->setObjectName(QString::fromUtf8("dockWidget"));
-        dockWidgetContents = new QWidget();
-        dockWidgetContents->setObjectName(QString::fromUtf8("dockWidgetContents"));
-        gridLayout = new QGridLayout(dockWidgetContents);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        scrollArea = new QScrollArea(dockWidgetContents);
-        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
-        scrollArea->setWidgetResizable(true);
-        scrollAreaWidgetContents = new QWidget();
-        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 338, 425));
-        gridLayout_3 = new QGridLayout(scrollAreaWidgetContents);
-        gridLayout_3->setSpacing(6);
-        gridLayout_3->setContentsMargins(11, 11, 11, 11);
-        gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
-        label = new QLabel(scrollAreaWidgetContents);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setPixmap(QPixmap(QString::fromUtf8(":/Recursos/Images/bogart2.bmp")));
-
-        gridLayout_3->addWidget(label, 0, 0, 1, 1);
-
-        scrollArea->setWidget(scrollAreaWidgetContents);
-
-        gridLayout->addWidget(scrollArea, 0, 0, 1, 1);
-
-        dockWidget->setWidget(dockWidgetContents);
-        MainWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidget);
 
         menuBar->addAction(menuArchivo->menuAction());
         menuBar->addAction(menuInformaci_n->menuAction());
@@ -195,14 +127,12 @@ public:
         actionContraste->setText(QApplication::translate("MainWindow", "Contraste", nullptr));
         actionHistograma_absoluto->setText(QApplication::translate("MainWindow", "Histograma Absoluto", nullptr));
         actionHistograma_Acumulativo->setText(QApplication::translate("MainWindow", "Histograma Acumulativo", nullptr));
-        label_2->setText(QString());
         menuArchivo->setTitle(QApplication::translate("MainWindow", "Archivo", nullptr));
         menuAyuda->setTitle(QApplication::translate("MainWindow", "Ayuda", nullptr));
         menuVentanas->setTitle(QApplication::translate("MainWindow", "Ventanas", nullptr));
         menuEfectos->setTitle(QApplication::translate("MainWindow", "Efectos", nullptr));
         menuInformaci_n->setTitle(QApplication::translate("MainWindow", "Ver", nullptr));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", nullptr));
-        label->setText(QString());
     } // retranslateUi
 
 };

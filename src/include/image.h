@@ -10,27 +10,60 @@
 #include <QVector>
 #include <QDebug>
 #include <QMap>
-
+#include <QScrollArea>
+#include <QWidget>
+#include <QGridLayout>
 class MainWindow;
 
 class Image : public QDockWidget
 {
     Q_OBJECT
 public:
-    explicit Image(QString image, QWidget *parent = nullptr);
-    ~Image();
+    explicit Image(const QString fileImage, MainWindow *parent = nullptr);
+    Image(QString title, QImage * image, MainWindow *parent= nullptr);
+  ~Image();
 
-virtual void  focusInEvent(QFocusEvent * event);
 
-   //QDockWidget * dock_;
+ class Punto
+{
+  public:
+   Punto();
+  ~Punto();
+
+
+  int red_;
+  int green_;
+  int blue_;
+  int grey_;
+
+};
+
+  virtual void  focusInEvent(QFocusEvent * event);
+
+  bool prepare();
+  void calcular_histograma();
+  void calcular_histograma_acumulado();
+  void toGray8Bits(Image *source, Image *target);
+
    QLabel * label_;
-   QImage * image_;
+   QImage * image_,imageGray8bits_;
    QPixmap * pixmapImage_;
-   bool gray_;
-   QVector<int> histograma_;
-   QVector<int> histograma_acumulado_;
-   QMap<int,int> lut_;
+   QScrollArea * scrollArea_;
+   QWidget * dockWidgetContents_;
+   QWidget * scrollAreaWidgetContents_;
+   QGridLayout * gridLayoutDockWidgetContentsAndScrollArea_;
+   QGridLayout * gridLayoutScrollAreaWidgetContentsAndLabel_;
+   bool isGray_;
+   QVector<Punto> histograma_;
+   QVector<Punto> histograma_acumulado_;
    QString nameFile_;
+   QString title_;
+
+   int width_,height_;  //medida de la imagen
+   MainWindow * parent_;
+
+
 };
 
 #endif // IMAGE_H
+

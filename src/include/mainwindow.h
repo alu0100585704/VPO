@@ -33,9 +33,10 @@ public:
 
     void closeEvent(QCloseEvent *event);
     //virtual bool event(QEvent *event);
+    bool lutGray8bitsPrepare();
     void show_images();
-    QString focus_; //nombre de la imagen que tiene le foco actualmente
 
+    QString focus_; //nombre de la imagen que tiene le foco actualmente    
 private slots:
 
     void on_actionOpenFiles_triggered();
@@ -49,7 +50,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QVector<Image *> images_;
+    QMap<QString, Image *> images_;
+    QVector<QRgb>  lutGray8bits_;
 
 };
 

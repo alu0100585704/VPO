@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
 
-    QCoreApplication::setApplicationName("Grupo Maquinas");
+    QCoreApplication::setApplicationName("FotoVision2");
     QCoreApplication::setOrganizationDomain("VPO");
     QCoreApplication::setOrganizationName("VPO");
 
