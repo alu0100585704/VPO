@@ -91,7 +91,7 @@ bool MainWindow::lutGray8bitsPrepare()
 
 return  true;
 }
-void MainWindow::on_actionEscala_de_Grises_triggered()
+void MainWindow::grayScale(bool ntsc)
 {
   QMap<QString, Image *>::iterator it = images_.begin();
   while (it!=images_.end())
@@ -102,11 +102,40 @@ void MainWindow::on_actionEscala_de_Grises_triggered()
               QImage * ochobits =new QImage(it.value()->width_,it.value()->height_, QImage::Format_Indexed8);
               ochobits->setColorTable(lutGray8bits_);
               Image *imagen = new Image(QString("%1_Gris 8 bit").arg(focus_),ochobits,this);
-              imagen->toGray8Bits(it.value(),imagen);
+              imagen->toGray8Bits(it.value(),imagen,ntsc);
               images_.insert(QString("%1_Gris 8 bit").arg(focus_),imagen);
               ui->menuVentanas->addAction(imagen->toggleViewAction());
               addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,imagen,Qt::Orientation::Vertical);
         }
       ++it;
     }
+}
+
+void MainWindow::on_actionNTS_triggered()
+{
+    grayScale(true);
+}
+
+void MainWindow::on_actionPAL_triggered()
+{
+    grayScale(false);
+}
+
+void MainWindow::on_actionHistograma_absoluto_triggered()
+{
+ /* QMap<QString, Image *>::iterator it = images_.begin();
+  while (it!=images_.end())
+    {
+      if (it.key()==focus_)
+        {
+              //QImage * histograma =new QImage(it.value()->width_,it.value()->height_, QImage::Format_Indexed8);
+
+              Image *imagen = new Image(QString("%1_Histograma Absoluto").arg(focus_),ochobits,this);
+              imagen->histogramatoGray8Bits(it.value(),imagen,ntsc);
+              images_.insert(QString("%1_Gris 8 bit").arg(focus_),imagen);
+              ui->menuVentanas->addAction(imagen->toggleViewAction());
+              addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,imagen,Qt::Orientation::Vertical);
+        }
+      ++it;
+    }*/
 }

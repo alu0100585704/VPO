@@ -27,7 +27,9 @@ prepare();
 
 bool Image::prepare()
 {
-  isGray_=false;
+
+  pixmapImage_ = nullptr;
+
   histograma_.resize(256);
   histograma_acumulado_.resize(256);
 
@@ -57,34 +59,31 @@ bool Image::prepare()
 
     setSizePolicy(sizePolicy);*/
 
-    scrollArea_->setWidgetResizable(true);
+    scrollArea_->setWidgetResizable(false);
 
-    if (image_->isNull())
-      {
+    if (image_->isNull())      
           label_->setText(QString("Formato no admitido o ilegible para el fichero %1").arg(nameFile_));
-       }
-      else {
 
+      else
           updateImage();
-      }
 
+    width_=image_->width();
+    height_=image_->height();
 
     setMinimumHeight(40);
     setMinimumWidth(40);
     setMaximumWidth(1024);
     setMaximumHeight(768);
 
-      if (image_->width()<1024)
-          setMaximumWidth(image_->width()+5);
-      if (image_->height()<768)
-          setMaximumHeight(image_->height()+25);
+      if (width_<1024)
+          setMaximumWidth(width_+5);
+      if (height_<768)
+          setMaximumHeight(height_+25);
 
 
-          setGeometry(0,0,image_->width(),image_->height());
+          setGeometry(0,0,width_,height_);
 
-        qDebug() << "ancho" << image_->width() << "alto " << image_->height();
-
-          isGray_ = image_->isGrayscale();
+        qDebug() << "ancho" << width_ << "alto " << height_;
 
 
 
@@ -96,12 +95,6 @@ bool Image::prepare()
     scrollArea_->setWidget(scrollAreaWidgetContents_);
     setWidget(dockWidgetContents_);
 
-    //parent_->addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,this,Qt::Orientation::Vertical);
-
-qDebug() << image_->format()<< "Es gris : "<< isGray_ << "valor primer pixel "<< qRed(image_->pixel(0,0)) << ", " << qGreen(image_->pixel(0,0)) << "," << qBlue(image_->pixel(0,0));
-
-width_=image_->width();
-height_=image_->height();
 
 }
 
@@ -128,7 +121,13 @@ void Image::updateImage()
   *pixmapImage_ = pixmapImage_->fromImage(*image_);
   label_->setPixmap(*pixmapImage_);
   label_->setAlignment(Qt::AlignLeft|Qt::AlignTop);
-  label_->setGeometry(0,0,image_->width(),image_->height());
+  label_->setGeometry(0,0,width_,height_);
+
+  format_=image_->format();
+  isGray_ = image_->isGrayscale();
+
+  qDebug() << image_->format()<< "Es gris : "<< isGray_ << "valor primer pixel "<< qRed(image_->pixel(0,0)) << ", " << qGreen(image_->pixel(0,0)) << "," << qBlue(image_->pixel(0,0));
+
 
 }
 void Image::focusInEvent(QFocusEvent *event)
@@ -154,15 +153,31 @@ void Image::calcular_histograma()
      }
 }
 
-void Image::toGray8Bits(Image *source, Image *target)
+void Image::toGray8Bits(Image *source, Image *target, bool ntsc)
 {
-  for (int i=0; i < source->height_;i++) //
-    for (int j=0; j < source->width_;j++)
-      {
-        int gray = (qRed(source->image_->pixel(j,i)) * 0.222) + (qBlue(source->image_->pixel(j,i))*0.071) + (qGreen(source->image_->pixel(j,i))*0.707);
-        target->image_->setPixel(j,i,gray);
+  if (ntsc)
+    {
+      //formato ntsc
+      for (int i=0; i < source->height_;i++) //
+        for (int j=0; j < source->width_;j++)
+          {
+            int gray = (qRed(source->image_->pixel(j,i)) * 0.299) + (qBlue(source->image_->pixel(j,i))*0.114) + (qGreen(source->image_->pixel(j,i))*0.587);
+            target->image_->setPixel(j,i,gray);
 
-      }
+          }
+
+    }
+  else {
+///formato pal
+      for (int i=0; i < source->height_;i++) //
+        for (int j=0; j < source->width_;j++)
+          {
+            int gray = (qRed(source->image_->pixel(j,i)) * 0.222) + (qBlue(source->image_->pixel(j,i))*0.071) + (qGreen(source->image_->pixel(j,i))*0.707);
+            target->image_->setPixel(j,i,gray);
+
+          }
+
+    }
   updateImage();
 }
 

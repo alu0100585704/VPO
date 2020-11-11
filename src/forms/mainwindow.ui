@@ -47,7 +47,14 @@
     <property name="title">
      <string>Efectos</string>
     </property>
-    <addaction name="actionEscala_de_Grises"/>
+    <widget class="QMenu" name="menuEscala_de_Grises">
+     <property name="title">
+      <string>Escala de Grises</string>
+     </property>
+     <addaction name="actionNTS"/>
+     <addaction name="actionPAL"/>
+    </widget>
+    <addaction name="menuEscala_de_Grises"/>
     <addaction name="actionBrillo"/>
     <addaction name="actionContraste"/>
    </widget>
@@ -104,11 +111,6 @@
     <string>Acerca de . . .</string>
    </property>
   </action>
-  <action name="actionEscala_de_Grises">
-   <property name="text">
-    <string>Escala de Grises</string>
-   </property>
-  </action>
   <action name="actionBrillo">
    <property name="text">
     <string>Brillo y Contraste</string>
@@ -127,6 +129,16 @@
   <action name="actionHistograma_Acumulativo">
    <property name="text">
     <string>Histograma Acumulativo</string>
+   </property>
+  </action>
+  <action name="actionNTS">
+   <property name="text">
+    <string>NTSC</string>
+   </property>
+  </action>
+  <action name="actionPAL">
+   <property name="text">
+    <string>PAL</string>
    </property>
   </action>
  </widget>

@@ -44,7 +44,7 @@ public:
   void updateImage();
   void calcular_histograma();
   void calcular_histograma_acumulado();
-  void toGray8Bits(Image *source, Image *target);
+  void toGray8Bits(Image *source, Image *target, bool ntsc);
 
    QLabel * label_;
    QImage * image_,imageGray8bits_;
@@ -59,7 +59,7 @@ public:
    QVector<Punto> histograma_acumulado_;
    QString nameFile_;
    QString title_;
-
+   int format_;
    int width_,height_;  //medida de la imagen
    MainWindow * parent_;
 

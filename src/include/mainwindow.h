@@ -35,6 +35,7 @@ public:
     //virtual bool event(QEvent *event);
     bool lutGray8bitsPrepare();
     void show_images();
+    void grayScale(bool ntsc);
 
     QString focus_; //nombre de la imagen que tiene le foco actualmente    
 private slots:
@@ -45,8 +46,13 @@ private slots:
 
     void on_actionSaveFile_triggered();
 
-    void on_actionEscala_de_Grises_triggered();
 
+
+    void on_actionNTS_triggered();
+
+    void on_actionPAL_triggered();
+
+    void on_actionHistograma_absoluto_triggered();
 
 private:
     Ui::MainWindow *ui;
