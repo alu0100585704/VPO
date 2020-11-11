@@ -34,8 +34,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
   qDebug() << "closeevent";
 
-  //for (int i=0;i < images_.size();i++)
-    //  delete images_[i];
+
 
   qDebug() << "destruidas desde closeevent";
 
@@ -82,15 +81,7 @@ void MainWindow::on_actionSaveFile_triggered()
 
 }
 
-bool MainWindow::lutGray8bitsPrepare()
-{
-  lutGray8bits_.resize(256);
 
- for (int i=0; i < 255;i++)
-    lutGray8bits_[i] = qRgb(i,i,i);
-
-return  true;
-}
 void MainWindow::grayScale(bool ntsc)
 {
   QMap<QString, Image *>::iterator it = images_.begin();
@@ -98,11 +89,7 @@ void MainWindow::grayScale(bool ntsc)
     {
       if (it.key()==focus_)
         {
-              lutGray8bitsPrepare();
-              QImage * ochobits =new QImage(it.value()->width_,it.value()->height_, QImage::Format_Indexed8);
-              ochobits->setColorTable(lutGray8bits_);
-              Image *imagen = new Image(QString("%1_Gris 8 bit").arg(focus_),ochobits,this);
-              imagen->toGray8Bits(it.value(),imagen,ntsc);
+              Image *imagen = new Image(QString("%1_Gris 8 bit").arg(focus_),it.value()->toGray8Bits(ntsc),this);
               images_.insert(QString("%1_Gris 8 bit").arg(focus_),imagen);
               ui->menuVentanas->addAction(imagen->toggleViewAction());
               addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,imagen,Qt::Orientation::Vertical);
@@ -123,19 +110,34 @@ void MainWindow::on_actionPAL_triggered()
 
 void MainWindow::on_actionHistograma_absoluto_triggered()
 {
- /* QMap<QString, Image *>::iterator it = images_.begin();
+  QMap<QString, Image *>::iterator it = images_.begin();
   while (it!=images_.end())
     {
       if (it.key()==focus_)
         {
-              //QImage * histograma =new QImage(it.value()->width_,it.value()->height_, QImage::Format_Indexed8);
+          Image *imagen = new Image(QString("%1_Histograma Absoluto").arg(focus_),it.value()->toHistograma(),this);
+          images_.insert(QString("%1_Histograma Absoluto").arg(focus_),imagen);
+          ui->menuVentanas->addAction(imagen->toggleViewAction());
+          addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,imagen,Qt::Orientation::Vertical);
 
-              Image *imagen = new Image(QString("%1_Histograma Absoluto").arg(focus_),ochobits,this);
-              imagen->histogramatoGray8Bits(it.value(),imagen,ntsc);
-              images_.insert(QString("%1_Gris 8 bit").arg(focus_),imagen);
-              ui->menuVentanas->addAction(imagen->toggleViewAction());
-              addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,imagen,Qt::Orientation::Vertical);
         }
       ++it;
-    }*/
+    }
+}
+
+void MainWindow::on_actionHistograma_Acumulativo_triggered()
+{
+  QMap<QString, Image *>::iterator it = images_.begin();
+  while (it!=images_.end())
+    {
+      if (it.key()==focus_)
+        {
+          Image *imagen = new Image(QString("%1_Histograma Acumulativo").arg(focus_),it.value()->toHistogramaAcumulativo(),this);
+          images_.insert(QString("%1_Histograma Acumulativo").arg(focus_),imagen);
+          ui->menuVentanas->addAction(imagen->toggleViewAction());
+          addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,imagen,Qt::Orientation::Vertical);
+
+        }
+      ++it;
+    }
 }

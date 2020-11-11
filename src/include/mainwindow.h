@@ -16,6 +16,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/video/background_segm.hpp>
+
+
 using namespace  cv;
 using namespace  std;
 
@@ -32,8 +34,7 @@ public:
     ~MainWindow();
 
     void closeEvent(QCloseEvent *event);
-    //virtual bool event(QEvent *event);
-    bool lutGray8bitsPrepare();
+    //virtual bool event(QEvent *event);    
     void show_images();
     void grayScale(bool ntsc);
 
@@ -54,10 +55,12 @@ private slots:
 
     void on_actionHistograma_absoluto_triggered();
 
+    void on_actionHistograma_Acumulativo_triggered();
+
 private:
     Ui::MainWindow *ui;
     QMap<QString, Image *> images_;
-    QVector<QRgb>  lutGray8bits_;
+
 
 };
 

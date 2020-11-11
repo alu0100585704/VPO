@@ -244,6 +244,7 @@ Makefile: FotoVision2.pro ../../Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/win32-g++/
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/features/yacc.prf \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/features/lex.prf \
 		FotoVision2.pro \
+		../../Qt/Qt5.12.0/5.12.0/mingw73_64/lib/Qt5Charts.prl \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/lib/Qt5Widgets.prl \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/lib/Qt5Gui.prl \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/lib/Qt5Core.prl \
@@ -432,6 +433,7 @@ Makefile: FotoVision2.pro ../../Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/win32-g++/
 ../../Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/features/yacc.prf:
 ../../Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/features/lex.prf:
 FotoVision2.pro:
+../../Qt/Qt5.12.0/5.12.0/mingw73_64/lib/Qt5Charts.prl:
 ../../Qt/Qt5.12.0/5.12.0/mingw73_64/lib/Qt5Widgets.prl:
 ../../Qt/Qt5.12.0/5.12.0/mingw73_64/lib/Qt5Gui.prl:
 ../../Qt/Qt5.12.0/5.12.0/mingw73_64/lib/Qt5Core.prl:
