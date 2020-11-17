@@ -55,8 +55,7 @@
      <addaction name="actionPAL"/>
     </widget>
     <addaction name="menuEscala_de_Grises"/>
-    <addaction name="actionBrillo"/>
-    <addaction name="actionContraste"/>
+    <addaction name="actionBrilloyContraste"/>
    </widget>
    <widget class="QMenu" name="menuInformaci_n">
     <property name="title">
@@ -64,8 +63,6 @@
     </property>
     <addaction name="actionHistograma_absoluto"/>
     <addaction name="actionHistograma_Acumulativo"/>
-    <addaction name="actionBrillo_2"/>
-    <addaction name="actionContraste_2"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuInformaci_n"/>
@@ -113,14 +110,9 @@
     <string>Acerca de . . .</string>
    </property>
   </action>
-  <action name="actionBrillo">
+  <action name="actionBrilloyContraste">
    <property name="text">
     <string>Brillo y Contraste</string>
-   </property>
-  </action>
-  <action name="actionContraste">
-   <property name="text">
-    <string>Contraste</string>
    </property>
   </action>
   <action name="actionHistograma_absoluto">
@@ -141,16 +133,6 @@
   <action name="actionPAL">
    <property name="text">
     <string>8 bit PAL</string>
-   </property>
-  </action>
-  <action name="actionBrillo_2">
-   <property name="text">
-    <string>Brillo</string>
-   </property>
-  </action>
-  <action name="actionContraste_2">
-   <property name="text">
-    <string>Contraste</string>
    </property>
   </action>
  </widget>

@@ -12,6 +12,7 @@ Image::Image(const QString fileImage,MainWindow * parent) :
     barGraphics_(nullptr),
     pixmapImage_(nullptr),
     isBarGraphics_(false),
+    pixels_out_of_range_(0),
     parent_(parent)
 {
 prepare();
@@ -26,6 +27,7 @@ Image::Image(QString title,QImage *image,MainWindow * parent):
       isBarGraphics_(false),
       title_(title),
       nameFile_(title),
+      pixels_out_of_range_(0),
       parent_(parent)
 {
 
@@ -40,6 +42,7 @@ Image::Image(QString title, QChartView *image, MainWindow *parent):
   isBarGraphics_(true),
   title_(title),
   nameFile_(title),
+  pixels_out_of_range_(0),
   parent_(parent)
 {
   scrollArea_=new QScrollArea(this);
@@ -75,16 +78,6 @@ Image::Image(QString title, QChartView *image, MainWindow *parent):
 
 bool Image::prepare()
 {
-
-  brillo_blue_=0;
-brillo_gray_=0;
-brillo_green_=0;
-brillo_red_=0;
-contraste_blue_=0;
-contraste_gray_=0;
-contraste_green_=0;
-contraste_red_=0;
-
 
   label_=new QLabel(this);
 
@@ -156,6 +149,14 @@ Image::~Image()
 void Image::updateImage()
 {
 
+  brillo_blue_=0;
+  brillo_gray_=0;
+  brillo_green_=0;
+  brillo_red_=0;
+  contraste_blue_=0;
+  contraste_gray_=0;
+  contraste_green_=0;
+  contraste_red_=0;
 
   setMinimumHeight(50);
   setMinimumWidth(50);
@@ -187,14 +188,21 @@ void Image::updateImage()
     isGray_ = image_->isGrayscale();
 
   ///preparo la Look UP Table para gris
-  lutGray8bitsPrepare();
+
+  ///lutGray8bitsPrepare();
 
   calcular_histograma();
+
   calcular_histograma_acumulado();
+
   calcular_probabilidad_absoluto();
+
   calcular_probabilidad_acumulativo();
+
   calcular_brillo();
+
   calcular_contraste();
+
 
   qDebug() << image_->format()<< "Es gris : "<< isGray_ << "valor primer pixel "<< qRed(image_->pixel(0,0)) << ", " << qGreen(image_->pixel(0,0)) << "," << qBlue(image_->pixel(0,0));
 
@@ -337,6 +345,8 @@ void Image::calcular_contraste()
       contraste_gray_ = contraste_gray_ / (width_* height_);
       contraste_gray_ = sqrt(contraste_gray_);
       contraste_gray_=round(contraste_gray_);
+      if (contraste_gray_ < 1)
+        contraste_gray_ =1; ///no dejo que el contraste sea nunca cero, porque para los calculos de brillo y contraste podría fallar las divisiones.
     }
   else {
       contraste_green_ = contraste_green_ / (width_* height_);
@@ -399,6 +409,62 @@ void Image::calcular_probabilidad_acumulativo()
 
 }
 
+void Image::brilloYContraste(float brilloNuevo, float contrasteNuevo)
+{
+  ///uso la fórmula de la recta para obtener una nueva LUT acorde a el nuevo
+  /// brillo y contraste
+  /// y= Ax + B
+  /// A= contraste nuevo / contraste actual
+  /// B= Brillo nuevo - A * Brillo Actual
+  ///
+  float A,B;
+
+  if (isGray_)
+    {
+      ///formula para optener el coeficiente A      
+      A = contrasteNuevo / contraste_gray_;
+      B = brilloNuevo - (A*brillo_gray_);
+      qDebug() << contrasteNuevo << " " << contraste_gray_ << " " << brilloNuevo << " " << brillo_gray_;
+      qDebug() << A << " " << B;
+      ///preparo la LUT
+      QVector<int>  LUT(256);
+      float tmp;
+      pixels_out_of_range_ = 0;
+
+       for (int i=0;i < 256; i++)
+         {
+           tmp = (A * i) + B;
+           if (tmp < 0)
+             {
+             tmp = 0;
+             pixels_out_of_range_++;
+             }
+
+           if (tmp > 255)
+             {
+             tmp = 255;
+             pixels_out_of_range_++; ///cuento los pixels que han tenido que ser adaptados por quedar fuera del rango [0-255]
+             }
+
+           LUT[i]=(int)round(tmp);
+
+         }
+
+       ///ahora reasigno los puntos de la imagen en correspondencia con la nueva
+       /// LUT
+
+
+    for (int i=0; i < height_; i++)
+       for (int j=0; j < width_; j++)
+           image_->setPixel(j,i,LUT[qRed(image_->pixel(j,i))]);
+
+
+    }
+
+  updateImage();
+
+}
+
 bool Image::lutGray8bitsPrepare()
 {
 
@@ -422,7 +488,7 @@ return  true;
 ///
 QImage * Image::toGray8Bits(bool ntsc)
 {
-
+lutGray8bitsPrepare();
   ///
   QImage * ochobits =new QImage(width_,height_, QImage::Format_Indexed8);
   ///
@@ -453,6 +519,14 @@ QImage * Image::toGray8Bits(bool ntsc)
 
     }  
   return ochobits;
+}
+
+///Devuelvo una copia de la imagen en formato QImage. El receptor se encargará
+/// de su destrucción
+QImage *Image::getImage()
+{
+  QImage * tmp =new QImage(*image_);
+  return tmp;
 }
 
 QChartView *Image::toHistograma()
@@ -540,7 +614,11 @@ Image::Punto::Punto():
   countGreen_(0),
   countRed_(0),
   countBlue_(0),
-  countGray_(0)
+  countGray_(0),
+  probabilidadBlue_(0),
+  probabilidadGray_(0),
+  probabilidadGreen_(0),
+  probabilidadRed_(0)
 {
 
 }

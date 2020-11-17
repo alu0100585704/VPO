@@ -19,7 +19,7 @@
 #include <QRgb>
 #include <QColor>
 #include <math.h>
-
+#include <qmessagebox.h>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -60,8 +60,10 @@ public:
   void calcular_contraste();
   void calcular_probabilidad_absoluto();
   void calcular_probabilidad_acumulativo();
+  void brilloYContraste(float brilloNuevo, float contrasteNuevo);
 
   QImage * toGray8Bits(bool ntsc);
+  QImage *getImage();
   QChartView * toHistograma();
   QChartView * toHistogramaAcumulativo();
 
@@ -99,7 +101,7 @@ public:
 
    float brillo_red_;  ///media del histograma
    float contraste_red_; ///desviación típica del histograma
-
+   int pixels_out_of_range_;
 
 };
 

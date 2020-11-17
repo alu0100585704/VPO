@@ -14,6 +14,8 @@ MainWindow::~MainWindow()
 qDebug() << "Destrucyendo mainwindow";
     delete ui;
 
+if (dialog_ != nullptr)
+   delete dialog_;
 
 qDebug() << "Destructor mainwindow";
 }
@@ -142,11 +144,30 @@ void MainWindow::on_actionHistograma_Acumulativo_triggered()
     }
 }
 
-void MainWindow::on_actionBrillo_2_triggered()
-{
-}
 
-void MainWindow::on_actionContraste_2_triggered()
+
+void MainWindow::on_actionBrilloyContraste_triggered()
 {
+  QMap<QString, Image *>::iterator it = images_.begin();
+  Image * borrador;
+
+  while (it!=images_.end())
+    {
+      if (it.key()==focus_)
+        {
+          Image * imagen = new Image(QString("%1_Brillo y Contraste").arg(focus_),it.value()->getImage(),this);
+          images_.insert(QString("%1_Brillo y Contraste").arg(focus_),imagen);
+          ui->menuVentanas->addAction(imagen->toggleViewAction());
+          addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,imagen,Qt::Orientation::Vertical);
+          borrador = imagen;
+        }
+      ++it;
+    }
+
+ dialog_ = new BrilloYContraste(this);
+ dialog_->setWindowTitle(QString("Brillo y Contraste para : %1").arg(focus_));
+ dialog_->setImage(borrador);
+ dialog_->show();
+
 
 }

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BrilloYContraste</class>
+ <widget class="QWidget" name="BrilloYContraste">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>367</width>
+    <height>295</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="6" column="3">
+    <widget class="QLineEdit" name="lineEdit_4"/>
+   </item>
+   <item row="1" column="3">
+    <widget class="QLineEdit" name="lineEditContrasteGris"/>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Contraste&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QSlider" name="horizontalSlider_3">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(85, 170, 255);</string>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Brillo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="3">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="lineEditBrilloGris">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="3">
+    <widget class="QLineEdit" name="lineEdit_6"/>
+   </item>
+   <item row="3" column="3">
+    <widget class="QLineEdit" name="lineEdit_2"/>
+   </item>
+   <item row="6" column="1">
+    <widget class="QLineEdit" name="lineEdit_3"/>
+   </item>
+   <item row="9" column="1">
+    <widget class="QLineEdit" name="lineEdit_5"/>
+   </item>
+   <item row="4" column="3">
+    <widget class="QSlider" name="horizontalSlider_6">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 0, 0);</string>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="1">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="3">
+    <widget class="QPushButton" name="pushButtonClose">
+     <property name="text">
+      <string>Cerrar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QSlider" name="horizontalSlider_2">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 255, 0);</string>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QSlider" name="horizontalSlider">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 0, 0);</string>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="lineEdit"/>
+   </item>
+   <item row="10" column="2" colspan="2">
+    <widget class="QSlider" name="horizontalSlider_4">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(85, 170, 255);</string>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="3">
+    <widget class="QSlider" name="horizontalSlider_5">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 255, 0);</string>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QSlider" name="sliderContrasteGris">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(170, 170, 170);</string>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>127</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QSlider" name="sliderBrilloGris">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(170, 170, 170);</string>
+     </property>
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="1">
+    <widget class="QLabel" name="pixelsLost">
+     <property name="text">
+      <string>Pixel Adaptados: </string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

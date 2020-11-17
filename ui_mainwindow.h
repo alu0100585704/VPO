@@ -28,14 +28,11 @@ public:
     QAction *actionSaveFile;
     QAction *actionExit;
     QAction *actionAbout;
-    QAction *actionBrillo;
-    QAction *actionContraste;
+    QAction *actionBrilloyContraste;
     QAction *actionHistograma_absoluto;
     QAction *actionHistograma_Acumulativo;
     QAction *actionNTS;
     QAction *actionPAL;
-    QAction *actionBrillo_2;
-    QAction *actionContraste_2;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuArchivo;
@@ -61,10 +58,8 @@ public:
         actionExit->setObjectName(QString::fromUtf8("actionExit"));
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
-        actionBrillo = new QAction(MainWindow);
-        actionBrillo->setObjectName(QString::fromUtf8("actionBrillo"));
-        actionContraste = new QAction(MainWindow);
-        actionContraste->setObjectName(QString::fromUtf8("actionContraste"));
+        actionBrilloyContraste = new QAction(MainWindow);
+        actionBrilloyContraste->setObjectName(QString::fromUtf8("actionBrilloyContraste"));
         actionHistograma_absoluto = new QAction(MainWindow);
         actionHistograma_absoluto->setObjectName(QString::fromUtf8("actionHistograma_absoluto"));
         actionHistograma_Acumulativo = new QAction(MainWindow);
@@ -73,10 +68,6 @@ public:
         actionNTS->setObjectName(QString::fromUtf8("actionNTS"));
         actionPAL = new QAction(MainWindow);
         actionPAL->setObjectName(QString::fromUtf8("actionPAL"));
-        actionBrillo_2 = new QAction(MainWindow);
-        actionBrillo_2->setObjectName(QString::fromUtf8("actionBrillo_2"));
-        actionContraste_2 = new QAction(MainWindow);
-        actionContraste_2->setObjectName(QString::fromUtf8("actionContraste_2"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -117,14 +108,11 @@ public:
         menuArchivo->addAction(actionExit);
         menuAyuda->addAction(actionAbout);
         menuEfectos->addAction(menuEscala_de_Grises->menuAction());
-        menuEfectos->addAction(actionBrillo);
-        menuEfectos->addAction(actionContraste);
+        menuEfectos->addAction(actionBrilloyContraste);
         menuEscala_de_Grises->addAction(actionNTS);
         menuEscala_de_Grises->addAction(actionPAL);
         menuInformaci_n->addAction(actionHistograma_absoluto);
         menuInformaci_n->addAction(actionHistograma_Acumulativo);
-        menuInformaci_n->addAction(actionBrillo_2);
-        menuInformaci_n->addAction(actionContraste_2);
 
         retranslateUi(MainWindow);
 
@@ -138,14 +126,11 @@ public:
         actionSaveFile->setText(QApplication::translate("MainWindow", "Salvar", nullptr));
         actionExit->setText(QApplication::translate("MainWindow", "Salir", nullptr));
         actionAbout->setText(QApplication::translate("MainWindow", "Acerca de . . .", nullptr));
-        actionBrillo->setText(QApplication::translate("MainWindow", "Brillo y Contraste", nullptr));
-        actionContraste->setText(QApplication::translate("MainWindow", "Contraste", nullptr));
+        actionBrilloyContraste->setText(QApplication::translate("MainWindow", "Brillo y Contraste", nullptr));
         actionHistograma_absoluto->setText(QApplication::translate("MainWindow", "Histograma Absoluto", nullptr));
         actionHistograma_Acumulativo->setText(QApplication::translate("MainWindow", "Histograma Acumulativo", nullptr));
         actionNTS->setText(QApplication::translate("MainWindow", "8 bit NTSC", nullptr));
         actionPAL->setText(QApplication::translate("MainWindow", "8 bit PAL", nullptr));
-        actionBrillo_2->setText(QApplication::translate("MainWindow", "Brillo", nullptr));
-        actionContraste_2->setText(QApplication::translate("MainWindow", "Contraste", nullptr));
         menuArchivo->setTitle(QApplication::translate("MainWindow", "Archivo", nullptr));
         menuAyuda->setTitle(QApplication::translate("MainWindow", "Ayuda", nullptr));
         menuVentanas->setTitle(QApplication::translate("MainWindow", "Ventanas", nullptr));

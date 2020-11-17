@@ -10,6 +10,7 @@
 #include <QCloseEvent>
 #include <QDebug>
 #include <QEvent>
+#include <brilloycontraste.h>
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -57,13 +58,13 @@ private slots:
 
     void on_actionHistograma_Acumulativo_triggered();
 
-    void on_actionBrillo_2_triggered();
 
-    void on_actionContraste_2_triggered();
+    void on_actionBrilloyContraste_triggered();
 
 private:
     Ui::MainWindow *ui;
     QMap<QString, Image *> images_;
+    BrilloYContraste * dialog_;
 
 
 };

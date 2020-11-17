@@ -49,15 +49,18 @@ CONFIG += c++11
 SOURCES += \
         src/cpp/main.cpp \
         src/cpp/mainwindow.cpp \
-        src/cpp/image.cpp
+        src/cpp/image.cpp \
+    brilloycontraste.cpp
 
 HEADERS += \
         src/include/mainwindow.h \
     src/include/asmopencv.h \
-    src/include/image.h
+    src/include/image.h \
+    brilloycontraste.h
 
 FORMS += \
-        src/forms/mainwindow.ui
+        src/forms/mainwindow.ui \
+    brilloycontraste.ui
 
 
 RESOURCES += \
