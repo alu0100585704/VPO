@@ -141,3 +141,12 @@ void MainWindow::on_actionHistograma_Acumulativo_triggered()
       ++it;
     }
 }
+
+void MainWindow::on_actionBrillo_2_triggered()
+{
+}
+
+void MainWindow::on_actionContraste_2_triggered()
+{
+
+}

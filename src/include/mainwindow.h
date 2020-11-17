@@ -57,6 +57,10 @@ private slots:
 
     void on_actionHistograma_Acumulativo_triggered();
 
+    void on_actionBrillo_2_triggered();
+
+    void on_actionContraste_2_triggered();
+
 private:
     Ui::MainWindow *ui;
     QMap<QString, Image *> images_;

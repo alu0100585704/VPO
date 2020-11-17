@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>646</width>
-    <height>437</height>
+    <width>958</width>
+    <height>696</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>646</width>
+     <width>958</width>
      <height>21</height>
     </rect>
    </property>
@@ -64,6 +64,8 @@
     </property>
     <addaction name="actionHistograma_absoluto"/>
     <addaction name="actionHistograma_Acumulativo"/>
+    <addaction name="actionBrillo_2"/>
+    <addaction name="actionContraste_2"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuInformaci_n"/>
@@ -133,12 +135,22 @@
   </action>
   <action name="actionNTS">
    <property name="text">
-    <string>NTSC</string>
+    <string>8 bit NTSC</string>
    </property>
   </action>
   <action name="actionPAL">
    <property name="text">
-    <string>PAL</string>
+    <string>8 bit PAL</string>
+   </property>
+  </action>
+  <action name="actionBrillo_2">
+   <property name="text">
+    <string>Brillo</string>
+   </property>
+  </action>
+  <action name="actionContraste_2">
+   <property name="text">
+    <string>Contraste</string>
    </property>
   </action>
  </widget>

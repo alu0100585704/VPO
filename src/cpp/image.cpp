@@ -76,6 +76,16 @@ Image::Image(QString title, QChartView *image, MainWindow *parent):
 bool Image::prepare()
 {
 
+  brillo_blue_=0;
+brillo_gray_=0;
+brillo_green_=0;
+brillo_red_=0;
+contraste_blue_=0;
+contraste_gray_=0;
+contraste_green_=0;
+contraste_red_=0;
+
+
   label_=new QLabel(this);
 
   pixmapImage_= new QPixmap();
@@ -181,6 +191,10 @@ void Image::updateImage()
 
   calcular_histograma();
   calcular_histograma_acumulado();
+  calcular_probabilidad_absoluto();
+  calcular_probabilidad_acumulativo();
+  calcular_brillo();
+  calcular_contraste();
 
   qDebug() << image_->format()<< "Es gris : "<< isGray_ << "valor primer pixel "<< qRed(image_->pixel(0,0)) << ", " << qGreen(image_->pixel(0,0)) << "," << qBlue(image_->pixel(0,0));
 
@@ -237,6 +251,149 @@ void Image::calcular_histograma_acumulado()
             histograma_acumulado_[i].countRed_ = histograma_acumulado_[i-1].countRed_ + histograma_[i].countRed_;
             histograma_acumulado_[i].countGreen_ = histograma_acumulado_[i-1].countGreen_ + histograma_[i].countGreen_;
             histograma_acumulado_[i].countBlue_ = histograma_acumulado_[i-1].countBlue_ + histograma_[i].countBlue_;
+        }
+  }
+
+}
+
+void Image::calcular_brillo()
+{
+  for (int i=0; i< 256;i++)
+  {
+      if (isGray_)
+        brillo_gray_ = brillo_gray_ + (histograma_[i].countGray_ * i);
+      else {
+          brillo_red_=brillo_red_+(histograma_[i].countRed_ * i);
+          brillo_green_=brillo_green_ + (histograma_[i].countGreen_ * i);
+          brillo_blue_=brillo_blue_ + (histograma_[i].countBlue_ * i);
+        }
+  }
+
+  if (isGray_)
+    {
+      brillo_gray_ = brillo_gray_ / (width_* height_);
+      brillo_gray_=round(brillo_gray_);
+    }
+  else {
+      brillo_green_ = brillo_green_ / (width_* height_);
+      brillo_green_=round(brillo_green_);
+
+      brillo_blue_ = brillo_blue_ / (width_* height_);
+      brillo_blue_=round(brillo_blue_);
+
+      brillo_red_ = brillo_red_ / (width_* height_);
+      brillo_red_=round(brillo_red_);
+
+    }
+}
+
+void Image::calcular_contraste()
+{
+  ///ya con el brillo calculado
+  float a,b;
+  for (int i=0; i< 256;i++)
+  {
+      if (isGray_)
+        {
+          /// resuelvo (i-media)^2 mediante el cuadrado de una diferencia
+          a = pow(i,2);
+          a = a - (2*i*brillo_gray_);
+          b = pow(brillo_gray_,2);
+          a= a +b;  ///en a resultado del cuadrado de una diferencia
+          contraste_gray_= contraste_gray_ + (histograma_[i].countGray_ * a);
+
+        }
+
+      else {
+
+          /// resuelvo (i-media)^2 mediante el cuadrado de una diferencia
+          a = pow(i,2);
+          a = a - (2*i*brillo_red_);
+          b = pow(brillo_red_,2);
+          a= a +b;  ///en a resultado del cuadrado de una diferencia
+          contraste_red_= contraste_red_ + (histograma_[i].countRed_ * a);
+
+          /// resuelvo (i-media)^2 mediante el cuadrado de una diferencia
+          a = pow(i,2);
+          a = a - (2*i*brillo_green_);
+          b = pow(brillo_green_,2);
+          a= a +b;  ///en a resultado del cuadrado de una diferencia
+          contraste_green_=contraste_green_ + (histograma_[i].countGreen_ * a);
+
+          /// resuelvo (i-media)^2 mediante el cuadrado de una diferencia
+          a = pow(i,2);
+          a = a - (2*i*brillo_blue_);
+          b = pow(brillo_blue_,2);
+          a= a +b;  ///en a resultado del cuadrado de una diferencia
+          contraste_blue_=contraste_blue_ + (histograma_[i].countBlue_ * a);
+
+
+        }
+  }
+
+  if (isGray_)
+    {
+
+      contraste_gray_ = contraste_gray_ / (width_* height_);
+      contraste_gray_ = sqrt(contraste_gray_);
+      contraste_gray_=round(contraste_gray_);
+    }
+  else {
+      contraste_green_ = contraste_green_ / (width_* height_);
+      contraste_green_ = sqrt(contraste_green_);
+      contraste_green_=round(contraste_green_);
+
+      contraste_blue_ = contraste_blue_ / (width_* height_);
+      contraste_blue_ = sqrt(contraste_blue_);
+      contraste_blue_=round(contraste_blue_);
+
+      contraste_red_ = contraste_red_ / (width_* height_);
+      contraste_red_ = sqrt(contraste_red_);
+      contraste_red_=round(contraste_red_);
+
+    }
+
+
+}
+
+void Image::calcular_probabilidad_absoluto()
+{
+  for (int i=0; i < 256; i++)
+  {
+    if (isGray_)
+      histograma_[i].probabilidadGray_=histograma_[i].countGray_ / (width_*height_);
+    else {
+        histograma_[i].probabilidadRed_=histograma_[i].countRed_ / (width_*height_);
+        histograma_[i].probabilidadGreen_=histograma_[i].countGreen_ / (width_*height_);
+        histograma_[i].probabilidadBlue_=histograma_[i].countBlue_ / (width_*height_);
+      }
+  }
+}
+
+void Image::calcular_probabilidad_acumulativo()
+{
+  for (int i=0; i < 256; i++)
+  {
+    if (isGray_)
+      histograma_[i].probabilidadGray_=histograma_[i].countGray_ / (width_*height_);
+    else {
+        histograma_[i].probabilidadRed_=histograma_[i].countRed_ / (width_*height_);
+        histograma_[i].probabilidadGreen_=histograma_[i].countGreen_ / (width_*height_);
+        histograma_[i].probabilidadBlue_=histograma_[i].countBlue_ / (width_*height_);
+      }
+  }
+
+  histograma_acumulado_[0] = histograma_[0]; ///el primer valor del acumulado
+  ///es igual al del absoluto
+  ///
+  for (int i=1; i < 256;i++)
+  {
+      if (isGray_)
+          histograma_acumulado_[i].probabilidadGray_=histograma_acumulado_[i-1].probabilidadGray_ + histograma_[i].probabilidadGray_;
+      else {
+            histograma_acumulado_[i].probabilidadRed_=histograma_acumulado_[i-1].probabilidadRed_ + histograma_[i].probabilidadRed_;
+            histograma_acumulado_[i].probabilidadGreen_=histograma_acumulado_[i-1].probabilidadGreen_ + histograma_[i].probabilidadGreen_;
+            histograma_acumulado_[i].probabilidadBlue_=histograma_acumulado_[i-1].probabilidadBlue_ + histograma_[i].probabilidadBlue_;
         }
   }
 
@@ -321,6 +478,7 @@ QChartView *Image::toHistograma()
 
   axisX->setRange(0,255);
   axisX->setTickCount(7);
+  axisX->setTitleText(QString("Brillo : %1 | Contraste %2").arg(brillo_gray_).arg(contraste_gray_));
 
   axisY->setRange(0,width_*height_); ///ancho por alto es el máximo numero de pixeles que se podrán tener
   axisY->setTickCount(20);

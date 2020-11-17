@@ -34,6 +34,8 @@ public:
     QAction *actionHistograma_Acumulativo;
     QAction *actionNTS;
     QAction *actionPAL;
+    QAction *actionBrillo_2;
+    QAction *actionContraste_2;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuArchivo;
@@ -50,7 +52,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(646, 437);
+        MainWindow->resize(958, 696);
         actionOpenFiles = new QAction(MainWindow);
         actionOpenFiles->setObjectName(QString::fromUtf8("actionOpenFiles"));
         actionSaveFile = new QAction(MainWindow);
@@ -71,12 +73,16 @@ public:
         actionNTS->setObjectName(QString::fromUtf8("actionNTS"));
         actionPAL = new QAction(MainWindow);
         actionPAL->setObjectName(QString::fromUtf8("actionPAL"));
+        actionBrillo_2 = new QAction(MainWindow);
+        actionBrillo_2->setObjectName(QString::fromUtf8("actionBrillo_2"));
+        actionContraste_2 = new QAction(MainWindow);
+        actionContraste_2->setObjectName(QString::fromUtf8("actionContraste_2"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 646, 21));
+        menuBar->setGeometry(QRect(0, 0, 958, 21));
         menuArchivo = new QMenu(menuBar);
         menuArchivo->setObjectName(QString::fromUtf8("menuArchivo"));
         menuAyuda = new QMenu(menuBar);
@@ -117,6 +123,8 @@ public:
         menuEscala_de_Grises->addAction(actionPAL);
         menuInformaci_n->addAction(actionHistograma_absoluto);
         menuInformaci_n->addAction(actionHistograma_Acumulativo);
+        menuInformaci_n->addAction(actionBrillo_2);
+        menuInformaci_n->addAction(actionContraste_2);
 
         retranslateUi(MainWindow);
 
@@ -134,8 +142,10 @@ public:
         actionContraste->setText(QApplication::translate("MainWindow", "Contraste", nullptr));
         actionHistograma_absoluto->setText(QApplication::translate("MainWindow", "Histograma Absoluto", nullptr));
         actionHistograma_Acumulativo->setText(QApplication::translate("MainWindow", "Histograma Acumulativo", nullptr));
-        actionNTS->setText(QApplication::translate("MainWindow", "NTSC", nullptr));
-        actionPAL->setText(QApplication::translate("MainWindow", "PAL", nullptr));
+        actionNTS->setText(QApplication::translate("MainWindow", "8 bit NTSC", nullptr));
+        actionPAL->setText(QApplication::translate("MainWindow", "8 bit PAL", nullptr));
+        actionBrillo_2->setText(QApplication::translate("MainWindow", "Brillo", nullptr));
+        actionContraste_2->setText(QApplication::translate("MainWindow", "Contraste", nullptr));
         menuArchivo->setTitle(QApplication::translate("MainWindow", "Archivo", nullptr));
         menuAyuda->setTitle(QApplication::translate("MainWindow", "Ayuda", nullptr));
         menuVentanas->setTitle(QApplication::translate("MainWindow", "Ventanas", nullptr));

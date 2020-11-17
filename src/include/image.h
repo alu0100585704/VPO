@@ -18,6 +18,7 @@
 #include <QtCharts/qvalueaxis.h>
 #include <QRgb>
 #include <QColor>
+#include <math.h>
 
 
 QT_CHARTS_USE_NAMESPACE
@@ -45,6 +46,7 @@ public:
   unsigned int countGreen_;
   unsigned int countBlue_;
   unsigned int countGray_;
+  float probabilidadGray_,probabilidadGreen_,probabilidadBlue_,probabilidadRed_;
 
 };
 
@@ -54,6 +56,11 @@ public:
   void updateImage();
   void calcular_histograma();
   void calcular_histograma_acumulado();  
+  void calcular_brillo();
+  void calcular_contraste();
+  void calcular_probabilidad_absoluto();
+  void calcular_probabilidad_acumulativo();
+
   QImage * toGray8Bits(bool ntsc);
   QChartView * toHistograma();
   QChartView * toHistogramaAcumulativo();
@@ -80,6 +87,18 @@ public:
    int format_;
    int width_,height_;  //medida de la imagen
    MainWindow * parent_;
+
+   float brillo_gray_;  ///media del histograma
+   float contraste_gray_; ///desviación típica del histograma
+
+   float brillo_green_;  ///media del histograma
+   float contraste_green_; ///desviación típica del histograma
+
+   float brillo_blue_;  ///media del histograma
+   float contraste_blue_; ///desviación típica del histograma
+
+   float brillo_red_;  ///media del histograma
+   float contraste_red_; ///desviación típica del histograma
 
 
 };
