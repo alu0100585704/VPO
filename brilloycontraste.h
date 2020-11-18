@@ -30,11 +30,21 @@ private slots:
 
   void on_pushButtonClose_clicked();
 
+
+  void on_pushButtonApply_clicked();
+
+  void on_checkBoxRealTime_stateChanged(int arg1);
+
+  void on_checkBoxKeepOriginal_stateChanged(int arg1);
+
 private:
   Ui::BrilloYContraste *ui;
   Image * imagen_;
+  QImage * imageForKeepOriginal_;
 
   float brillo_,contraste_;
+  bool keepOriginal_; ///todo los cambios los realiza en relación al brillo y contraste original.
+  bool realTime_; ///realiza los cambios directamente, sin necesidad de presionar aplicar
 };
 
 #endif // BRILLOYCONTRASTE_H

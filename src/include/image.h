@@ -64,6 +64,7 @@ public:
 
   QImage * toGray8Bits(bool ntsc);
   QImage *getImage();
+  void setImage(QImage &imagen);
   QChartView * toHistograma();
   QChartView * toHistogramaAcumulativo();
 

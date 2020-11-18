@@ -38,7 +38,7 @@ public:
     //virtual bool event(QEvent *event);    
     void show_images();
     void grayScale(bool ntsc);
-
+    void statusBarUpdate();
     QString focus_; //nombre de la imagen que tiene le foco actualmente    
 private slots:
 
@@ -65,6 +65,7 @@ private:
     Ui::MainWindow *ui;
     QMap<QString, Image *> images_;
     BrilloYContraste * dialog_;
+    QLabel statusPermanentMessage_;
 
 
 };

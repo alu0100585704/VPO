@@ -4,9 +4,13 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    focus_("Sin foco")
+    focus_("Ninguna imagen Seleccionada"),
+    dialog_(nullptr)
 {
     ui->setupUi(this);
+    statusBar();
+    statusBar()->addPermanentWidget(&statusPermanentMessage_);
+    statusBarUpdate();
 }
 
 MainWindow::~MainWindow()
@@ -100,6 +104,11 @@ void MainWindow::grayScale(bool ntsc)
     }
 }
 
+void MainWindow::statusBarUpdate()
+{
+  statusPermanentMessage_.setText(focus_);
+}
+
 void MainWindow::on_actionNTS_triggered()
 {
     grayScale(true);
@@ -163,6 +172,9 @@ void MainWindow::on_actionBrilloyContraste_triggered()
         }
       ++it;
     }
+
+if (dialog_!=nullptr)
+  delete dialog_;
 
  dialog_ = new BrilloYContraste(this);
  dialog_->setWindowTitle(QString("Brillo y Contraste para : %1").arg(focus_));

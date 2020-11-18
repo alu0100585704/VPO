@@ -168,10 +168,10 @@ void Image::updateImage()
 
 
   if (width_ <1024)
-      setMaximumWidth(width_);
+      setMaximumWidth(width_+6);
 
   if (height_<768)
-      setMaximumHeight(height_);
+      setMaximumHeight(height_+25);
 
 
   *pixmapImage_ = pixmapImage_->fromImage(*image_);
@@ -211,7 +211,9 @@ void Image::updateImage()
 void Image::focusInEvent(QFocusEvent *event)
 {
   parent_->focus_=nameFile_;
+  parent_->statusBarUpdate();
   qDebug() << QString("Foco asignado a %1").arg(nameFile_);
+
   event->accept();
 
 }
@@ -527,6 +529,13 @@ QImage *Image::getImage()
 {
   QImage * tmp =new QImage(*image_);
   return tmp;
+}
+
+void Image::setImage(QImage &imagen)
+{
+  *image_  = imagen;
+
+  updateImage();
 }
 
 QChartView *Image::toHistograma()
