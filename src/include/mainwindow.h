@@ -11,7 +11,10 @@
 #include <QDebug>
 #include <QEvent>
 #include <brilloycontraste.h>
-
+#include <QDoubleSpinBox>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <qpushbutton.h>
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -38,8 +41,9 @@ public:
     //virtual bool event(QEvent *event);    
     void show_images();
     void grayScale(bool ntsc);
-    void statusBarUpdate();
-    QString focus_; //nombre de la imagen que tiene le foco actualmente    
+
+    QString focus_; //nombre de la imagen que tiene le foco actualmente        
+    QLabel statusPermanentMessage_,information_;
 private slots:
 
     void on_actionOpenFiles_triggered();
@@ -61,11 +65,15 @@ private slots:
 
     void on_actionBrilloyContraste_triggered();
 
+    void on_actionEntropia_triggered();
+
+    void on_actionGamma_triggered();
+
 private:
     Ui::MainWindow *ui;
     QMap<QString, Image *> images_;
     BrilloYContraste * dialog_;
-    QLabel statusPermanentMessage_;
+
 
 
 };

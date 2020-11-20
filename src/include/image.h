@@ -20,6 +20,8 @@
 #include <QColor>
 #include <math.h>
 #include <qmessagebox.h>
+#include <QMouseEvent>
+#include <events.h>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -42,32 +44,34 @@ public:
   ~Punto();
 
 
-  unsigned int countRed_;
-  unsigned int countGreen_;
-  unsigned int countBlue_;
-  unsigned int countGray_;
-  float probabilidadGray_,probabilidadGreen_,probabilidadBlue_,probabilidadRed_;
+  double countRed_;
+  double countGreen_;
+  double countBlue_;
+  double countGray_;
+  double probabilidadGray_,probabilidadGreen_,probabilidadBlue_,probabilidadRed_;
 
 };
 
-  virtual void  focusInEvent(QFocusEvent * event);
+
   bool lutGray8bitsPrepare();
   bool prepare();
   void updateImage();
   void calcular_histograma();
-  void calcular_histograma_acumulado();  
+  void calcular_histograma_acumulado();
   void calcular_brillo();
   void calcular_contraste();
   void calcular_probabilidad_absoluto();
   void calcular_probabilidad_acumulativo();
-  void brilloYContraste(float brilloNuevo, float contrasteNuevo);
+  void calcular_entropia();
 
+  void funcionGamma(double value);
+  void brilloYContrasteGris(double brilloNuevoGris, double contrasteNuevoGris);
+  void brilloYContrasteColor(double brilloNuevoRed, double contrasteNuevoRed,double brilloNuevoGreen, double contrasteNuevoGreen,double brilloNuevoBlue, double contrasteNuevoBlue);
   QImage * toGray8Bits(bool ntsc);
+  QChartView * toHistograma(bool acumulativo);   ///true si quiero el acumulativo o false si quiero el absoluto
   QImage *getImage();
-  void setImage(QImage &imagen);
-  QChartView * toHistograma();
-  QChartView * toHistogramaAcumulativo();
-
+  void setImage(QImage &imagen);  
+  Events * filterEvents_;
 
 
    QLabel * label_;
@@ -90,19 +94,24 @@ public:
    int format_;
    int width_,height_;  //medida de la imagen
    MainWindow * parent_;
+   double entropia_;
 
-   float brillo_gray_;  ///media del histograma
-   float contraste_gray_; ///desviación típica del histograma
+   double brillo_gray_;  ///media del histograma
+   double contraste_gray_; ///desviación típica del histograma
 
-   float brillo_green_;  ///media del histograma
-   float contraste_green_; ///desviación típica del histograma
+   double brillo_green_;  ///media del histograma
+   double contraste_green_; ///desviación típica del histograma
 
-   float brillo_blue_;  ///media del histograma
-   float contraste_blue_; ///desviación típica del histograma
+   double brillo_blue_;  ///media del histograma
+   double contraste_blue_; ///desviación típica del histograma
 
-   float brillo_red_;  ///media del histograma
-   float contraste_red_; ///desviación típica del histograma
-   int pixels_out_of_range_;
+   double brillo_red_;  ///media del histograma
+   double contraste_red_; ///desviación típica del histograma
+
+   int pixelsGrayTo0, pixelsGrayTo255;
+   int pixelsRedTo0, pixelsRedTo255;
+   int pixelsGreenTo0, pixelsGreenTo255;
+   int pixelsBlueTo0, pixelsBlueTo255;
 
 };
 

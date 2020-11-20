@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>534</width>
-    <height>399</height>
+    <width>803</width>
+    <height>359</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,32 +20,251 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="13" column="1">
-    <widget class="QLineEdit" name="lineEdit_5"/>
-   </item>
-   <item row="7" column="1">
-    <widget class="QLineEdit" name="lineEdit"/>
-   </item>
-   <item row="10" column="1">
-    <widget class="QLineEdit" name="lineEdit_3"/>
-   </item>
-   <item row="7" column="3">
-    <widget class="QLineEdit" name="lineEdit_2"/>
-   </item>
-   <item row="8" column="3">
-    <widget class="QSlider" name="horizontalSlider_6">
+   <item row="13" column="3">
+    <widget class="QSlider" name="sliderContrasteGreen">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 0, 0);</string>
+      <string notr="true">background-color: rgb(0, 255, 0);</string>
+     </property>
+     <property name="maximum">
+      <number>255</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item row="13" column="3">
-    <widget class="QLineEdit" name="lineEdit_6"/>
+   <item row="6" column="1">
+    <widget class="QLineEdit" name="lineEditBrilloGris">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="3">
+    <widget class="QLineEdit" name="lineEditContrasteRed"/>
+   </item>
+   <item row="6" column="5">
+    <widget class="QProgressBar" name="progressBarGrayTo0">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="textVisible">
+      <bool>true</bool>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+     <property name="textDirection">
+      <enum>QProgressBar::TopToBottom</enum>
+     </property>
+     <property name="format">
+      <string>%p%</string>
+     </property>
+    </widget>
+   </item>
+   <item row="15" column="2" colspan="2">
+    <widget class="QSlider" name="sliderContrasteBlue">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(85, 170, 255);</string>
+     </property>
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="6">
+    <widget class="QLabel" name="pixelsLostTo255">
+     <property name="text">
+      <string>Pixels ajustados a 255:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
    </item>
    <item row="6" column="3">
+    <widget class="QLineEdit" name="lineEditContrasteGris"/>
+   </item>
+   <item row="1" column="3">
+    <widget class="QLabel" name="labelContraste">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Contraste Actual:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="6">
+    <widget class="QProgressBar" name="progressBarRedTo255">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="format">
+      <string>%p%</string>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="1">
+    <widget class="QLineEdit" name="lineEditBrilloBlue"/>
+   </item>
+   <item row="11" column="6">
+    <widget class="QProgressBar" name="progressBarGreenTo255">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="format">
+      <string>%p%</string>
+     </property>
+    </widget>
+   </item>
+   <item row="20" column="1">
+    <widget class="QPushButton" name="pushButtonApply">
+     <property name="text">
+      <string>Aplicar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="5">
+    <widget class="QProgressBar" name="progressBarRedTo0">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="format">
+      <string>%p%</string>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="1">
+    <widget class="QSlider" name="sliderBrilloGreen">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 255, 0);</string>
+     </property>
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="6">
+    <widget class="QProgressBar" name="progressBarBlueTo255">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="format">
+      <string>%p%</string>
+     </property>
+    </widget>
+   </item>
+   <item row="20" column="3">
+    <widget class="QPushButton" name="pushButtonClose">
+     <property name="text">
+      <string>Cerrar</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="5">
+    <widget class="QLabel" name="pixelsLostTo0">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Pixels Ajustados a 0:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="3">
+    <widget class="QSlider" name="sliderContrasteRed">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 0, 0);</string>
+     </property>
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="Line" name="line_5">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="20" column="5">
+    <widget class="QCheckBox" name="checkBoxKeepOriginal">
+     <property name="text">
+      <string>Respecto a imagen original</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="Line" name="line_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="6">
+    <widget class="QProgressBar" name="progressBarGrayTo255">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="format">
+      <string>%p%</string>
+     </property>
+    </widget>
+   </item>
+   <item row="16" column="3">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="5">
+    <widget class="QProgressBar" name="progressBarBlueTo0">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="format">
+      <string>%p%</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="3">
     <widget class="QSlider" name="sliderContrasteGris">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(170, 170, 170);</string>
@@ -61,58 +280,21 @@
      </property>
     </widget>
    </item>
-   <item row="15" column="3">
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="3">
-    <widget class="QSlider" name="horizontalSlider_5">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 255, 0);</string>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="3">
-    <widget class="QLineEdit" name="lineEdit_4"/>
-   </item>
-   <item row="19" column="1">
-    <widget class="QPushButton" name="pushButtonApply">
+   <item row="1" column="1">
+    <widget class="QLabel" name="labelBrillo">
      <property name="text">
-      <string>Aplicar</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Brillo Actual:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="3">
-    <widget class="QLabel" name="labelContraste">
+   <item row="20" column="6">
+    <widget class="QCheckBox" name="checkBoxRealTime">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Contraste Actual:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>Tiempo Real</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="1">
-    <widget class="QSlider" name="horizontalSlider">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 0, 0);</string>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="3">
-    <widget class="QCheckBox" name="checkBoxKeepOriginal">
-     <property name="text">
-      <string>Respecto a imagen original:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1">
+   <item row="7" column="1">
     <widget class="QSlider" name="sliderBrilloGris">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(170, 170, 170);</string>
@@ -125,17 +307,35 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="labelBrillo">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Brillo Actual:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   <item row="11" column="3">
+    <widget class="QLineEdit" name="lineEditContrasteGreen"/>
+   </item>
+   <item row="11" column="5">
+    <widget class="QProgressBar" name="progressBarGreenTo0">
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="format">
+      <string>%p%</string>
      </property>
     </widget>
    </item>
-   <item row="12" column="1">
-    <widget class="QSlider" name="horizontalSlider_2">
+   <item row="11" column="1">
+    <widget class="QLineEdit" name="lineEditBrilloGreen"/>
+   </item>
+   <item row="14" column="3">
+    <widget class="QLineEdit" name="lineEditContrasteBlue"/>
+   </item>
+   <item row="9" column="1">
+    <widget class="QSlider" name="sliderBrilloRed">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 255, 0);</string>
+      <string notr="true">background-color: rgb(255, 0, 0);</string>
+     </property>
+     <property name="maximum">
+      <number>255</number>
      </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -143,80 +343,39 @@
     </widget>
    </item>
    <item row="15" column="1">
+    <widget class="QSlider" name="sliderBrilloBlue">
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(85, 170, 255);</string>
+     </property>
+     <property name="maximum">
+      <number>255</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QLineEdit" name="lineEditBrilloRed"/>
+   </item>
+   <item row="16" column="1">
     <widget class="Line" name="line">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item row="19" column="3">
-    <widget class="QPushButton" name="pushButtonClose">
+   <item row="0" column="1">
+    <widget class="QLabel" name="labelBrilloOriginal">
      <property name="text">
-      <string>Cerrar</string>
+      <string>TextLabel</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QLineEdit" name="lineEditBrilloGris">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-    </widget>
-   </item>
-   <item row="14" column="1">
-    <widget class="QSlider" name="horizontalSlider_3">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(85, 170, 255);</string>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="3">
-    <widget class="QLineEdit" name="lineEditContrasteGris"/>
-   </item>
-   <item row="2" column="1">
-    <widget class="QLabel" name="pixelsLost">
+   <item row="0" column="3">
+    <widget class="QLabel" name="labelContrasteOriginal">
      <property name="text">
-      <string>Pixels Adaptados: </string>
-     </property>
-    </widget>
-   </item>
-   <item row="14" column="2" colspan="2">
-    <widget class="QSlider" name="horizontalSlider_4">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(85, 170, 255);</string>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QCheckBox" name="checkBoxRealTime">
-     <property name="text">
-      <string>Tiempo Real</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="Line" name="line_5">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="3">
-    <widget class="Line" name="line_6">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <string>TextLabel</string>
      </property>
     </widget>
    </item>

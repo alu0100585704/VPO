@@ -10,7 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     statusBar();
     statusBar()->addPermanentWidget(&statusPermanentMessage_);
-    statusBarUpdate();
+    statusBar()->addWidget(&information_);
+    statusPermanentMessage_.setAlignment(Qt::AlignLeft);
+    information_.setAlignment(Qt::AlignRight);
+    statusPermanentMessage_.setText(focus_);
+
 }
 
 MainWindow::~MainWindow()
@@ -24,25 +28,10 @@ if (dialog_ != nullptr)
 qDebug() << "Destructor mainwindow";
 }
 
-/*
-bool MainWindow::event(QEvent *event)
-{
-  qDebug() << event->type();
-
-
-    event->accept();
-
-}
-*/
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
 
-  qDebug() << "closeevent";
-
-
-
-  qDebug() << "destruidas desde closeevent";
 
     event->accept();
 
@@ -104,10 +93,6 @@ void MainWindow::grayScale(bool ntsc)
     }
 }
 
-void MainWindow::statusBarUpdate()
-{
-  statusPermanentMessage_.setText(focus_);
-}
 
 void MainWindow::on_actionNTS_triggered()
 {
@@ -126,7 +111,7 @@ void MainWindow::on_actionHistograma_absoluto_triggered()
     {
       if (it.key()==focus_)
         {
-          Image *imagen = new Image(QString("%1_Histograma Absoluto").arg(focus_),it.value()->toHistograma(),this);
+          Image *imagen = new Image(QString("%1_Histograma Absoluto").arg(focus_),it.value()->toHistograma(false),this);
           images_.insert(QString("%1_Histograma Absoluto").arg(focus_),imagen);
           ui->menuVentanas->addAction(imagen->toggleViewAction());
           addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,imagen,Qt::Orientation::Vertical);
@@ -143,7 +128,7 @@ void MainWindow::on_actionHistograma_Acumulativo_triggered()
     {
       if (it.key()==focus_)
         {
-          Image *imagen = new Image(QString("%1_Histograma Acumulativo").arg(focus_),it.value()->toHistogramaAcumulativo(),this);
+          Image *imagen = new Image(QString("%1_Histograma Acumulativo").arg(focus_),it.value()->toHistograma(true),this);
           images_.insert(QString("%1_Histograma Acumulativo").arg(focus_),imagen);
           ui->menuVentanas->addAction(imagen->toggleViewAction());
           addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,imagen,Qt::Orientation::Vertical);
@@ -180,6 +165,77 @@ if (dialog_!=nullptr)
  dialog_->setWindowTitle(QString("Brillo y Contraste para : %1").arg(focus_));
  dialog_->setImage(borrador);
  dialog_->show();
+
+
+}
+
+
+void MainWindow::on_actionEntropia_triggered()
+{
+  QMap<QString, Image *>::iterator it = images_.begin();
+  Image * borrador;
+
+  while (it!=images_.end())
+    {
+      if (it.key()==focus_)
+        {
+          QMessageBox::information(this,"Entropia",QString("Valor para %1: %2").arg(focus_).arg(it.value()->entropia_));
+        }
+      ++it;
+    }
+
+
+}
+
+void MainWindow::on_actionGamma_triggered()
+{
+
+  QMap<QString, Image *>::iterator it = images_.begin();
+  Image * borrador;
+
+
+  while (it!=images_.end())
+    {
+      if (it.key()==focus_)
+        {
+          Image * imagen = new Image(QString("%1_Gamma").arg(focus_),it.value()->getImage(),this);
+          images_.insert(QString("%1_Gamma").arg(focus_),imagen);
+          ui->menuVentanas->addAction(imagen->toggleViewAction());
+          addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,imagen,Qt::Orientation::Vertical);
+          borrador = imagen;
+        }
+      ++it;
+    }
+
+  QDialog * dialogGamma = new QDialog(this);
+  QDoubleSpinBox * valor = new QDoubleSpinBox(dialogGamma);
+  QLabel * label = new QLabel(dialogGamma);
+  QHBoxLayout * layout = new QHBoxLayout(dialogGamma);
+
+  dialogGamma->setWindowTitle(QString("Valor Gamma para %1").arg(focus_));
+  label->setText("Introduzca valor para la función Gamma\n\nValores > 1 Mejora contraste en zona clara\nValores < 1 Mejora contraste en la zona oscura");
+  layout->addWidget(label);
+  layout->addWidget(valor);
+  dialogGamma->setLayout(layout);
+  valor->setMinimum(0);
+  valor->setMaximum(255.0);
+
+  dialogGamma->show();
+  QImage * imageForKeepOriginal = borrador->getImage();
+
+  connect(valor,QOverload<double>::of(&QDoubleSpinBox::valueChanged),[=](double d){
+
+      borrador->setImage(*imageForKeepOriginal);
+      borrador->funcionGamma(d);
+
+  });
+
+
+  connect(dialogGamma,(&QDialog::finished),[=](int result){
+
+    delete imageForKeepOriginal;
+
+  });
 
 
 }

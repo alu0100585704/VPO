@@ -1,0 +1,10 @@
+tmp/o/main.o
+tmp/o/mainwindow.o
+tmp/o/image.o
+tmp/o/brilloycontraste.o
+tmp/o/events.o
+tmp/o/qrc_recursos.o
+tmp/o/moc_mainwindow.o
+tmp/o/moc_image.o
+tmp/o/moc_brilloycontraste.o
+tmp/o/moc_events.o

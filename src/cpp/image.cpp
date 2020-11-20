@@ -12,10 +12,11 @@ Image::Image(const QString fileImage,MainWindow * parent) :
     barGraphics_(nullptr),
     pixmapImage_(nullptr),
     isBarGraphics_(false),
-    pixels_out_of_range_(0),
+    filterEvents_(new Events(this)),
     parent_(parent)
 {
-prepare();
+
+  prepare();
 
 }
 
@@ -27,9 +28,10 @@ Image::Image(QString title,QImage *image,MainWindow * parent):
       isBarGraphics_(false),
       title_(title),
       nameFile_(title),
-      pixels_out_of_range_(0),
+      filterEvents_(new Events(this)),
       parent_(parent)
 {
+
 
   prepare();
 }
@@ -42,15 +44,9 @@ Image::Image(QString title, QChartView *image, MainWindow *parent):
   isBarGraphics_(true),
   title_(title),
   nameFile_(title),
-  pixels_out_of_range_(0),
+  filterEvents_(new Events(this)),
   parent_(parent)
 {
-  scrollArea_=new QScrollArea(this);
-  scrollAreaWidgetContents_=new QWidget(this);
-  dockWidgetContents_=new QWidget(this);
-  gridLayoutDockWidgetContentsAndScrollArea_ =new QGridLayout(dockWidgetContents_);
-  gridLayoutScrollAreaWidgetContentsAndLabel_=new QGridLayout(scrollAreaWidgetContents_);
-
 
   ///Preparo Dock widget acoplado pero con posibilidad de ser flotante
   /// Lo hago dentro de un QLabel que a la vez está dentro de un QScroolArea
@@ -65,7 +61,7 @@ Image::Image(QString title, QChartView *image, MainWindow *parent):
   //barGraphics_->setGeometry(0,0,500,500);
 
 
-    setContextMenuPolicy(Qt::DefaultContextMenu);
+
     setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable  | QDockWidget::DockWidgetFloatable);
     setFloating(true);
     setFocusPolicy(Qt::FocusPolicy::StrongFocus);
@@ -79,8 +75,7 @@ Image::Image(QString title, QChartView *image, MainWindow *parent):
 bool Image::prepare()
 {
 
-  label_=new QLabel(this);
-
+  label_= new QLabel(this);
   pixmapImage_= new QPixmap();
   scrollArea_=new QScrollArea(this);
   scrollAreaWidgetContents_=new QWidget(this);
@@ -88,6 +83,13 @@ bool Image::prepare()
   gridLayoutDockWidgetContentsAndScrollArea_ =new QGridLayout(dockWidgetContents_);
   gridLayoutScrollAreaWidgetContentsAndLabel_=new QGridLayout(scrollAreaWidgetContents_);
 
+  label_->setMouseTracking(true);
+  label_->installEventFilter(filterEvents_);
+
+
+  //scrollArea_->setMouseTracking(true);
+  //scrollAreaWidgetContents_->setMouseTracking(true);
+  //dockWidgetContents_->setMouseTracking(true);
 
   ///Preparo Dock widget acoplado pero con posibilidad de ser flotante
   /// Lo hago dentro de un QLabel que a la vez está dentro de un QScroolArea
@@ -99,6 +101,7 @@ bool Image::prepare()
     setFocusPolicy(Qt::FocusPolicy::StrongFocus);
 
    scrollArea_->setWidgetResizable(false);
+
 
 
     if (image_->isNull())
@@ -143,6 +146,8 @@ Image::~Image()
     delete barGraphics_;
 
     qDebug() << "Destructor Image";
+  if (filterEvents_ !=nullptr)
+    delete filterEvents_;
 
 }
 
@@ -157,6 +162,7 @@ void Image::updateImage()
   contraste_gray_=0;
   contraste_green_=0;
   contraste_red_=0;
+
 
   setMinimumHeight(50);
   setMinimumWidth(50);
@@ -179,6 +185,7 @@ void Image::updateImage()
   label_->setAlignment(Qt::AlignLeft|Qt::AlignTop);
   label_->setGeometry(0,0,width_,height_);
 
+
   format_=image_->format();
 
   if (format_ == QImage::Format_Indexed8)
@@ -187,9 +194,6 @@ void Image::updateImage()
   else
     isGray_ = image_->isGrayscale();
 
-  ///preparo la Look UP Table para gris
-
-  ///lutGray8bitsPrepare();
 
   calcular_histograma();
 
@@ -203,18 +207,10 @@ void Image::updateImage()
 
   calcular_contraste();
 
+  calcular_entropia();
 
   qDebug() << image_->format()<< "Es gris : "<< isGray_ << "valor primer pixel "<< qRed(image_->pixel(0,0)) << ", " << qGreen(image_->pixel(0,0)) << "," << qBlue(image_->pixel(0,0));
 
-
-}
-void Image::focusInEvent(QFocusEvent *event)
-{
-  parent_->focus_=nameFile_;
-  parent_->statusBarUpdate();
-  qDebug() << QString("Foco asignado a %1").arg(nameFile_);
-
-  event->accept();
 
 }
 
@@ -229,17 +225,15 @@ void Image::calcular_histograma()
  for (int i=0; i < image_->height();i++)
    for (int j=0; j < image_->width();j++)
      {
-        unsigned int valor = qRed(image_->pixel(j,i));
+        QRgb valor = image_->pixel(j,i);
 
         if (isGray_)
-            histograma_[valor].countGray_ = histograma_[valor].countGray_ + 1;
+            histograma_[qRed(valor)].countGray_++;
         else {
             ///entonces tengo que actualizar los tres colores
-            histograma_[valor].countRed_ = histograma_[valor].countRed_ + 1;
-            valor = qGreen(image_->pixel(j,i));
-            histograma_[valor].countGreen_ = histograma_[valor].countGreen_ + 1;
-            valor = qBlue(image_->pixel(j,i));
-            histograma_[valor].countBlue_ = histograma_[valor].countBlue_ + 1;
+            histograma_[qRed(valor)].countRed_++;
+            histograma_[qGreen(valor)].countGreen_++;
+            histograma_[qBlue(valor)].countBlue_++;
           }
 
      }
@@ -250,13 +244,24 @@ void Image::calcular_histograma_acumulado()
   histograma_acumulado_.clear();
   histograma_acumulado_.resize(256);
 
-  histograma_acumulado_[0] = histograma_[0]; ///el primer valor del acumulado
+ if (isGray_)
+  histograma_acumulado_[0].countGray_ = histograma_[0].countGray_; ///el primer valor del acumulado
   ///es igual al del absoluto
   ///
+  else
+   {
+     histograma_acumulado_[0].countRed_ = histograma_[0].countRed_; ///el primer valor del acumulado
+     ///es igual al del absoluto
+     ///
+     histograma_acumulado_[0].countGreen_ = histograma_[0].countGreen_; ///el primer valor del acumulado
+     histograma_acumulado_[0].countBlue_ = histograma_[0].countBlue_; ///el primer valor del acumulado
+   }
+
   for (int i=1; i < 256;i++)
   {
-      if (isGray_)
+      if (isGray_)  
           histograma_acumulado_[i].countGray_ = histograma_acumulado_[i-1].countGray_ + histograma_[i].countGray_;
+
       else {
             histograma_acumulado_[i].countRed_ = histograma_acumulado_[i-1].countRed_ + histograma_[i].countRed_;
             histograma_acumulado_[i].countGreen_ = histograma_acumulado_[i-1].countGreen_ + histograma_[i].countGreen_;
@@ -300,7 +305,7 @@ void Image::calcular_brillo()
 void Image::calcular_contraste()
 {
   ///ya con el brillo calculado
-  float a,b;
+  double a,b;
   for (int i=0; i< 256;i++)
   {
       if (isGray_)
@@ -373,31 +378,33 @@ void Image::calcular_probabilidad_absoluto()
   for (int i=0; i < 256; i++)
   {
     if (isGray_)
-      histograma_[i].probabilidadGray_=histograma_[i].countGray_ / (width_*height_);
+        histograma_[i].probabilidadGray_=histograma_[i].countGray_ / (width_*height_);
+
     else {
         histograma_[i].probabilidadRed_=histograma_[i].countRed_ / (width_*height_);
         histograma_[i].probabilidadGreen_=histograma_[i].countGreen_ / (width_*height_);
         histograma_[i].probabilidadBlue_=histograma_[i].countBlue_ / (width_*height_);
       }
   }
+
 }
 
 void Image::calcular_probabilidad_acumulativo()
 {
-  for (int i=0; i < 256; i++)
-  {
-    if (isGray_)
-      histograma_[i].probabilidadGray_=histograma_[i].countGray_ / (width_*height_);
-    else {
-        histograma_[i].probabilidadRed_=histograma_[i].countRed_ / (width_*height_);
-        histograma_[i].probabilidadGreen_=histograma_[i].countGreen_ / (width_*height_);
-        histograma_[i].probabilidadBlue_=histograma_[i].countBlue_ / (width_*height_);
-      }
-  }
 
-  histograma_acumulado_[0] = histograma_[0]; ///el primer valor del acumulado
-  ///es igual al del absoluto
-  ///
+  if (isGray_)
+   histograma_acumulado_[0].probabilidadGray_ = histograma_[0].probabilidadGray_; ///el primer valor del acumulado
+   ///es igual al del absoluto
+   ///
+   else
+    {
+      histograma_acumulado_[0].probabilidadRed_ = histograma_[0].probabilidadRed_; ///el primer valor del acumulado
+      ///es igual al del absoluto
+      ///
+      histograma_acumulado_[0].probabilidadGreen_ = histograma_[0].probabilidadGreen_; ///el primer valor del acumulado
+      histograma_acumulado_[0].probabilidadBlue_ = histograma_[0].probabilidadBlue_; ///el primer valor del acumulado
+    }
+
   for (int i=1; i < 256;i++)
   {
       if (isGray_)
@@ -411,7 +418,69 @@ void Image::calcular_probabilidad_acumulativo()
 
 }
 
-void Image::brilloYContraste(float brilloNuevo, float contrasteNuevo)
+void Image::calcular_entropia()
+{
+  ///fórmula:
+  /// E= - sumatorio(0-255) p(i) * log2 P(i)
+  /// donde p es la probabilidad del histograma absoluto y P probabilidad del histograma acumulado.
+  double logaritmo,tmp;
+  entropia_=0;
+
+  for (int i=0; i < 256; i++)
+    {
+     if (isGray_)
+       {
+
+         if (histograma_[i].probabilidadGray_ > 0.0)
+           {
+             logaritmo = log2(histograma_[i].probabilidadGray_);
+             tmp = histograma_[i].probabilidadGray_ * logaritmo;
+              entropia_ = entropia_ + tmp;
+
+           }
+       }
+     else
+          entropia_=0; ///sinifica que no la he hecho. no se como sería para color
+
+
+    }
+  entropia_=entropia_ * (-1); ///tengo que cambiar el signo
+
+}
+
+void Image::funcionGamma(double value)
+{
+  QVector <int> Lut(256);
+  double tmp;
+  ///preparo la nueva LUT
+  for (int i=0;i < 256; i++)
+    {
+      tmp = i/255.0;
+      tmp = pow(tmp,value);
+      tmp = round(tmp *255);
+      if (tmp<0)
+           tmp= 0;
+      if (tmp>255)
+           tmp=255;
+
+       Lut[i]=(int)tmp;
+    }
+
+
+  for (int i=0; i < height_; i++)
+     for (int j=0; j < width_; j++)
+        if (format_ == QImage::Format_Indexed8)
+                    image_->setPixel(j,i,Lut[qRed(image_->pixel(j,i))]); ///solo un byte, ya la imagen se adecua con su LUT de grises
+         else
+          {
+            int tmp2 =Lut[qRed(image_->pixel(j,i))];
+           image_->setPixel(j,i,qRgb(tmp2,tmp2,tmp2)); ///En rgb, pongo los tres colores al mismo valor
+
+          }
+  updateImage();
+}
+
+void Image::brilloYContrasteGris(double brilloNuevoGris, double contrasteNuevoGris)
 {
   ///uso la fórmula de la recta para obtener una nueva LUT acorde a el nuevo
   /// brillo y contraste
@@ -419,19 +488,20 @@ void Image::brilloYContraste(float brilloNuevo, float contrasteNuevo)
   /// A= contraste nuevo / contraste actual
   /// B= Brillo nuevo - A * Brillo Actual
   ///
-  float A,B;
+  double A,B;
 
   if (isGray_)
     {
       ///formula para optener el coeficiente A      
-      A = contrasteNuevo / contraste_gray_;
-      B = brilloNuevo - (A*brillo_gray_);
-      qDebug() << contrasteNuevo << " " << contraste_gray_ << " " << brilloNuevo << " " << brillo_gray_;
-      qDebug() << A << " " << B;
+      A = contrasteNuevoGris / contraste_gray_;
+      B = brilloNuevoGris - (A*brillo_gray_);
+
       ///preparo la LUT
       QVector<int>  LUT(256);
-      float tmp;
-      pixels_out_of_range_ = 0;
+      double tmp;
+      pixelsGrayTo0=0;
+      pixelsGrayTo255=0;
+
 
        for (int i=0;i < 256; i++)
          {
@@ -439,13 +509,13 @@ void Image::brilloYContraste(float brilloNuevo, float contrasteNuevo)
            if (tmp < 0)
              {
              tmp = 0;
-             pixels_out_of_range_++;
+             pixelsGrayTo0++;
              }
 
            if (tmp > 255)
              {
              tmp = 255;
-             pixels_out_of_range_++; ///cuento los pixels que han tenido que ser adaptados por quedar fuera del rango [0-255]
+                 pixelsGrayTo255++;
              }
 
            LUT[i]=(int)round(tmp);
@@ -458,7 +528,15 @@ void Image::brilloYContraste(float brilloNuevo, float contrasteNuevo)
 
     for (int i=0; i < height_; i++)
        for (int j=0; j < width_; j++)
-           image_->setPixel(j,i,LUT[qRed(image_->pixel(j,i))]);
+          if (format_ == QImage::Format_Indexed8)
+                      image_->setPixel(j,i,LUT[qRed(image_->pixel(j,i))]); ///solo un byte, ya la imagen se adecua con su LUT de grises
+           else
+            {
+              int tmp =LUT[qRed(image_->pixel(j,i))];
+             image_->setPixel(j,i,qRgb(tmp,tmp,tmp)); ///En rgb, pongo los tres colores al mismo valor
+
+            }
+
 
 
     }
@@ -467,6 +545,113 @@ void Image::brilloYContraste(float brilloNuevo, float contrasteNuevo)
 
 }
 
+void Image::brilloYContrasteColor(double brilloNuevoRed, double contrasteNuevoRed,double brilloNuevoGreen, double contrasteNuevoGreen,double brilloNuevoBlue, double contrasteNuevoBlue)
+{
+  ///uso la fórmula de la recta para obtener una nueva LUT acorde a el nuevo
+  /// brillo y contraste
+  /// y= Ax + B
+  /// A= contraste nuevo / contraste actual
+  /// B= Brillo nuevo - A * Brillo Actual
+  ///
+  double aRed,aGreen,aBlue,bRed,bGreen,bBlue;
+  QVector<int>  LutRed(256);
+  QVector<int>  LutGreen(256);
+  QVector<int>  LutBlue(256);
+
+  double tmpRed,tmpGreen,tmpBlue;
+
+  if (!isGray_)
+    {
+      ///primero calculo el nuevo valor para el rojo
+      ///formula para optener el coeficiente A
+      aRed = contrasteNuevoRed / contraste_red_;
+      bRed = brilloNuevoRed - (aRed*brillo_red_);
+
+      aGreen = contrasteNuevoGreen / contraste_green_;
+      bGreen = brilloNuevoGreen - (aGreen*brillo_green_);
+
+      aBlue = contrasteNuevoBlue / contraste_blue_;
+      bBlue = brilloNuevoBlue - (aBlue*brillo_blue_);
+
+      ///preparo la LUT
+
+      pixelsRedTo0=0;
+      pixelsRedTo255=0;
+
+      pixelsGreenTo0=0;
+      pixelsGreenTo255=0;
+
+      pixelsBlueTo0=0;
+      pixelsBlueTo255=0;
+
+
+       for (int i=0;i < 256; i++)
+         {
+           tmpRed = (aRed * i) + bRed;
+           if (tmpRed < 0)
+             {
+             tmpRed = 0;
+             pixelsRedTo0++;
+             }
+
+           if (tmpRed > 255)
+             {
+             tmpRed = 255;
+                 pixelsRedTo255++;
+             }
+
+           tmpGreen = (aGreen * i) + bGreen;
+           if (tmpGreen < 0)
+             {
+             tmpGreen = 0;
+             pixelsGreenTo0++;
+             }
+
+           if (tmpGreen > 255)
+             {
+             tmpGreen = 255;
+                 pixelsGreenTo255++;
+             }
+
+           tmpBlue = (aBlue * i) + bBlue;
+           if (tmpBlue < 0)
+             {
+             tmpBlue = 0;
+             pixelsBlueTo0++;
+             }
+
+           if (tmpBlue > 255)
+             {
+             tmpBlue = 255;
+                 pixelsBlueTo255++;
+             }
+
+
+           LutRed[i]=(int)round(tmpRed);
+           LutGreen[i]=(int)round(tmpGreen);
+           LutBlue[i]=(int)round(tmpBlue);
+
+         }
+
+       ///ahora reasigno los puntos de la imagen en correspondencia con la nueva
+       /// LUT
+
+
+    for (int i=0; i < height_; i++)
+       for (int j=0; j < width_; j++)
+         {
+           QRgb valor = image_->pixel(j,i);
+           QRgb newValor = qRgb(LutRed[qRed(valor)],LutGreen[qGreen(valor)],LutBlue[qBlue(valor)]);
+           image_->setPixel(j,i,newValor);
+         }
+
+
+
+    }
+
+  updateImage();
+
+}
 bool Image::lutGray8bitsPrepare()
 {
 
@@ -538,31 +723,20 @@ void Image::setImage(QImage &imagen)
   updateImage();
 }
 
-QChartView *Image::toHistograma()
-{
-  QLineSeries *linesGray = new QLineSeries();
-
-  linesGray->setName("Tono de Gris");
-
-  for (int i=0; i < 256; i++)
-  {
-    if (isGray_)
-      linesGray->append(i,histograma_[i].countGray_);
-  }
-
+QChartView *Image::toHistograma(bool acumulativo)
+{  
   QChart * chart = new QChart();
-    if (isGray_)
-       chart->addSeries(linesGray);
 
-  chart->setTitle("Histograma Absoluto");
+  if (acumulativo)
+    chart->setTitle("Histograma Acumulativo");
+  else
+   chart->setTitle("Histograma Absoluto");
 
   QValueAxis * axisX =new QValueAxis();
   QValueAxis * axisY =new QValueAxis();
 
   axisX->setRange(0,255);
   axisX->setTickCount(7);
-  axisX->setTitleText(QString("Brillo : %1 | Contraste %2").arg(brillo_gray_).arg(contraste_gray_));
-
   axisY->setRange(0,width_*height_); ///ancho por alto es el máximo numero de pixeles que se podrán tener
   axisY->setTickCount(20);
   axisY->setTitleText("Cantidad de Pixels");
@@ -572,50 +746,64 @@ QChartView *Image::toHistograma()
   chart->legend()->setVisible(true);
   chart->legend()->setAlignment(Qt::AlignBottom);
 
+  if (isGray_)
+    {
+      QLineSeries *linesGray = new QLineSeries();
+      linesGray->setName("Tono de Gris");
+      linesGray->setColor(Qt::gray);
+
+        for (int i=0; i < 256; i++)
+          if (acumulativo)
+            linesGray->append(i,histograma_acumulado_[i].countGray_);
+          else
+            linesGray->append(i,histograma_[i].countGray_);
+
+     chart->addSeries(linesGray);
+     axisX->setTitleText(QString("Brillo : %1 | Contraste %2").arg(brillo_gray_).arg(contraste_gray_));
+    }
+  else
+        {
+          QLineSeries *linesRed = new QLineSeries();
+          QLineSeries *linesGreen = new QLineSeries();
+          QLineSeries *linesBlue = new QLineSeries();
+          linesRed->setName("Tono de Rojo");
+          linesRed->setColor(Qt::red);
+          linesGreen->setName("Tono de Verde");
+          linesGreen->setColor(Qt::green);
+          linesBlue->setColor(Qt::blue);
+          linesBlue->setName("Tono de Azul");
+
+          for (int i=0; i < 256; i++)
+            {
+              if (acumulativo)
+                {
+                linesRed->append(i,histograma_acumulado_[i].countRed_);
+                linesGreen->append(i,histograma_acumulado_[i].countGreen_);
+                linesBlue->append(i,histograma_acumulado_[i].countBlue_);
+                }
+
+
+              else {
+                    linesRed->append(i,histograma_[i].countRed_);
+                    linesGreen->append(i,histograma_[i].countGreen_);
+                    linesBlue->append(i,histograma_[i].countBlue_);
+                }
+            }
+
+          chart->addSeries(linesRed);
+          chart->addSeries(linesGreen);
+          chart->addSeries(linesBlue);
+          axisX->setTitleText(QString("Rojo: Brillo %1 y Contraste %2 | Verde: Brillo %3 y Contraste %4 | Azul: Brillo %5 y Contraste %6").arg(brillo_red_).arg(contraste_red_).arg(brillo_green_).arg(contraste_green_).arg(brillo_blue_).arg(contraste_blue_));
+
+       }
+
+
+
   QChartView * chartview = new QChartView(chart);
   chartview->setRenderHint(QPainter::Antialiasing);
 
   return chartview;
 
-}
-
-QChartView *Image::toHistogramaAcumulativo()
-{
-  QLineSeries *linesGray = new QLineSeries();
-
-  linesGray->setName("Tono de Gris");
-
-  for (int i=0; i < 256; i++)
-  {
-    if (isGray_)
-      linesGray->append(i,histograma_acumulado_[i].countGray_);
-  }
-
-  QChart * chart = new QChart();
-    if (isGray_)
-       chart->addSeries(linesGray);
-
-  chart->setTitle("Histograma Acumulativo");
-
-  QValueAxis * axisX =new QValueAxis();
-  QValueAxis * axisY =new QValueAxis();
-
-  axisX->setRange(0,255);
-  axisX->setTickCount(7);
-
-  axisY->setRange(0,width_*height_); ///ancho por alto es el máximo numero de pixeles que se podrán tener
-  axisY->setTickCount(20);
-  axisY->setTitleText("Cantidad de Pixels");
-  chart->addAxis(axisX,Qt::AlignBottom);
-  chart->addAxis(axisY, Qt::AlignLeft);
-
-  chart->legend()->setVisible(true);
-  chart->legend()->setAlignment(Qt::AlignBottom);
-
-  QChartView * chartview = new QChartView(chart);
-  chartview->setRenderHint(QPainter::Antialiasing);
-
-  return chartview;
 }
 
 

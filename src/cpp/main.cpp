@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
 
     w.setWindowIcon(QIcon(":/Recursos/Images/RMpixel ico 64x64.png"));
-    w.setWindowTitle("VPO: Mi FotoVisión");
+    w.setWindowTitle("VPO: Mi FotoVision");
     w.show();
     return a.exec();
 }

@@ -56,6 +56,7 @@
     </widget>
     <addaction name="menuEscala_de_Grises"/>
     <addaction name="actionBrilloyContraste"/>
+    <addaction name="actionGamma"/>
    </widget>
    <widget class="QMenu" name="menuInformaci_n">
     <property name="title">
@@ -63,6 +64,7 @@
     </property>
     <addaction name="actionHistograma_absoluto"/>
     <addaction name="actionHistograma_Acumulativo"/>
+    <addaction name="actionEntropia"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuInformaci_n"/>
@@ -133,6 +135,16 @@
   <action name="actionPAL">
    <property name="text">
     <string>8 bit PAL</string>
+   </property>
+  </action>
+  <action name="actionEntropia">
+   <property name="text">
+    <string>Entropía</string>
+   </property>
+  </action>
+  <action name="actionGamma">
+   <property name="text">
+    <string>Funcion Gamma</string>
    </property>
   </action>
  </widget>

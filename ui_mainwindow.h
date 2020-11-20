@@ -33,6 +33,8 @@ public:
     QAction *actionHistograma_Acumulativo;
     QAction *actionNTS;
     QAction *actionPAL;
+    QAction *actionEntropia;
+    QAction *actionGamma;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuArchivo;
@@ -68,6 +70,10 @@ public:
         actionNTS->setObjectName(QString::fromUtf8("actionNTS"));
         actionPAL = new QAction(MainWindow);
         actionPAL->setObjectName(QString::fromUtf8("actionPAL"));
+        actionEntropia = new QAction(MainWindow);
+        actionEntropia->setObjectName(QString::fromUtf8("actionEntropia"));
+        actionGamma = new QAction(MainWindow);
+        actionGamma->setObjectName(QString::fromUtf8("actionGamma"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -109,10 +115,12 @@ public:
         menuAyuda->addAction(actionAbout);
         menuEfectos->addAction(menuEscala_de_Grises->menuAction());
         menuEfectos->addAction(actionBrilloyContraste);
+        menuEfectos->addAction(actionGamma);
         menuEscala_de_Grises->addAction(actionNTS);
         menuEscala_de_Grises->addAction(actionPAL);
         menuInformaci_n->addAction(actionHistograma_absoluto);
         menuInformaci_n->addAction(actionHistograma_Acumulativo);
+        menuInformaci_n->addAction(actionEntropia);
 
         retranslateUi(MainWindow);
 
@@ -131,6 +139,8 @@ public:
         actionHistograma_Acumulativo->setText(QApplication::translate("MainWindow", "Histograma Acumulativo", nullptr));
         actionNTS->setText(QApplication::translate("MainWindow", "8 bit NTSC", nullptr));
         actionPAL->setText(QApplication::translate("MainWindow", "8 bit PAL", nullptr));
+        actionEntropia->setText(QApplication::translate("MainWindow", "Entrop\303\255a", nullptr));
+        actionGamma->setText(QApplication::translate("MainWindow", "Funcion Gamma", nullptr));
         menuArchivo->setTitle(QApplication::translate("MainWindow", "Archivo", nullptr));
         menuAyuda->setTitle(QApplication::translate("MainWindow", "Ayuda", nullptr));
         menuVentanas->setTitle(QApplication::translate("MainWindow", "Ventanas", nullptr));
