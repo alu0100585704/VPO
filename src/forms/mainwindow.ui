@@ -51,12 +51,22 @@
      <property name="title">
       <string>Escala de Grises</string>
      </property>
-     <addaction name="actionNTS"/>
-     <addaction name="actionPAL"/>
+     <addaction name="actionNTSC8Bits"/>
+     <addaction name="actionPAL8Bits"/>
+     <addaction name="actionRGB32_NTSC"/>
+     <addaction name="actionRGB32_PAL"/>
+    </widget>
+    <widget class="QMenu" name="menuHistograma">
+     <property name="title">
+      <string>Histograma</string>
+     </property>
+     <addaction name="actionEcualizar"/>
+     <addaction name="actionEspecificacion"/>
     </widget>
     <addaction name="menuEscala_de_Grises"/>
     <addaction name="actionBrilloyContraste"/>
     <addaction name="actionGamma"/>
+    <addaction name="menuHistograma"/>
    </widget>
    <widget class="QMenu" name="menuInformaci_n">
     <property name="title">
@@ -127,12 +137,12 @@
     <string>Histograma Acumulativo</string>
    </property>
   </action>
-  <action name="actionNTS">
+  <action name="actionNTSC8Bits">
    <property name="text">
     <string>8 bit NTSC</string>
    </property>
   </action>
-  <action name="actionPAL">
+  <action name="actionPAL8Bits">
    <property name="text">
     <string>8 bit PAL</string>
    </property>
@@ -145,6 +155,26 @@
   <action name="actionGamma">
    <property name="text">
     <string>Funcion Gamma</string>
+   </property>
+  </action>
+  <action name="actionEcualizar">
+   <property name="text">
+    <string>Ecualizar</string>
+   </property>
+  </action>
+  <action name="actionEspecificacion">
+   <property name="text">
+    <string>Especificación</string>
+   </property>
+  </action>
+  <action name="actionRGB32_NTSC">
+   <property name="text">
+    <string>RGB32 NTSC</string>
+   </property>
+  </action>
+  <action name="actionRGB32_PAL">
+   <property name="text">
+    <string>RGB32 PAL</string>
    </property>
   </action>
  </widget>

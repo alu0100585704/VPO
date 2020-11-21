@@ -37,13 +37,11 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void closeEvent(QCloseEvent *event);
-    //virtual bool event(QEvent *event);    
-    void show_images();
-    void grayScale(bool ntsc);
+    void closeEvent(QCloseEvent *event);     
 
     QString focus_; //nombre de la imagen que tiene le foco actualmente        
     QLabel statusPermanentMessage_,information_;
+
 private slots:
 
     void on_actionOpenFiles_triggered();
@@ -51,12 +49,6 @@ private slots:
     void on_actionExit_triggered();
 
     void on_actionSaveFile_triggered();
-
-
-
-    void on_actionNTS_triggered();
-
-    void on_actionPAL_triggered();
 
     void on_actionHistograma_absoluto_triggered();
 
@@ -69,7 +61,23 @@ private slots:
 
     void on_actionGamma_triggered();
 
+    void on_actionEcualizar_triggered();
+
+    void on_actionNTSC8Bits_triggered();
+
+    void on_actionPAL8Bits_triggered();
+
+    void on_actionRGB32_NTSC_triggered();
+
+    void on_actionRGB32_PAL_triggered();
+
 private:
+    Image * findImageAndNew(QString name, QString newTitle, bool toHistograma = false, bool tipoHistograma = false);
+    Image * findImage(QString name);
+    void grayScale(bool ntsc, bool ochobits);
+
+
+
     Ui::MainWindow *ui;
     QMap<QString, Image *> images_;
     BrilloYContraste * dialog_;

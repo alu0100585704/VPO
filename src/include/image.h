@@ -67,8 +67,10 @@ public:
   void funcionGamma(double value);
   void brilloYContrasteGris(double brilloNuevoGris, double contrasteNuevoGris);
   void brilloYContrasteColor(double brilloNuevoRed, double contrasteNuevoRed,double brilloNuevoGreen, double contrasteNuevoGreen,double brilloNuevoBlue, double contrasteNuevoBlue);
-  QImage * toGray8Bits(bool ntsc);
+  void  toGray(bool ntsc,bool ochobits);
+  void toEcualizer();
   QChartView * toHistograma(bool acumulativo);   ///true si quiero el acumulativo o false si quiero el absoluto
+
   QImage *getImage();
   void setImage(QImage &imagen);  
   Events * filterEvents_;

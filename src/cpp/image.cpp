@@ -194,6 +194,7 @@ void Image::updateImage()
   else
     isGray_ = image_->isGrayscale();
 
+  lutGray8bitsPrepare();
 
   calcular_histograma();
 
@@ -448,35 +449,105 @@ void Image::calcular_entropia()
 
 }
 
+///función Gamma
+///
+
+///
 void Image::funcionGamma(double value)
 {
-  QVector <int> Lut(256);
-  double tmp;
-  ///preparo la nueva LUT
-  for (int i=0;i < 256; i++)
+  ///Fórmula funciona Gamma utilizada
+  /// ((Vin/255)^gamma) * 255 = Vout
+  ///  Se hace con redondeo y rango entre 0 -255
+  ///
+  if (isGray_)
     {
-      tmp = i/255.0;
-      tmp = pow(tmp,value);
-      tmp = round(tmp *255);
-      if (tmp<0)
-           tmp= 0;
-      if (tmp>255)
-           tmp=255;
+      QVector <int> Lut(256);
+      double tmp;
+      ///preparo la nueva LUT
+      for (int i=0;i < 256; i++)
+        {
+          tmp = i/255.0;
+          tmp = pow(tmp,value);
+          tmp = round(tmp *255);
+          if (tmp<0)
+               tmp= 0;
+          if (tmp>255)
+               tmp=255;
 
-       Lut[i]=(int)tmp;
+           Lut[i]=(int)tmp;
+        }
+
+
+      for (int i=0; i < height_; i++)
+         for (int j=0; j < width_; j++)
+            if (format_ == QImage::Format_Indexed8)
+                        image_->setPixel(j,i,Lut[qRed(image_->pixel(j,i))]); ///solo un byte, ya la imagen se adecua con su LUT de grises
+             else
+              {
+                int tmp2 =Lut[qRed(image_->pixel(j,i))];
+               image_->setPixel(j,i,qRgb(tmp2,tmp2,tmp2)); ///En rgb, pongo los tres colores al mismo valor
+
+              }
+
+
     }
+  else {
+
+      QVector<int>  LutRed(256);
+      QVector<int>  LutGreen(256);
+      QVector<int>  LutBlue(256);
+
+      double tmpRed,tmpGreen,tmpBlue;
+
+      ///preparo la LUT
+
+       for (int i=0;i < 256; i++)
+         {
+           tmpRed = i/255.0;
+           tmpRed = pow(tmpRed,value);
+           tmpRed = round(tmpRed *255);
+           if (tmpRed<0)
+                tmpRed= 0;
+           if (tmpRed>255)
+                tmpRed=255;
 
 
-  for (int i=0; i < height_; i++)
-     for (int j=0; j < width_; j++)
-        if (format_ == QImage::Format_Indexed8)
-                    image_->setPixel(j,i,Lut[qRed(image_->pixel(j,i))]); ///solo un byte, ya la imagen se adecua con su LUT de grises
-         else
-          {
-            int tmp2 =Lut[qRed(image_->pixel(j,i))];
-           image_->setPixel(j,i,qRgb(tmp2,tmp2,tmp2)); ///En rgb, pongo los tres colores al mismo valor
+           tmpGreen = i/255.0;
+           tmpGreen = pow(tmpGreen,value);
+           tmpGreen = round(tmpGreen *255);
+           if (tmpGreen<0)
+                tmpGreen= 0;
+           if (tmpGreen>255)
+                tmpGreen=255;
 
-          }
+           tmpBlue = i/255.0;
+           tmpBlue = pow(tmpBlue,value);
+           tmpBlue = round(tmpBlue *255);
+           if (tmpBlue<0)
+                tmpBlue= 0;
+           if (tmpBlue>255)
+                tmpBlue=255;
+
+
+           LutRed[i]=(int)round(tmpRed);
+           LutGreen[i]=(int)round(tmpGreen);
+           LutBlue[i]=(int)round(tmpBlue);
+
+         }
+
+       ///ahora reasigno los puntos de la imagen en correspondencia con la nueva
+       /// LUT
+
+
+    for (int i=0; i < height_; i++)
+       for (int j=0; j < width_; j++)
+         {
+           QRgb valor = image_->pixel(j,i);
+           QRgb newValor = qRgb(LutRed[qRed(valor)],LutGreen[qGreen(valor)],LutBlue[qBlue(valor)]);
+           image_->setPixel(j,i,newValor);
+         }
+
+    }
   updateImage();
 }
 
@@ -665,47 +736,112 @@ return  true;
 }
 
 ///
-/// \brief Image::toGray8Bits
+/// \brief Image::toGray
 /// \param source
 /// \param target
 /// \param ntsc
 /// \return
 ///Debuelve un QImage con la imagen en formato 256 colores,8 bits y escala de grises
 /// El receptor será el encargado crear su delete
-///
-QImage * Image::toGray8Bits(bool ntsc)
+/// Convierte la imagen a escala de grises formato 8 bits
+void Image::toGray(bool ntsc,bool ochobits)
 {
-lutGray8bitsPrepare();
-  ///
-  QImage * ochobits =new QImage(width_,height_, QImage::Format_Indexed8);
-  ///
-  ///Asigno la LUT de grises a la imagen nueva
-  ochobits->setColorTable(lutGray8bits_);
-
+  ///Se puede convertir de color RGB a gris RGB o gris ocho bits. TAmbién de gris RGB a gris ocho bits o bien
+  /// de gris ocho bits a gris RGB.
+  double coeficienteRed,coeficienteGreen,coeficienteBlue;
+  QImage * target;
+  ///establezco coeficientes dependiendo ntsc o pal
   if (ntsc)
     {
-      //formato ntsc
-      for (int i=0; i < height_;i++) //
-        for (int j=0; j < width_;j++)
-          {
-            int gray = (qRed(image_->pixel(j,i)) * 0.299) + (qBlue(image_->pixel(j,i))*0.114) + (qGreen(image_->pixel(j,i))*0.587);
-            ochobits->setPixel(j,i,gray);
-
-          }
+      coeficienteRed = 0.299;
+      coeficienteGreen = 0.587;
+      coeficienteBlue = 0.114;
 
     }
   else {
-///formato pal
-      for (int i=0; i < height_;i++) //
-        for (int j=0; j < width_;j++)
-          {
-            int gray = (qRed(image_->pixel(j,i)) * 0.222) + (qBlue(image_->pixel(j,i))*0.071) + (qGreen(image_->pixel(j,i))*0.707);
-            ochobits->setPixel(j,i,gray);
 
-          }
+      coeficienteRed = 0.222;
+      coeficienteGreen = 0.707;
+      coeficienteBlue = 0.071;
+    }
 
-    }  
-  return ochobits;
+  if (ochobits)
+    {
+      target =new QImage(width_,height_, QImage::Format_Indexed8);
+      ///Asigno la LUT de grises a la imagen nueva
+      target->setColorTable(lutGray8bits_);
+    }
+  else
+      target = new QImage(width_,height_,QImage::Format_RGB32);
+      ///
+
+      ///
+    int tmpGray;
+
+          for (int i=0; i < height_;i++)
+            for (int j=0; j < width_;j++)
+              {
+                if ((format_ == QImage::Format_Indexed8) && (isGray_)) ///si es ocho bits gris
+                       tmpGray = qRed(image_->pixel(j,i)); ///con coger solo el primer byte es suficiente
+
+                else if (format_ != QImage::Format_Indexed8)
+                       tmpGray = (qRed(image_->pixel(j,i)) * coeficienteRed) + (qBlue(image_->pixel(j,i))*coeficienteBlue) + (qGreen(image_->pixel(j,i))*coeficienteGreen);
+
+
+                if (ochobits) ///si es ocho bits gris
+                      target->setPixel(j,i,tmpGray);
+                else
+                    target->setPixel(j,i,qRgb(tmpGray,tmpGray,tmpGray)); ///En rgb, pongo los tres colores al mismo valor
+
+              }
+          setImage(*target);
+          delete target;
+
+}
+///Función Ecualizacón. Caso específico de especificación de histograma
+///
+///
+void Image::toEcualizer()
+{
+  ///Fórmula
+  /// vout= max[0,round(m/255*Histograma acumulado(Vin) -1
+  ///
+ if (isGray_)
+    {
+      QVector <int> Lut(256);
+      double tmp;
+      ///preparo la nueva LUT
+      for (int i=0;i < 256; i++)
+        {
+          tmp = histograma_acumulado_[i].countGray_  / (width_*height_);
+          tmp = round(tmp *255);
+          tmp = tmp -1;
+
+          if (tmp<0)
+               tmp= 0;
+          if (tmp>255)
+               tmp=255;
+
+           Lut[i]=(int)tmp;
+        }
+
+
+      for (int i=0; i < height_; i++)
+         for (int j=0; j < width_; j++)
+            if (format_ == QImage::Format_Indexed8)
+                        image_->setPixel(j,i,Lut[qRed(image_->pixel(j,i))]); ///solo un byte, ya la imagen se adecua con su LUT de grises
+             else
+              {
+                int tmp2 =Lut[qRed(image_->pixel(j,i))];
+               image_->setPixel(j,i,qRgb(tmp2,tmp2,tmp2)); ///En rgb, pongo los tres colores al mismo valor
+
+              }
+
+
+    }
+
+
+  updateImage();
 }
 
 ///Devuelvo una copia de la imagen en formato QImage. El receptor se encargará

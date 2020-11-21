@@ -20,11 +20,11 @@ bool Events::eventFilter(QObject *watched, QEvent *event)
 
       if (parent_->isGray_)
         if (parent_->format_ == QImage::Format_Indexed8)
-          parent_->parent_->information_.setText(QString("%1 (x=%2,y=%3) | Imagen Gris 8 bits: %4 | %5 ").arg(parent_->title_).arg(x).arg(y).arg(qRed(parent_->image_->pixel(x,y))));
+          parent_->parent_->information_.setText(QString("%1 (x=%2,y=%3) | Imagen Gris 8 bits: %4 ").arg(parent_->title_).arg(x).arg(y).arg(qRed(parent_->image_->pixel(x,y))));
           else
-          parent_->parent_->information_.setText(QString("%1 (x=%2,%y=3) | Imagen RGB Gris: %4 | %5 ").arg(parent_->title_).arg(x).arg(y).arg(qRed(parent_->image_->pixel(x,y))));
+          parent_->parent_->information_.setText(QString("%1 (x=%2,y=3) | Imagen RGB Gris: R: %4, G: %5, B: %6 ").arg(parent_->title_).arg(x).arg(y).arg(qRed(parent_->image_->pixel(x,y))).arg(qGreen(parent_->image_->pixel(x,y))).arg(qBlue(parent_->image_->pixel(x,y))));
       else
-        parent_->parent_->information_.setText(QString("%1 (x=%2,y=%3) | Imagen Color R: %4, G: %5, B: %6 |").arg(parent_->title_).arg(x).arg(y).arg(qRed(parent_->image_->pixel(x,y))).arg(qGreen(parent_->image_->pixel(x,y))).arg(qBlue(parent_->image_->pixel(x,y))));
+        parent_->parent_->information_.setText(QString("%1 (x=%2,y=%3) | Imagen RGB Color R: %4, G: %5, B: %6 ").arg(parent_->title_).arg(x).arg(y).arg(qRed(parent_->image_->pixel(x,y))).arg(qGreen(parent_->image_->pixel(x,y))).arg(qBlue(parent_->image_->pixel(x,y))));
 
     return true;
 
