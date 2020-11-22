@@ -149,7 +149,7 @@
   </action>
   <action name="actionEntropia">
    <property name="text">
-    <string>Entropía</string>
+    <string>Entropía(Solo Gris)</string>
    </property>
   </action>
   <action name="actionGamma">
@@ -175,6 +175,11 @@
   <action name="actionRGB32_PAL">
    <property name="text">
     <string>RGB32 PAL</string>
+   </property>
+  </action>
+  <action name="actionLineal">
+   <property name="text">
+    <string>Lineal</string>
    </property>
   </action>
  </widget>

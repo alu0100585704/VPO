@@ -840,8 +840,186 @@ void Image::toEcualizer()
 
     }
 
+ else {
+     QVector<int>  LutRed(256);
+     QVector<int>  LutGreen(256);
+     QVector<int>  LutBlue(256);
 
-  updateImage();
+     double tmpRed,tmpGreen,tmpBlue;
+
+     ///preparo la LUT
+      for (int i=0;i < 256; i++)
+        {
+          tmpRed = histograma_acumulado_[i].countRed_  / (width_*height_);
+          tmpRed = round(tmpRed *255);
+          tmpRed = tmpRed -1;
+
+          if (tmpRed<0)
+               tmpRed= 0;
+          if (tmpRed>255)
+               tmpRed=255;
+
+
+          tmpGreen = histograma_acumulado_[i].countGreen_  / (width_*height_);
+          tmpGreen = round(tmpGreen *255);
+          tmpGreen = tmpGreen -1;
+
+          if (tmpGreen<0)
+               tmpGreen= 0;
+          if (tmpGreen>255)
+               tmpGreen=255;
+
+
+
+          tmpBlue = histograma_acumulado_[i].countBlue_  / (width_*height_);
+          tmpBlue = round(tmpBlue *255);
+          tmpBlue = tmpBlue -1;
+
+          if (tmpBlue<0)
+               tmpBlue= 0;
+          if (tmpBlue>255)
+               tmpBlue=255;
+
+          LutRed[i]=(int)tmpRed;
+          LutGreen[i]=(int)tmpGreen;
+          LutBlue[i]=(int)tmpBlue;
+        }
+
+      for (int i=0; i < height_; i++)
+         for (int j=0; j < width_; j++)
+               image_->setPixel(j,i,qRgb(LutRed[qRed(image_->pixel(j,i))],LutGreen[qGreen(image_->pixel(j,i))],LutBlue[qBlue(image_->pixel(j,i))])); ///En rgb, pongo los tres colores
+
+   }
+
+ updateImage();
+}
+///
+/// Especificación de histograma.
+/// \brief Image::toHistogramaEspecificado
+/// \param targetHistograma
+///
+void Image::toHistogramaEspecificado(Image *targetHistograma)
+{
+  ///Fórmula
+  /// vout= histogramaAcumulado_imagen_destino^-1[HistogramaAcumulado_imagen_origen(vin)]
+  ///Aquí trabajo con los histogramas normalizados para no depender y tener que controlar los tamaños
+  /// e la imagen.
+ if (isGray_)
+    {
+      QVector <int> Lut(256);
+      double tmp,a,b;
+      int j=0;
+      ///preparo la nueva LUT
+      for (int i=0;i < 256; i++)
+        {
+          tmp = histograma_acumulado_[i].probabilidadGray_;          
+          ///
+          ///busco su correspondiente en el histograma destino.
+          ///
+          j=0;
+          while (tmp > targetHistograma->histograma_acumulado_[j].probabilidadGray_)
+              j++;
+
+           a = tmp - targetHistograma->histograma_acumulado_[j-1].probabilidadGray_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
+           b = targetHistograma->histograma_acumulado_[j].probabilidadGray_ - tmp ;///resto al valor del pixel superior, el valor encontrado
+
+           ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca más al pixel, ya sea, el anterior o el posterior
+
+           if (a <= b )
+             Lut[i] = j-1; ///me quedo con el pixel con probabilidad justo anterior
+           if (a > b)
+             Lut[i] = j; ///lo convierto al pixel con probabilidad un poco superior.         
+        }
+
+
+      for (int i=0; i < height_; i++)
+         for (int j=0; j < width_; j++)
+            if (format_ == QImage::Format_Indexed8)
+                        image_->setPixel(j,i,Lut[qRed(image_->pixel(j,i))]); ///solo un byte, ya la imagen se adecua con su LUT de grises
+             else
+              {
+                int tmp2 =Lut[qRed(image_->pixel(j,i))];
+               image_->setPixel(j,i,qRgb(tmp2,tmp2,tmp2)); ///En rgb, pongo los tres colores al mismo valor
+
+              }
+
+    }
+
+ else {
+    QVector<int>  LutRed(256);
+     QVector<int>  LutGreen(256);
+     QVector<int>  LutBlue(256);
+
+     double tmpRed,tmpGreen,tmpBlue,a,b;
+     int j=0;
+     ///preparo la LUT
+      for (int i=0;i < 256; i++)
+        {
+          tmpRed = histograma_acumulado_[i].probabilidadRed_;
+          ///
+          ///busco su correspondiente en el histograma destino.
+          ///
+          j=0;
+          while (tmpRed > targetHistograma->histograma_acumulado_[j].probabilidadRed_)
+              j++;
+
+           a = tmpRed - targetHistograma->histograma_acumulado_[j-1].probabilidadRed_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
+           b = targetHistograma->histograma_acumulado_[j].probabilidadRed_ - tmpRed ;///resto al valor del pixel superior, el valor encontrado
+
+           ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca más al pixel, ya sea, el anterior o el posterior
+
+           if (a <= b )
+             LutRed[i] = j-1; ///me quedo con el pixel con probabilidad justo anterior
+           if (a > b)
+             LutRed[i] = j; ///lo convierto al pixel con probabilidad un poco superior.
+
+
+           tmpGreen = histograma_acumulado_[i].probabilidadGreen_;
+           ///
+           ///busco su correspondiente en el histograma destino.
+           ///
+           j=0;
+           while (tmpGreen > targetHistograma->histograma_acumulado_[j].probabilidadGreen_)
+               j++;
+
+            a = tmpGreen - targetHistograma->histograma_acumulado_[j-1].probabilidadGreen_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
+            b = targetHistograma->histograma_acumulado_[j].probabilidadGreen_ - tmpGreen ;///resto al valor del pixel superior, el valor encontrado
+
+            ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca más al pixel, ya sea, el anterior o el posterior
+
+            if (a <= b )
+              LutGreen[i] = j-1; ///me quedo con el pixel con probabilidad justo anterior
+            if (a > b)
+              LutGreen[i] = j; ///lo convierto al pixel con probabilidad un poco superior.
+
+            tmpBlue = histograma_acumulado_[i].probabilidadBlue_;
+            ///
+            ///busco su correspondiente en el histograma destino.
+            ///
+            j=0;
+            while (tmpBlue > targetHistograma->histograma_acumulado_[j].probabilidadBlue_)
+                j++;
+
+             a = tmpBlue - targetHistograma->histograma_acumulado_[j-1].probabilidadBlue_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
+             b = targetHistograma->histograma_acumulado_[j].probabilidadBlue_ - tmpBlue ;///resto al valor del pixel superior, el valor encontrado
+
+             ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca más al pixel, ya sea, el anterior o el posterior
+
+             if (a <= b )
+               LutBlue[i] = j-1; ///me quedo con el pixel con probabilidad justo anterior
+             if (a > b)
+               LutBlue[i] = j; ///lo convierto al pixel con probabilidad un poco superior.
+
+
+        }
+
+      for (int i=0; i < height_; i++)
+         for (int j=0; j < width_; j++)
+               image_->setPixel(j,i,qRgb(LutRed[qRed(image_->pixel(j,i))],LutGreen[qGreen(image_->pixel(j,i))],LutBlue[qBlue(image_->pixel(j,i))])); ///En rgb, pongo los tres colores
+
+   }
+
+ updateImage();
 }
 
 ///Devuelvo una copia de la imagen en formato QImage. El receptor se encargará

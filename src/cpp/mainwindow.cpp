@@ -276,3 +276,51 @@ void MainWindow::on_actionRGB32_PAL_triggered()
 }
 
 
+
+void MainWindow::on_actionEspecificacion_triggered()
+{
+  Image * borrador;
+
+  borrador= findImageAndNew(focus_,"Histograma Especificado");
+
+  if (borrador!= nullptr)
+    {
+      QDialog * dialogEspecificarHistograma = new QDialog(this);
+      QLabel * label = new QLabel(dialogEspecificarHistograma);
+      QComboBox * comboBoxTargetHistograma = new QComboBox(dialogEspecificarHistograma);
+      QPushButton * pushButtonApply = new QPushButton(dialogEspecificarHistograma);
+      QVBoxLayout * layout = new QVBoxLayout(dialogEspecificarHistograma);
+
+
+      QMap<QString, Image *>::iterator it = images_.begin();
+
+      while (it!=images_.end())
+        {
+          comboBoxTargetHistograma->addItem(it.key());
+          ++it;
+        }
+
+      pushButtonApply->setText("Aplicar");
+      label->setText("Selecciona una imagen desde las ya abiertas.\nEl Histograma Destino será el que tenga la imagen seleccionada.");
+      layout->addWidget(label);
+      layout->addWidget(comboBoxTargetHistograma);
+      layout->addWidget(pushButtonApply);
+
+
+      dialogEspecificarHistograma->setWindowTitle("Histograma Destino");
+
+
+      connect(pushButtonApply,(&QPushButton::clicked),[=](bool checked){
+
+          borrador->toHistogramaEspecificado(findImage(comboBoxTargetHistograma->currentText()));
+          dialogEspecificarHistograma->close();
+
+      });
+
+
+      dialogEspecificarHistograma->exec();
+
+
+    }
+
+}

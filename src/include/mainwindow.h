@@ -15,6 +15,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <qpushbutton.h>
+#include <qcombobox.h>
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -70,6 +71,8 @@ private slots:
     void on_actionRGB32_NTSC_triggered();
 
     void on_actionRGB32_PAL_triggered();
+
+    void on_actionEspecificacion_triggered();
 
 private:
     Image * findImageAndNew(QString name, QString newTitle, bool toHistograma = false, bool tipoHistograma = false);
