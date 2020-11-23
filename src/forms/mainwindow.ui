@@ -78,6 +78,8 @@
     <addaction name="actionHistograma_absoluto"/>
     <addaction name="actionHistograma_Acumulativo"/>
     <addaction name="actionEntropia"/>
+    <addaction name="separator"/>
+    <addaction name="actionInformacion"/>
    </widget>
    <addaction name="menuArchivo"/>
    <addaction name="menuInformaci_n"/>
@@ -98,11 +100,18 @@
    </attribute>
    <addaction name="actionOpenFiles"/>
    <addaction name="actionSaveFile"/>
+   <addaction name="actionGamma"/>
+   <addaction name="actionBrilloyContraste"/>
+   <addaction name="actionHistograma_absoluto"/>
+   <addaction name="actionHistograma_Acumulativo"/>
+   <addaction name="actionInformacion"/>
+   <addaction name="separator"/>
+   <addaction name="actionExit"/>
   </widget>
   <action name="actionOpenFiles">
    <property name="icon">
     <iconset resource="../qrc/recursos.qrc">
-     <normaloff>:/Recursos/iconos/abir.png</normaloff>:/Recursos/iconos/abir.png</iconset>
+     <normaloff>:/Recursos/iconos/open files.png</normaloff>:/Recursos/iconos/open files.png</iconset>
    </property>
    <property name="text">
     <string>Abrir</string>
@@ -117,7 +126,7 @@
   <action name="actionSaveFile">
    <property name="icon">
     <iconset resource="../qrc/recursos.qrc">
-     <normaloff>:/Recursos/iconos/save_file.png</normaloff>:/Recursos/iconos/save_file.png</iconset>
+     <normaloff>:/Recursos/iconos/save file.png</normaloff>:/Recursos/iconos/save file.png</iconset>
    </property>
    <property name="text">
     <string>Salvar</string>
@@ -127,6 +136,10 @@
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/cerrar.png</normaloff>:/Recursos/iconos/cerrar.png</iconset>
+   </property>
    <property name="text">
     <string>Salir</string>
    </property>
@@ -137,16 +150,28 @@
    </property>
   </action>
   <action name="actionBrilloyContraste">
+   <property name="icon">
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/brilloycontraste.png</normaloff>:/Recursos/iconos/brilloycontraste.png</iconset>
+   </property>
    <property name="text">
     <string>Brillo y Contraste</string>
    </property>
   </action>
   <action name="actionHistograma_absoluto">
+   <property name="icon">
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/histograma absoluto.png</normaloff>:/Recursos/iconos/histograma absoluto.png</iconset>
+   </property>
    <property name="text">
     <string>Histograma Absoluto</string>
    </property>
   </action>
   <action name="actionHistograma_Acumulativo">
+   <property name="icon">
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/histograma acumulado.png</normaloff>:/Recursos/iconos/histograma acumulado.png</iconset>
+   </property>
    <property name="text">
     <string>Histograma Acumulativo</string>
    </property>
@@ -167,8 +192,15 @@
    </property>
   </action>
   <action name="actionGamma">
+   <property name="icon">
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/gamma.png</normaloff>:/Recursos/iconos/gamma.png</iconset>
+   </property>
    <property name="text">
     <string>Funcion Gamma</string>
+   </property>
+   <property name="toolTip">
+    <string>Calcular Funcion Gamma</string>
    </property>
   </action>
   <action name="actionEcualizar">
@@ -194,6 +226,18 @@
   <action name="actionLineal">
    <property name="text">
     <string>Lineal</string>
+   </property>
+  </action>
+  <action name="actionInformacion">
+   <property name="icon">
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/information.png</normaloff>:/Recursos/iconos/information.png</iconset>
+   </property>
+   <property name="text">
+    <string>Información</string>
+   </property>
+   <property name="toolTip">
+    <string>Información sobre la imagen seleccionada</string>
    </property>
   </action>
  </widget>

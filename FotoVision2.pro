@@ -50,19 +50,19 @@ SOURCES += \
         src/cpp/main.cpp \
         src/cpp/mainwindow.cpp \
         src/cpp/image.cpp \
-    brilloycontraste.cpp \
-    events.cpp
+        src/cpp/brilloycontraste.cpp \
+        src/cpp/events.cpp
 
 HEADERS += \
         src/include/mainwindow.h \
     src/include/asmopencv.h \
     src/include/image.h \
-    brilloycontraste.h \
-    events.h
+    src/include/brilloycontraste.h \
+    src/include/events.h
 
 FORMS += \
         src/forms/mainwindow.ui \
-    brilloycontraste.ui
+        src/forms/brilloycontraste.ui
 
 
 RESOURCES += \

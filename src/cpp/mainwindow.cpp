@@ -365,3 +365,60 @@ qDebug() << name;
     }
 
 }
+
+void MainWindow::on_actionInformacion_triggered()
+{
+  Image *borrador;
+  borrador = findImage(focus_);
+
+  QString information;
+
+  information = "\nNombre Imagen : " + focus_;
+   if (borrador!=nullptr)
+     {
+       if (borrador->isGray_)
+       {
+
+           if (borrador->format_==QImage::Format_Indexed8)
+            information = information + "\nImagen Gris de 8 Bits";
+          else
+          information = information + "\nImagen Gris RGB de 32 Bits";
+
+           information =information + "\nValor inferior de Gris: " + QString::number(borrador->grayValueMin_) + "\nValor superior de Gris: " + QString::number(borrador->grayValueMax_);
+           information = information + "\nBrillo: " + QString::number(borrador->brillo_gray_);
+           information = information + "\nContraste: " + QString::number(borrador->contraste_gray_);
+
+        }
+       else
+          {
+          information = information + "\nImagen Color RGB de 32 Bits";
+
+          information =information + "\n\nValor inferior de Rojo: " + QString::number(borrador->redValueMin_) + "\nValor superior de Rojo: " + QString::number(borrador->redValueMax_);
+          information = information + "\nBrillo Tono Rojo: " + QString::number(borrador->brillo_red_);
+          information = information + "\nContraste Tono Rojo: " + QString::number(borrador->contraste_red_);
+
+          information =information + "\n\nValor inferior de Verde: " + QString::number(borrador->greenValueMin_) + "\nValor superior de Verde " + QString::number(borrador->greenValueMax_);
+          information = information + "\nBrillo Tono Verde: " + QString::number(borrador->brillo_green_);
+          information = information + "\nContraste Tono Verde: " + QString::number(borrador->contraste_green_);
+
+
+          information =information + "\n\nValor inferior de Azul: " + QString::number(borrador->blueValueMin_) + "\nValor superior de Azul: " + QString::number(borrador->blueValueMax_);
+          information = information + "\nBrillo Tono Azul: " + QString::number(borrador->brillo_blue_);
+          information = information + "\nContraste Tono Azul: " + QString::number(borrador->contraste_blue_);
+
+
+          }
+
+       information = information + "\nValor entropía: " + QString::number(borrador->entropia_);
+       information = information + "\nAncho: " + QString::number(borrador->width_) + " pixels";
+       information = information + "\nAlto: " + QString::number(borrador->height_) + " pixels";
+       information = information + "\nTotal de Pixels: " + QString::number(borrador->height_ * borrador->width_) + " pixels";
+
+
+
+       QMessageBox::information(this,"Información",information);
+     }
+
+
+}
+

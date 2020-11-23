@@ -6,8 +6,16 @@
         <file>Recursos/Images/RMpixel.ico</file>
         <file>Recursos/Images/RMpixel.jpg</file>
         <file>Recursos/Images/bogart2.bmp</file>
-        <file>Recursos/iconos/abir.png</file>
         <file>Recursos/iconos/open-file.png</file>
         <file>Recursos/iconos/save_file.png</file>
+        <file>Recursos/iconos/information.png</file>
+        <file>Recursos/iconos/open files.png</file>
+        <file>Recursos/iconos/save file.png</file>
+        <file>Recursos/iconos/brilloycontraste.png</file>
+        <file>Recursos/iconos/gamma.png</file>
+        <file>Recursos/iconos/grises.png</file>
+        <file>Recursos/iconos/histograma absoluto.png</file>
+        <file>Recursos/iconos/histograma acumulado.png</file>
+        <file>Recursos/iconos/cerrar.png</file>
     </qresource>
 </RCC>

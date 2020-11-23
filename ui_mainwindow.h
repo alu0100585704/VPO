@@ -40,6 +40,7 @@ public:
     QAction *actionRGB32_NTSC;
     QAction *actionRGB32_PAL;
     QAction *actionLineal;
+    QAction *actionInformacion;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuArchivo;
@@ -61,24 +62,36 @@ public:
         actionOpenFiles = new QAction(MainWindow);
         actionOpenFiles->setObjectName(QString::fromUtf8("actionOpenFiles"));
         QIcon icon;
-        icon.addFile(QString::fromUtf8(":/Recursos/iconos/abir.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/Recursos/iconos/open files.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionOpenFiles->setIcon(icon);
         actionOpenFiles->setIconVisibleInMenu(true);
         actionSaveFile = new QAction(MainWindow);
         actionSaveFile->setObjectName(QString::fromUtf8("actionSaveFile"));
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8(":/Recursos/iconos/save_file.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8(":/Recursos/iconos/save file.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionSaveFile->setIcon(icon1);
         actionExit = new QAction(MainWindow);
         actionExit->setObjectName(QString::fromUtf8("actionExit"));
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/Recursos/iconos/cerrar.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionExit->setIcon(icon2);
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
         actionBrilloyContraste = new QAction(MainWindow);
         actionBrilloyContraste->setObjectName(QString::fromUtf8("actionBrilloyContraste"));
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/Recursos/iconos/brilloycontraste.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionBrilloyContraste->setIcon(icon3);
         actionHistograma_absoluto = new QAction(MainWindow);
         actionHistograma_absoluto->setObjectName(QString::fromUtf8("actionHistograma_absoluto"));
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/Recursos/iconos/histograma absoluto.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionHistograma_absoluto->setIcon(icon4);
         actionHistograma_Acumulativo = new QAction(MainWindow);
         actionHistograma_Acumulativo->setObjectName(QString::fromUtf8("actionHistograma_Acumulativo"));
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8(":/Recursos/iconos/histograma acumulado.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionHistograma_Acumulativo->setIcon(icon5);
         actionNTSC8Bits = new QAction(MainWindow);
         actionNTSC8Bits->setObjectName(QString::fromUtf8("actionNTSC8Bits"));
         actionPAL8Bits = new QAction(MainWindow);
@@ -87,6 +100,9 @@ public:
         actionEntropia->setObjectName(QString::fromUtf8("actionEntropia"));
         actionGamma = new QAction(MainWindow);
         actionGamma->setObjectName(QString::fromUtf8("actionGamma"));
+        QIcon icon6;
+        icon6.addFile(QString::fromUtf8(":/Recursos/iconos/gamma.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionGamma->setIcon(icon6);
         actionEcualizar = new QAction(MainWindow);
         actionEcualizar->setObjectName(QString::fromUtf8("actionEcualizar"));
         actionEspecificacion = new QAction(MainWindow);
@@ -97,6 +113,11 @@ public:
         actionRGB32_PAL->setObjectName(QString::fromUtf8("actionRGB32_PAL"));
         actionLineal = new QAction(MainWindow);
         actionLineal->setObjectName(QString::fromUtf8("actionLineal"));
+        actionInformacion = new QAction(MainWindow);
+        actionInformacion->setObjectName(QString::fromUtf8("actionInformacion"));
+        QIcon icon7;
+        icon7.addFile(QString::fromUtf8(":/Recursos/iconos/information.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionInformacion->setIcon(icon7);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -148,8 +169,17 @@ public:
         menuInformaci_n->addAction(actionHistograma_absoluto);
         menuInformaci_n->addAction(actionHistograma_Acumulativo);
         menuInformaci_n->addAction(actionEntropia);
+        menuInformaci_n->addSeparator();
+        menuInformaci_n->addAction(actionInformacion);
         toolBar->addAction(actionOpenFiles);
         toolBar->addAction(actionSaveFile);
+        toolBar->addAction(actionGamma);
+        toolBar->addAction(actionBrilloyContraste);
+        toolBar->addAction(actionHistograma_absoluto);
+        toolBar->addAction(actionHistograma_Acumulativo);
+        toolBar->addAction(actionInformacion);
+        toolBar->addSeparator();
+        toolBar->addAction(actionExit);
 
         retranslateUi(MainWindow);
 
@@ -176,11 +206,18 @@ public:
         actionPAL8Bits->setText(QApplication::translate("MainWindow", "8 bit PAL", nullptr));
         actionEntropia->setText(QApplication::translate("MainWindow", "Entrop\303\255a(Solo Gris)", nullptr));
         actionGamma->setText(QApplication::translate("MainWindow", "Funcion Gamma", nullptr));
+#ifndef QT_NO_TOOLTIP
+        actionGamma->setToolTip(QApplication::translate("MainWindow", "Calcular Funcion Gamma", nullptr));
+#endif // QT_NO_TOOLTIP
         actionEcualizar->setText(QApplication::translate("MainWindow", "Ecualizar", nullptr));
         actionEspecificacion->setText(QApplication::translate("MainWindow", "Especificaci\303\263n", nullptr));
         actionRGB32_NTSC->setText(QApplication::translate("MainWindow", "RGB32 NTSC", nullptr));
         actionRGB32_PAL->setText(QApplication::translate("MainWindow", "RGB32 PAL", nullptr));
         actionLineal->setText(QApplication::translate("MainWindow", "Lineal", nullptr));
+        actionInformacion->setText(QApplication::translate("MainWindow", "Informaci\303\263n", nullptr));
+#ifndef QT_NO_TOOLTIP
+        actionInformacion->setToolTip(QApplication::translate("MainWindow", "Informaci\303\263n sobre la imagen seleccionada", nullptr));
+#endif // QT_NO_TOOLTIP
         menuArchivo->setTitle(QApplication::translate("MainWindow", "Archivo", nullptr));
         menuAyuda->setTitle(QApplication::translate("MainWindow", "Ayuda", nullptr));
         menuVentanas->setTitle(QApplication::translate("MainWindow", "Ventanas", nullptr));

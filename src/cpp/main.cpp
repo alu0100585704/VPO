@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QCoreApplication>
-
+#include <QTextCodec>
 int main(int argc, char *argv[])
 {
 
@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     MainWindow w;
 
 
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8") );
     w.setWindowIcon(QIcon(":/Recursos/Images/RMpixel ico 64x64.png"));
     w.setWindowTitle("VPO: Mi FotoVision");
     w.show();

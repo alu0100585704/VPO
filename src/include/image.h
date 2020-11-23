@@ -117,6 +117,8 @@ public:
    int pixelsGreenTo0, pixelsGreenTo255;
    int pixelsBlueTo0, pixelsBlueTo255;
 
+   int redValueMax_,redValueMin_,greenValueMax_,greenValueMin_,blueValueMax_,blueValueMin_,grayValueMax_,grayValueMin_; ///almacena los valores máximos y mínimos de cada color Se averigua durante la creación del histograma.
+
 };
 
 #endif // IMAGE_H

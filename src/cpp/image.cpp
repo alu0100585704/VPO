@@ -221,6 +221,16 @@ void Image::calcular_histograma()
 
   histograma_.clear();
   histograma_.resize(256);
+  redValueMax_=0;
+  redValueMin_=255;
+  blueValueMax_=0;
+  blueValueMin_=255;
+  greenValueMax_=0;
+  greenValueMin_=255;
+  grayValueMax_=0;
+  grayValueMin_=255;
+
+
 
 
  for (int i=0; i < image_->height();i++)
@@ -229,12 +239,40 @@ void Image::calcular_histograma()
         QRgb valor = image_->pixel(j,i);
 
         if (isGray_)
+          {
+            ///actualizo los valores de pixel máximo y mínimos.
+            if (qRed(valor)> grayValueMax_)
+                grayValueMax_=qRed(valor);
+
+            if (qRed(valor)< grayValueMin_)
+                grayValueMin_=qRed(valor);
+
             histograma_[qRed(valor)].countGray_++;
+          }
         else {
             ///entonces tengo que actualizar los tres colores
             histograma_[qRed(valor)].countRed_++;
             histograma_[qGreen(valor)].countGreen_++;
             histograma_[qBlue(valor)].countBlue_++;
+
+            if (qRed(valor)> redValueMax_)
+                redValueMax_=qRed(valor);
+
+            if (qRed(valor)< redValueMin_)
+                redValueMin_=qRed(valor);
+
+            if (qGreen(valor)> greenValueMax_)
+                greenValueMax_=qGreen(valor);
+
+            if (qGreen(valor)< greenValueMin_)
+                greenValueMin_=qGreen(valor);
+
+            if (qBlue(valor)> blueValueMax_)
+                blueValueMax_=qBlue(valor);
+
+            if (qBlue(valor)< blueValueMin_)
+                blueValueMin_=qBlue(valor);
+
           }
 
      }

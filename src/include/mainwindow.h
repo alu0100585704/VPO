@@ -74,6 +74,8 @@ private slots:
 
     void on_actionEspecificacion_triggered();
 
+    void on_actionInformacion_triggered();
+
 private:
     Image * findImageAndNew(QString name, QString newTitle, bool toHistograma = false, bool tipoHistograma = false);
     Image * findImage(QString name);
