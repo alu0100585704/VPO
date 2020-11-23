@@ -6,5 +6,8 @@
         <file>Recursos/Images/RMpixel.ico</file>
         <file>Recursos/Images/RMpixel.jpg</file>
         <file>Recursos/Images/bogart2.bmp</file>
+        <file>Recursos/iconos/abir.png</file>
+        <file>Recursos/iconos/open-file.png</file>
+        <file>Recursos/iconos/save_file.png</file>
     </qresource>
 </RCC>

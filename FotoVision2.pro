@@ -96,3 +96,6 @@ unix:!macx: LIBS += $$PWD/libs/ubuntux64/opencv412/so/libopencv_features2d.so.4.
 unix:!macx: LIBS += $$PWD/libs/ubuntux64/opencv412/so/libopencv_calib3d.so.4.1
 unix:!macx: LIBS += $$PWD/libs/ubuntux64/opencv412/so/libopencv_videoio.so.4.1
 
+DISTFILES += \
+    ../../Users/Juan Siverio.ULL/Downloads/open-file.png
+

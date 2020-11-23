@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>958</width>
+    <width>930</width>
     <height>696</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonIconOnly</enum>
   </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
@@ -19,7 +22,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>958</width>
+     <width>930</width>
      <height>21</height>
     </rect>
    </property>
@@ -82,14 +85,7 @@
    <addaction name="menuVentanas"/>
    <addaction name="menuAyuda"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
@@ -100,16 +96,34 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionOpenFiles"/>
+   <addaction name="actionSaveFile"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpenFiles">
+   <property name="icon">
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/abir.png</normaloff>:/Recursos/iconos/abir.png</iconset>
+   </property>
    <property name="text">
     <string>Abrir</string>
    </property>
+   <property name="toolTip">
+    <string>Cargar Imagen</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="actionSaveFile">
+   <property name="icon">
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/save_file.png</normaloff>:/Recursos/iconos/save_file.png</iconset>
+   </property>
    <property name="text">
     <string>Salvar</string>
+   </property>
+   <property name="toolTip">
+    <string>Guardar imagen en fichero</string>
    </property>
   </action>
   <action name="actionExit">
@@ -184,6 +198,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../qrc/recursos.qrc"/>
+ </resources>
  <connections/>
 </ui>

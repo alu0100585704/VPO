@@ -49,19 +49,26 @@ public:
     QMenu *menuEscala_de_Grises;
     QMenu *menuHistograma;
     QMenu *menuInformaci_n;
-    QToolBar *mainToolBar;
-    QToolBar *toolBar;
     QStatusBar *statusBar;
+    QToolBar *toolBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(958, 696);
+        MainWindow->resize(930, 696);
+        MainWindow->setToolButtonStyle(Qt::ToolButtonIconOnly);
         actionOpenFiles = new QAction(MainWindow);
         actionOpenFiles->setObjectName(QString::fromUtf8("actionOpenFiles"));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/Recursos/iconos/abir.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionOpenFiles->setIcon(icon);
+        actionOpenFiles->setIconVisibleInMenu(true);
         actionSaveFile = new QAction(MainWindow);
         actionSaveFile->setObjectName(QString::fromUtf8("actionSaveFile"));
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/Recursos/iconos/save_file.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionSaveFile->setIcon(icon1);
         actionExit = new QAction(MainWindow);
         actionExit->setObjectName(QString::fromUtf8("actionExit"));
         actionAbout = new QAction(MainWindow);
@@ -95,7 +102,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 958, 21));
+        menuBar->setGeometry(QRect(0, 0, 930, 21));
         menuArchivo = new QMenu(menuBar);
         menuArchivo->setObjectName(QString::fromUtf8("menuArchivo"));
         menuAyuda = new QMenu(menuBar);
@@ -111,15 +118,12 @@ public:
         menuInformaci_n = new QMenu(menuBar);
         menuInformaci_n->setObjectName(QString::fromUtf8("menuInformaci_n"));
         MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        toolBar = new QToolBar(MainWindow);
-        toolBar->setObjectName(QString::fromUtf8("toolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
+        toolBar = new QToolBar(MainWindow);
+        toolBar->setObjectName(QString::fromUtf8("toolBar"));
+        MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
 
         menuBar->addAction(menuArchivo->menuAction());
         menuBar->addAction(menuInformaci_n->menuAction());
@@ -144,6 +148,8 @@ public:
         menuInformaci_n->addAction(actionHistograma_absoluto);
         menuInformaci_n->addAction(actionHistograma_Acumulativo);
         menuInformaci_n->addAction(actionEntropia);
+        toolBar->addAction(actionOpenFiles);
+        toolBar->addAction(actionSaveFile);
 
         retranslateUi(MainWindow);
 
@@ -154,7 +160,13 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         actionOpenFiles->setText(QApplication::translate("MainWindow", "Abrir", nullptr));
+#ifndef QT_NO_TOOLTIP
+        actionOpenFiles->setToolTip(QApplication::translate("MainWindow", "Cargar Imagen", nullptr));
+#endif // QT_NO_TOOLTIP
         actionSaveFile->setText(QApplication::translate("MainWindow", "Salvar", nullptr));
+#ifndef QT_NO_TOOLTIP
+        actionSaveFile->setToolTip(QApplication::translate("MainWindow", "Guardar imagen en fichero", nullptr));
+#endif // QT_NO_TOOLTIP
         actionExit->setText(QApplication::translate("MainWindow", "Salir", nullptr));
         actionAbout->setText(QApplication::translate("MainWindow", "Acerca de . . .", nullptr));
         actionBrilloyContraste->setText(QApplication::translate("MainWindow", "Brillo y Contraste", nullptr));
