@@ -78,7 +78,7 @@ private:
     Image * findImageAndNew(QString name, QString newTitle, bool toHistograma = false, bool tipoHistograma = false);
     Image * findImage(QString name);
     void grayScale(bool ntsc, bool ochobits);
-
+    void deleteImage(QString name);
 
 
     Ui::MainWindow *ui;

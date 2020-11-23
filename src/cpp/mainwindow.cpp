@@ -296,9 +296,13 @@ void MainWindow::on_actionEspecificacion_triggered()
 
       while (it!=images_.end())
         {
-          comboBoxTargetHistograma->addItem(it.key());
+          if ((it.key()!=focus_) && (!it.key().contains("histograma",Qt::CaseInsensitive))) ///agrego al combo solo las imágenes que no sean esta misma y que no sean histogramas
+              comboBoxTargetHistograma->addItem(it.key());
           ++it;
         }
+
+      if (comboBoxTargetHistograma->count()!=0)
+      {
 
       pushButtonApply->setText("Aplicar");
       label->setText("Selecciona una imagen desde las ya abiertas.\nEl Histograma Destino será el que tenga la imagen seleccionada.");
@@ -321,6 +325,43 @@ void MainWindow::on_actionEspecificacion_triggered()
       dialogEspecificarHistograma->exec();
 
 
+      }
+      else
+      {
+        QMessageBox::warning(nullptr,"AtenciÃ³n:Falta imagen destino","Debe abrir por lo menos otra imagen de la que obtener su histograma");
+        deleteImage(focus_ + "_Histograma Especificado");
+      }
+
+    }
+
+}
+/// Elimino del vector de imágenes la imagen indicada o todas si name está vacío
+/// \brief MainWindow::deleteImage
+/// \param name
+///
+void MainWindow::deleteImage(QString name)
+{
+   QMap<QString, Image *>::iterator it = images_.begin();
+  Image *  imagen = nullptr;
+
+qDebug() << name;
+
+  while (it!=images_.end())
+    {
+      if (name.isEmpty())
+          {
+            delete it.value();
+            images_.erase(it);
+
+          }
+      else  if (it.key()==name)
+      {
+
+              delete it.value();
+              images_.erase(it);
+
+      }
+      ++it;
     }
 
 }
