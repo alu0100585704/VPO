@@ -804,7 +804,8 @@ void Image::toGray(bool ntsc,bool ochobits)
 void Image::toEcualizer()
 {
   ///Fórmula
-  /// vout= max[0,round(m/255*Histograma acumulado(Vin) -1
+  /// m=2^8
+  /// vout= max[0,round((m/size)*Histograma acumulado(Vin) -1
   ///
  if (isGray_)
     {
@@ -814,7 +815,7 @@ void Image::toEcualizer()
       for (int i=0;i < 256; i++)
         {
           tmp = histograma_acumulado_[i].countGray_  / (width_*height_);
-          tmp = round(tmp *255);
+          tmp = round(tmp *256);
           tmp = tmp -1;
 
           if (tmp<0)
@@ -851,7 +852,7 @@ void Image::toEcualizer()
       for (int i=0;i < 256; i++)
         {
           tmpRed = histograma_acumulado_[i].countRed_  / (width_*height_);
-          tmpRed = round(tmpRed *255);
+          tmpRed = round(tmpRed *256);
           tmpRed = tmpRed -1;
 
           if (tmpRed<0)
@@ -861,7 +862,7 @@ void Image::toEcualizer()
 
 
           tmpGreen = histograma_acumulado_[i].countGreen_  / (width_*height_);
-          tmpGreen = round(tmpGreen *255);
+          tmpGreen = round(tmpGreen *256);
           tmpGreen = tmpGreen -1;
 
           if (tmpGreen<0)
@@ -872,7 +873,7 @@ void Image::toEcualizer()
 
 
           tmpBlue = histograma_acumulado_[i].countBlue_  / (width_*height_);
-          tmpBlue = round(tmpBlue *255);
+          tmpBlue = round(tmpBlue *256);
           tmpBlue = tmpBlue -1;
 
           if (tmpBlue<0)
