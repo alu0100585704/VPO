@@ -17,5 +17,8 @@
         <file>Recursos/iconos/histograma absoluto.png</file>
         <file>Recursos/iconos/histograma acumulado.png</file>
         <file>Recursos/iconos/cerrar.png</file>
+        <file>Recursos/iconos/diferencia de imagenes.png</file>
+        <file>Recursos/iconos/mapa de cambios.png</file>
+        <file>Recursos/iconos/transformacion_lineal_tramos.png</file>
     </qresource>
 </RCC>

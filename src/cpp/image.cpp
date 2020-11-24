@@ -72,9 +72,29 @@ Image::Image(QString title, QChartView *image, MainWindow *parent):
 
 }
 
+void Image::setButtonTitleBar()
+{
+  QWidget * barNew = new QWidget();
+  QLabel *label = new QLabel(this);
+  QLabel *label2 = new QLabel(this);
+  QHBoxLayout * layout = new QHBoxLayout(this);
+  barNew->setLayout(layout);
+  layout->addWidget(label);
+  layout->addWidget(label2);
+  QPushButton * button = new QPushButton();
+  layout->addWidget(button);
+  label->setText("hola");
+  label2->setText("adios");
+
+  QIcon icon = button->style()->standardIcon(QStyle::SP_TitleBarMaxButton, 0,button);
+  button->setIcon( icon );
+  setTitleBarWidget(barNew);
+
+}
 bool Image::prepare()
 {
-
+  ///setButtonTitleBar(); ///configuro barra de titulos nueva.
+  ///
   label_= new QLabel(this);
   pixmapImage_= new QPixmap();
   scrollArea_=new QScrollArea(this);
@@ -86,10 +106,6 @@ bool Image::prepare()
   label_->setMouseTracking(true);
   label_->installEventFilter(filterEvents_);
 
-
-  //scrollArea_->setMouseTracking(true);
-  //scrollAreaWidgetContents_->setMouseTracking(true);
-  //dockWidgetContents_->setMouseTracking(true);
 
   ///Preparo Dock widget acoplado pero con posibilidad de ser flotante
   /// Lo hago dentro de un QLabel que a la vez está dentro de un QScroolArea
@@ -1151,6 +1167,146 @@ void Image::toHistogramaEspecificado(Image *targetHistograma)
    }
 
  updateImage();
+}
+///Pinto de color rojo los pixeles  de la imagen que difieren en base a un umbral especificado de otra imagen
+/// \brief Image::toMapChange
+/// \param imagen
+///
+bool Image::toMapChange(Image *imagen)
+{
+  QImage * borradorOriginal  = getImage();  ///hago una copia de la imagen original
+  QImage * borradorDiferencia = nullptr;
+
+  if (toDifference(imagen))  ///si se pudo realizar la diferencia
+       borradorDiferencia = getImage();  ///hago una copia de la imagen ya restada. Imagen diferencia
+  else
+    {
+      delete borradorOriginal;
+       return false;
+    }
+
+
+      QDialog *dialog = new QDialog(this);
+      QSpinBox * spin = new QSpinBox(dialog);
+      QLabel *  label = new QLabel(dialog);
+      QVBoxLayout * layout = new QVBoxLayout(dialog);
+
+      dialog->setWindowTitle("Valor Umbral");
+      label->setText("Indique el valor umbral a considerar para el mapa de cambios");
+      layout->addWidget(label);
+      layout->addWidget(spin);
+      dialog->setLayout(layout);
+      spin->setMinimum(0);
+      spin->setMaximum(255);
+      spin->setValue(255);
+
+
+      QChartView * histograma = toHistograma(false);
+       ///muestro el histograma absoluto de la imagen diferencia. Para que el usuario pueda decidir mejor el  umbrarl a especificar
+      histograma->setMinimumHeight(250);
+      histograma->setMinimumWidth(250);
+      layout->addWidget(histograma);
+      setImage(*borradorOriginal); ///vuelvo  a establecer la imagen original, puesto que la diferencia me modificó el objecto. Ya la imagen diferencia la tengo guardada en borradorDiferencia
+      indicarCambios(255,borradorDiferencia); ///primero muestro la imagen sin cambios, o sea, con umbral máximo.
+
+
+
+
+      dialog->show();
+      histograma->show();
+
+      connect(spin,QOverload<int>::of(&QSpinBox::valueChanged),[=](int d){
+
+          setImage(*borradorOriginal);
+          ///
+          indicarCambios(spin->value(),borradorDiferencia); ///función privada que pinta en rojo los pixeles en base al umbral seleccionado
+
+      });
+
+
+      connect(dialog,(&QDialog::finished),[=](int result){
+
+        delete borradorOriginal;
+        delete borradorDiferencia;
+        delete histograma;
+
+      });
+
+
+
+}
+///
+/// \brief Image::indicarCambios
+/// \param value
+///
+void Image::indicarCambios(int value, QImage * diferencia)
+{
+
+  for (int i=0; i < height_; i++)
+      for (int j=0; j < width_; j++)
+        {
+          if (isGray_)
+
+            if (format_ == QImage::Format_Indexed8)
+               {
+                 if (qRed(diferencia->pixel(j,i)) >= value)
+                      image_->setPixel(j,i,255); ///pongo a blanco, si es diferente
+               }
+
+            else
+              {
+                if (qRed(diferencia->pixel(j,i)) >= value)
+                    image_->setPixel(j,i,qRgb(255,0,0)); ///En rgb,pongo en rojo las diferencias
+
+              }
+          else {
+              ///imagen a color
+              ///
+            }
+
+        }
+updateImage();
+}
+
+
+
+///Calcula la diferencia de esta imagen con otra. Si se pudo realizar  devuelve true, de lo contrario false
+/// \brief Image::toImageDifference
+/// \param imagen
+///
+bool Image::toDifference(Image *imagen)
+{
+  int borrador;
+  if ((width_*height_) == (imagen->width_*height_)) ///si son del mismo tamaño, puedo operar
+    for (int i=0; i < height_; i++)
+      for (int j=0; j < width_; j++)
+        {
+          if (isGray_)
+
+            if (format_ == QImage::Format_Indexed8)
+               {
+                borrador = qAbs(qRed(image_->pixel(j,i)) - qRed(imagen->image_->pixel(j,i))); ///resto valor de pixel y me quedo con valor absoluto.
+                 image_->setPixel(j,i,borrador);
+               }
+
+            else
+              {
+                borrador = qAbs(qRed(image_->pixel(j,i)) - qRed(imagen->image_->pixel(j,i))); ///resto valor de pixel y me quedo con valor absoluto.
+                image_->setPixel(j,i,qRgb(borrador,borrador,borrador)); ///En rgb, pongo los tres colores al mismo valor
+
+              }
+          else {
+              ///imagen a color
+              ///
+            }
+       }
+  else
+     {
+      QMessageBox::warning(nullptr,QString::fromUtf8("Atención: Tamaños de imagen diferentes"),QString::fromUtf8("No se puede realizar la diferencia en tamaños de imágenes diferentes.\nSeleccione otra imagen"));
+      return false;
+    }
+updateImage();
+return true;
 }
 
 ///Devuelvo una copia de la imagen en formato QImage. El receptor se encargará

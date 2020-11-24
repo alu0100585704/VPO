@@ -428,3 +428,137 @@ void MainWindow::on_actionInformacion_triggered()
 
 }
 
+
+void MainWindow::on_actionChangeMap_triggered()
+{
+  Image * borrador;
+
+  borrador= findImageAndNew(focus_,"Mapa de Cambios");
+
+  if (borrador!= nullptr)
+    {
+      QDialog * dialogCambios = new QDialog(this);
+      QLabel * label = new QLabel(dialogCambios);
+      QComboBox * comboBoxTarget = new QComboBox(dialogCambios);
+      QPushButton * pushButtonApply = new QPushButton(dialogCambios);
+      QVBoxLayout * layout = new QVBoxLayout(dialogCambios);
+
+
+      QMap<QString, Image *>::iterator it = images_.begin();
+
+      while (it!=images_.end())
+        {
+          if ((it.key()!=focus_) && (it.key()!=focus_ + "_Mapa de Cambios") && (!it.key().contains("histograma",Qt::CaseInsensitive))) ///agrego al combo solo las imágenes que no sean esta misma y que no sean histogramas
+              comboBoxTarget->addItem(it.key());
+          ++it;
+        }
+
+      if (comboBoxTarget->count()!=0)
+      {
+
+      pushButtonApply->setText("Aplicar");
+      label->setText("Selecciona una imagen desde las ya abiertas.\nEl Mapa de Cambios(pixeles de diferencia) se mostrarán en rojo en la imagen resultante");
+      layout->addWidget(label);
+      layout->addWidget(comboBoxTarget);
+      layout->addWidget(pushButtonApply);
+
+
+      dialogCambios->setWindowTitle("Mapa de Cambios");
+
+      apply_ = false;
+      connect(pushButtonApply,(&QPushButton::clicked),[=](bool checked){
+
+          borrador->toMapChange(findImage(comboBoxTarget->currentText()));
+          apply_ =  true;
+          dialogCambios->close();
+
+      });
+
+      connect(dialogCambios,(&QDialog::finished),[=](int result){
+          if (!apply_)
+            delete borrador;
+          dialogCambios->close();
+
+      });
+
+
+      dialogCambios->exec();
+
+
+      }
+      else
+      {
+        QMessageBox::warning(nullptr,QString::fromUtf8("Atención: Falta imagen para comparar"),"Debe abrir por lo menos otra imagen con la que comparar");
+        deleteImage(focus_ + "_Mapa de Cambios");
+      }
+
+    }
+
+}
+
+void MainWindow::on_actionDiferencia_de_Imagenes_triggered()
+{
+  Image * borrador;
+
+  borrador= findImageAndNew(focus_,QString::fromUtf8("Diferencia"));
+
+  if (borrador!= nullptr)
+    {
+      QDialog * dialogDifference = new QDialog(this);
+      QLabel * label = new QLabel(dialogDifference);
+      QComboBox * comboBoxTarget = new QComboBox(dialogDifference);
+      QPushButton * pushButtonApply = new QPushButton(dialogDifference);
+      QVBoxLayout * layout = new QVBoxLayout(dialogDifference);
+
+
+      QMap<QString, Image *>::iterator it = images_.begin();
+
+      while (it!=images_.end())
+        {
+          if ((it.key()!=focus_) &&  (it.key()!=focus_ + "_Diferencia") && (!it.key().contains("histograma",Qt::CaseInsensitive))) ///agrego al combo solo las imágenes que no sean esta misma y que no sean histogramas
+              comboBoxTarget->addItem(it.key());
+          ++it;
+        }
+
+      if (comboBoxTarget->count()!=0)
+      {
+
+      pushButtonApply->setText("Aplicar");
+      label->setText("Selecciona una imagen desde las ya abiertas.\nLa imagen final será la diferencia entre la imagen origen y la seleccionada");
+      layout->addWidget(label);
+      layout->addWidget(comboBoxTarget);
+      layout->addWidget(pushButtonApply);
+
+
+      dialogDifference->setWindowTitle(QString::fromUtf8("Diferencia de Imágenes"));
+
+      apply_ = false;
+      connect(pushButtonApply,(&QPushButton::clicked),[=](bool checked){
+
+          borrador->toDifference(findImage(comboBoxTarget->currentText()));
+          apply_ = true;
+          dialogDifference->close();
+
+
+      });
+
+
+      connect(dialogDifference,(&QDialog::finished),[=](int result){
+          if (!apply_)
+            delete borrador;
+          dialogDifference->close();
+
+      });
+
+      dialogDifference->exec();
+
+
+      }
+      else
+      {
+        QMessageBox::warning(nullptr,QString::fromUtf8("Atención: Falta imagen con la que realizar la diferencia"),"Debe abrir por lo menos otra imagen");
+        deleteImage(focus_ + "_Diferencia");
+      }
+
+    }
+}

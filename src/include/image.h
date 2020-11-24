@@ -53,24 +53,14 @@ public:
 };
 
 
-  bool lutGray8bitsPrepare();
-  bool prepare();
-  void updateImage();
-  void calcular_histograma();
-  void calcular_histograma_acumulado();
-  void calcular_brillo();
-  void calcular_contraste();
-  void calcular_probabilidad_absoluto();
-  void calcular_probabilidad_acumulativo();
-  void calcular_entropia();
-
   void funcionGamma(double value);
   void brilloYContrasteGris(double brilloNuevoGris, double contrasteNuevoGris);
   void brilloYContrasteColor(double brilloNuevoRed, double contrasteNuevoRed,double brilloNuevoGreen, double contrasteNuevoGreen,double brilloNuevoBlue, double contrasteNuevoBlue);
   void toGray(bool ntsc,bool ochobits);
   void toEcualizer();
   void toHistogramaEspecificado(Image * targetHistograma);
-
+  bool toMapChange(Image * imagen);
+  bool toDifference(Image *imagen);
   QChartView * toHistograma(bool acumulativo);   ///true si quiero el acumulativo o false si quiero el absoluto
 
   QImage *getImage();
@@ -120,6 +110,20 @@ public:
    int redValueMax_,redValueMin_,greenValueMax_,greenValueMin_,blueValueMax_,blueValueMin_,grayValueMax_,grayValueMin_; ///almacena los valores máximos y mínimos de cada color Se averigua durante la creación del histograma.
    ///atributos que indican tono de color con más pixeles y tono de color con menos pixeles en cada banda.
    unsigned int toneGrayWidthMorePixels_,toneGrayWidthLessPixels_,toneRedWidthMorePixels_,toneRedWidthLessPixels_,toneGreenWidthMorePixels_,toneGreenWidthLessPixels_,toneBlueWidthMorePixels_,toneBlueWidthLessPixels_;
+
+private:
+  bool lutGray8bitsPrepare();
+  bool prepare();
+  void updateImage();
+  void calcular_histograma();
+  void calcular_histograma_acumulado();
+  void calcular_brillo();
+  void calcular_contraste();
+  void calcular_probabilidad_absoluto();
+  void calcular_probabilidad_acumulativo();
+  void calcular_entropia();
+  void indicarCambios(int value, QImage *diferencia);
+  void setButtonTitleBar();
 
 };
 

@@ -50,15 +50,6 @@
     <property name="title">
      <string>Efectos</string>
     </property>
-    <widget class="QMenu" name="menuEscala_de_Grises">
-     <property name="title">
-      <string>Escala de Grises</string>
-     </property>
-     <addaction name="actionNTSC8Bits"/>
-     <addaction name="actionPAL8Bits"/>
-     <addaction name="actionRGB32_NTSC"/>
-     <addaction name="actionRGB32_PAL"/>
-    </widget>
     <widget class="QMenu" name="menuHistograma">
      <property name="title">
       <string>Histograma</string>
@@ -66,10 +57,46 @@
      <addaction name="actionEcualizar"/>
      <addaction name="actionEspecificacion"/>
     </widget>
-    <addaction name="menuEscala_de_Grises"/>
-    <addaction name="actionBrilloyContraste"/>
-    <addaction name="actionGamma"/>
+    <widget class="QMenu" name="menuLineales">
+     <property name="title">
+      <string>Lineales</string>
+     </property>
+     <widget class="QMenu" name="menuEscala_de_Grises_2">
+      <property name="title">
+       <string>Escala de Grises</string>
+      </property>
+      <addaction name="actionRGB32_NTSC"/>
+      <addaction name="actionNTSC8Bits"/>
+      <addaction name="separator"/>
+      <addaction name="actionRGB32_PAL"/>
+      <addaction name="actionPAL8Bits"/>
+     </widget>
+     <addaction name="menuEscala_de_Grises_2"/>
+     <addaction name="separator"/>
+     <addaction name="actionBrilloyContraste"/>
+     <addaction name="actionTransformaci_n_Lineal_Por_tramos"/>
+     <addaction name="separator"/>
+    </widget>
+    <widget class="QMenu" name="menuNo_Lineales">
+     <property name="title">
+      <string>No Lineales</string>
+     </property>
+     <addaction name="actionGamma"/>
+     <addaction name="actionDiferencia_de_Imagenes"/>
+     <addaction name="actionChangeMap"/>
+    </widget>
+    <widget class="QMenu" name="menuFiltros">
+     <property name="title">
+      <string>Filtros</string>
+     </property>
+     <addaction name="actionSuavizado"/>
+    </widget>
     <addaction name="menuHistograma"/>
+    <addaction name="separator"/>
+    <addaction name="menuLineales"/>
+    <addaction name="separator"/>
+    <addaction name="menuNo_Lineales"/>
+    <addaction name="menuFiltros"/>
    </widget>
    <widget class="QMenu" name="menuInformaci_n">
     <property name="title">
@@ -104,6 +131,9 @@
    <addaction name="actionBrilloyContraste"/>
    <addaction name="actionHistograma_absoluto"/>
    <addaction name="actionHistograma_Acumulativo"/>
+   <addaction name="actionChangeMap"/>
+   <addaction name="actionDiferencia_de_Imagenes"/>
+   <addaction name="actionTransformaci_n_Lineal_Por_tramos"/>
    <addaction name="actionInformacion"/>
    <addaction name="separator"/>
    <addaction name="actionExit"/>
@@ -188,7 +218,7 @@
   </action>
   <action name="actionEntropia">
    <property name="text">
-    <string>Entropía(Solo Gris)</string>
+    <string>Entropía (Solo Gris)</string>
    </property>
   </action>
   <action name="actionGamma">
@@ -223,11 +253,6 @@
     <string>RGB32 PAL</string>
    </property>
   </action>
-  <action name="actionLineal">
-   <property name="text">
-    <string>Lineal</string>
-   </property>
-  </action>
   <action name="actionInformacion">
    <property name="icon">
     <iconset resource="../qrc/recursos.qrc">
@@ -238,6 +263,54 @@
    </property>
    <property name="toolTip">
     <string>Información sobre la imagen seleccionada</string>
+   </property>
+  </action>
+  <action name="actionSuavizado">
+   <property name="text">
+    <string>Suavizado</string>
+   </property>
+  </action>
+  <action name="actionscas">
+   <property name="text">
+    <string>scas</string>
+   </property>
+  </action>
+  <action name="actiondas">
+   <property name="text">
+    <string>das</string>
+   </property>
+  </action>
+  <action name="actionChangeMap">
+   <property name="icon">
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/mapa de cambios.png</normaloff>:/Recursos/iconos/mapa de cambios.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mapa de Cambios</string>
+   </property>
+   <property name="toolTip">
+    <string>Diferencias entre 2 imágenes</string>
+   </property>
+  </action>
+  <action name="actionDiferencia_de_Imagenes">
+   <property name="icon">
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/diferencia de imagenes.png</normaloff>:/Recursos/iconos/diferencia de imagenes.png</iconset>
+   </property>
+   <property name="text">
+    <string>Diferencia de Imágenes</string>
+   </property>
+  </action>
+  <action name="actionTransformaci_n_Lineal_Por_tramos">
+   <property name="icon">
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/transformacion_lineal_tramos.png</normaloff>:/Recursos/iconos/transformacion_lineal_tramos.png</iconset>
+   </property>
+   <property name="text">
+    <string>Transformación Lineal Por tramos</string>
+   </property>
+   <property name="toolTip">
+    <string>Transformación Lineal por Tramos</string>
    </property>
   </action>
  </widget>
