@@ -118,6 +118,8 @@ public:
    int pixelsBlueTo0, pixelsBlueTo255;
 
    int redValueMax_,redValueMin_,greenValueMax_,greenValueMin_,blueValueMax_,blueValueMin_,grayValueMax_,grayValueMin_; ///almacena los valores máximos y mínimos de cada color Se averigua durante la creación del histograma.
+   ///atributos que indican tono de color con más pixeles y tono de color con menos pixeles en cada banda.
+   unsigned int toneGrayWidthMorePixels_,toneGrayWidthLessPixels_,toneRedWidthMorePixels_,toneRedWidthLessPixels_,toneGreenWidthMorePixels_,toneGreenWidthLessPixels_,toneBlueWidthMorePixels_,toneBlueWidthLessPixels_;
 
 };
 

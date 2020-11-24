@@ -276,6 +276,98 @@ void Image::calcular_histograma()
           }
 
      }
+
+ ///ahora averiguo que tono de cada banda tiene más y menos píxeles asignados.
+ ///
+ toneBlueWidthLessPixels_=0;
+ toneBlueWidthMorePixels_=0;
+ toneGrayWidthLessPixels_=0;
+ toneGrayWidthMorePixels_=0;
+ toneGreenWidthLessPixels_=0;
+ toneGreenWidthMorePixels_=0;
+ toneRedWidthLessPixels_=0;
+ toneRedWidthMorePixels_=0;
+
+ double tmpMax = 0;
+ double tmpMin = 0xFFFFFFFFFFFF;  ///equivalente a infinito
+
+ for (int i=grayValueMin_; i <=grayValueMax_; i++)  ///miro solo desde el primer valor con pixeles hasta el último con pixeles,
+   ///que no tiene porqué coincidir con todo el rango [0,255]
+     {
+          if (histograma_[i].countGray_ >= tmpMax)
+            {
+              toneGrayWidthMorePixels_ = i;
+              tmpMax = histograma_[i].countGray_;
+            }
+
+
+          if ((histograma_[i].countGray_ <= tmpMin) && (histograma_[i].countGray_ > 0)) ///no incluyo los valores que tengan cero pixels
+            {
+              toneGrayWidthLessPixels_ = i;
+              tmpMin = histograma_[i].countGray_;
+            }
+
+     }
+
+ tmpMax = 0;
+ tmpMin = 0xFFFFFFFFFFFF;
+
+ for (int i=redValueMin_; i <=redValueMax_; i++)  ///miro solo desde el primer valor con pixeles hasta el último con pixeles,
+   ///que no tiene porqué coincidir con todo el rango [0,255]
+     {
+          if (histograma_[i].countRed_ >= tmpMax)
+            {
+              toneRedWidthMorePixels_ = i;
+              tmpMax = histograma_[i].countRed_;
+            }
+
+          if ((histograma_[i].countRed_ <= tmpMin)&& (histograma_[i].countRed_ > 0))
+            {
+              toneRedWidthLessPixels_ = i;
+              tmpMin = histograma_[i].countRed_;
+            }
+     }
+
+ tmpMax = 0;
+ tmpMin = 0xFFFFFFFFFFFF;
+
+ for (int i=greenValueMin_; i <=greenValueMax_; i++)  ///miro solo desde el primer valor con pixeles hasta el último con pixeles,
+   ///que no tiene porqué coincidir con todo el rango [0,255]
+     {
+
+          if (histograma_[i].countGreen_ >= tmpMax)
+            {
+              toneGreenWidthMorePixels_ = i;
+              tmpMax = histograma_[i].countGreen_;
+            }
+
+
+          if ((histograma_[i].countGreen_ <= tmpMin) && (histograma_[i].countGreen_ > 0))
+            {
+              toneGreenWidthLessPixels_ = i;
+              tmpMin = histograma_[i].countGreen_;
+            }
+
+      }
+ tmpMax = 0;
+ tmpMin = 0xFFFFFFFFFFFF;
+ for (int i=blueValueMin_; i <=blueValueMax_; i++)  ///miro solo desde el primer valor con pixeles hasta el último con pixeles,
+   ///que no tiene porqué coincidir con todo el rango [0,255]
+     {
+          if (histograma_[i].countBlue_ >= tmpMax)
+            {
+              toneBlueWidthMorePixels_ = i;
+              tmpMax = histograma_[i].countBlue_;
+            }
+
+
+          if ((histograma_[i].countBlue_ <= tmpMin) && (histograma_[i].countBlue_ > 0))
+            {
+            toneBlueWidthLessPixels_ = i;
+            tmpMin = histograma_[i].countBlue_;
+            }
+
+     }
 }
 
 void Image::calcular_histograma_acumulado()
@@ -1089,9 +1181,8 @@ QChartView *Image::toHistograma(bool acumulativo)
   QValueAxis * axisY =new QValueAxis();
 
   axisX->setRange(0,255);
-  axisX->setTickCount(7);
-  axisY->setRange(0,width_*height_); ///ancho por alto es el máximo numero de pixeles que se podrán tener
-  axisY->setTickCount(20);
+  ///axisX->setTickCount(7);
+  ///axisY->setTickCount(20);
   axisY->setTitleText("Cantidad de Pixels");
   chart->addAxis(axisX,Qt::AlignBottom);
   chart->addAxis(axisY, Qt::AlignLeft);
@@ -1099,11 +1190,17 @@ QChartView *Image::toHistograma(bool acumulativo)
   chart->legend()->setVisible(true);
   chart->legend()->setAlignment(Qt::AlignBottom);
 
+  if (acumulativo)
+      axisY->setRange(0,width_*height_); ///ajusto el rango Y del histograma al máximo valor que realmente puede alcanzar , en caso del acumulativo, el tamaño total de la imagen
+
   if (isGray_)
-    {
+    {      
       QLineSeries *linesGray = new QLineSeries();
       linesGray->setName("Tono de Gris");
-      linesGray->setColor(Qt::gray);
+      linesGray->setColor(Qt::black);
+
+      if (!acumulativo)
+          axisY->setRange(0,histograma_[toneGrayWidthMorePixels_].countGray_); ///ajusto el rango Y del histograma al máximo valor que realmente puede alcanzar
 
         for (int i=0; i < 256; i++)
           if (acumulativo)
@@ -1116,6 +1213,28 @@ QChartView *Image::toHistograma(bool acumulativo)
     }
   else
         {
+
+
+      if (!acumulativo)
+      ///Aquí busco la escala basándome en el tono con mayor número de pixeles, ya que muestro las tres
+      /// gráficas RGB simultáneamente.
+          if (toneRedWidthMorePixels_>=toneGreenWidthMorePixels_)
+              if (toneRedWidthMorePixels_>=toneBlueWidthMorePixels_)
+                  axisY->setRange(0,histograma_[toneRedWidthMorePixels_].countRed_); ///ajusto el rango Y del histograma al máximo valor que realmente puede alcanzar
+
+              else if (toneGreenWidthMorePixels_>=toneBlueWidthMorePixels_)
+                     axisY->setRange(0,histograma_[toneGreenWidthMorePixels_].countGreen_); ///ajusto el rango Y del histograma al máximo valor que realmente puede alcanzar
+
+              else
+                axisY->setRange(0,histograma_[toneBlueWidthMorePixels_].countBlue_); ///ajusto el rango Y del histograma al máximo valor que realmente puede alcanzar
+
+            else if (toneGreenWidthMorePixels_>=toneBlueWidthMorePixels_)
+                   axisY->setRange(0,histograma_[toneGreenWidthMorePixels_].countGreen_); ///ajusto el rango Y del histograma al máximo valor que realmente puede alcanzar
+
+            else
+              axisY->setRange(0,histograma_[toneBlueWidthMorePixels_].countBlue_); ///ajusto el rango Y del histograma al máximo valor que realmente puede alcanzar
+
+
           QLineSeries *linesRed = new QLineSeries();
           QLineSeries *linesGreen = new QLineSeries();
           QLineSeries *linesBlue = new QLineSeries();

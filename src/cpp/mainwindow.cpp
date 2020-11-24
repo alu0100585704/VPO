@@ -380,43 +380,49 @@ void MainWindow::on_actionInformacion_triggered()
        {
 
            if (borrador->format_==QImage::Format_Indexed8)
-            information = information + "\nImagen Gris de 8 Bits";
+            information = information + "\n\nImagen Gris de 8 Bits";
           else
-          information = information + "\nImagen Gris RGB de 32 Bits";
-
-           information =information + "\nValor inferior de Gris: " + QString::number(borrador->grayValueMin_) + "\nValor superior de Gris: " + QString::number(borrador->grayValueMax_);
+          information = information + "\n\nImagen Gris RGB de 32 Bits";
            information = information + "\nBrillo: " + QString::number(borrador->brillo_gray_);
            information = information + "\nContraste: " + QString::number(borrador->contraste_gray_);
+
+
+           information =information + "\n\nValor inferior de Gris: " + QString::number(borrador->grayValueMin_) + "\nValor superior de Gris: " + QString::number(borrador->grayValueMax_);
+           information =information + "\nTono de Gris con mayor cantidad de pixels: " + QString::number(borrador->toneGrayWidthMorePixels_) + " con " + QString::number(borrador->histograma_[borrador->toneGrayWidthMorePixels_].countGray_) + "\nTono de Gris con menor cantidad de pixels: " + QString::number(borrador->toneGrayWidthLessPixels_) + " con " + QString::number(borrador->histograma_[borrador->toneGrayWidthLessPixels_].countGray_) ;
 
         }
        else
           {
-          information = information + "\nImagen Color RGB de 32 Bits";
+          information = information + "\n\nImagen Color RGB de 32 Bits";
 
-          information =information + "\n\nValor inferior de Rojo: " + QString::number(borrador->redValueMin_) + "\nValor superior de Rojo: " + QString::number(borrador->redValueMax_);
-          information = information + "\nBrillo Tono Rojo: " + QString::number(borrador->brillo_red_);
+          information = information + "\n\nBrillo Tono Rojo: " + QString::number(borrador->brillo_red_);
           information = information + "\nContraste Tono Rojo: " + QString::number(borrador->contraste_red_);
+          information =information + "\nValor inferior de Rojo: " + QString::number(borrador->redValueMin_) + "\nValor superior de Rojo: " + QString::number(borrador->redValueMax_);
+          information =information + "\nTono de Rojo con mayor cantidad de pixels: " + QString::number(borrador->toneRedWidthMorePixels_) + " con " + QString::number(borrador->histograma_[borrador->toneRedWidthMorePixels_].countRed_) + "\nTono de Rojo con menor cantidad de pixels: " + QString::number(borrador->toneRedWidthLessPixels_) + " con " + QString::number(borrador->histograma_[borrador->toneRedWidthLessPixels_].countRed_) ;
 
-          information =information + "\n\nValor inferior de Verde: " + QString::number(borrador->greenValueMin_) + "\nValor superior de Verde " + QString::number(borrador->greenValueMax_);
-          information = information + "\nBrillo Tono Verde: " + QString::number(borrador->brillo_green_);
+
+          information = information + "\n\nBrillo Tono Verde: " + QString::number(borrador->brillo_green_);
           information = information + "\nContraste Tono Verde: " + QString::number(borrador->contraste_green_);
+          information =information + "\nValor inferior de Verde: " + QString::number(borrador->greenValueMin_) + "\nValor superior de Verde " + QString::number(borrador->greenValueMax_);
+          information =information + "\nTono de Verde con mayor cantidad de pixels: " + QString::number(borrador->toneGreenWidthMorePixels_) + " con " + QString::number(borrador->histograma_[borrador->toneGreenWidthMorePixels_].countGreen_) + "\nTono de Verde con menor cantidad de pixels: " + QString::number(borrador->toneGreenWidthLessPixels_) + " con " + QString::number(borrador->histograma_[borrador->toneGreenWidthLessPixels_].countGreen_) ;
 
 
-          information =information + "\n\nValor inferior de Azul: " + QString::number(borrador->blueValueMin_) + "\nValor superior de Azul: " + QString::number(borrador->blueValueMax_);
-          information = information + "\nBrillo Tono Azul: " + QString::number(borrador->brillo_blue_);
+
+          information = information + "\n\nBrillo Tono Azul: " + QString::number(borrador->brillo_blue_);
           information = information + "\nContraste Tono Azul: " + QString::number(borrador->contraste_blue_);
-
+          information =information + "\nValor inferior de Azul: " + QString::number(borrador->blueValueMin_) + "\nValor superior de Azul: " + QString::number(borrador->blueValueMax_);
+          information =information + "\nTono de Azul con mayor cantidad de pixels: " + QString::number(borrador->toneBlueWidthMorePixels_) + " con " + QString::number(borrador->histograma_[borrador->toneBlueWidthMorePixels_].countBlue_) + "\nTono de Azul con menor cantidad de pixels: " + QString::number(borrador->toneBlueWidthLessPixels_) + " con " + QString::number(borrador->histograma_[borrador->toneBlueWidthLessPixels_].countBlue_) ;
 
           }
 
-       information = information + "\nValor entropía: " + QString::number(borrador->entropia_);
-       information = information + "\nAncho: " + QString::number(borrador->width_) + " pixels";
+       information = information + QString::fromUtf8("\n\nValor entropía: ") + QString::number(borrador->entropia_);
+       information = information + "\n\Ancho: " + QString::number(borrador->width_) + " pixels";
        information = information + "\nAlto: " + QString::number(borrador->height_) + " pixels";
        information = information + "\nTotal de Pixels: " + QString::number(borrador->height_ * borrador->width_) + " pixels";
 
 
 
-       QMessageBox::information(this,"Información",information);
+       QMessageBox::information(this,QString::fromUtf8("Información"),information);
      }
 
 
