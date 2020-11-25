@@ -42,12 +42,14 @@ void MainWindow::on_actionExit_triggered()
 }
 
 
-
+///
+/// \brief MainWindow::on_actionOpenFiles_triggered
+///
 void MainWindow::on_actionOpenFiles_triggered()
 {
  QStringList filenames;
 
-   filenames = QFileDialog::getOpenFileNames(nullptr, "Abrir Archivo",QString(),"Multimedia (*.*)");
+   filenames = QFileDialog::getOpenFileNames(nullptr, "Abrir Archivo",QString(),"Todos (*.*);; Multimedia (*.bmp *.gif *.jpg *.jpeg *.png *.pbm *.pgm *.ppm *.xbm *.xpm) ");
 
    for (int i=0; i < filenames.size(); i++)
         {
@@ -67,9 +69,23 @@ void MainWindow::on_actionOpenFiles_triggered()
 
 }
 
-
+///
+/// \brief MainWindow::on_actionSaveFile_triggered
+///función que graba imagen a disco
 void MainWindow::on_actionSaveFile_triggered()
 {
+
+  Image * borrador = findImage(focus_);
+  if (borrador!=nullptr)
+    {
+      QString filename = QFileDialog::getSaveFileName(nullptr, "Abrir Archivo",focus_,"Todos (*.*);; *.bmp;;*.gif;;*.jpg;;*.jpeg;;*.png;;*.pbm;;*.pgm;;*.ppm;;*.xbm;;*.xpm");;
+
+      if (!filename.isEmpty())
+          borrador->image_->save(filename);
+
+    }
+
+
 
 }
 ///Devuelve puntero clase Image, con la imagen encontrada. nullptr si no se encontró.

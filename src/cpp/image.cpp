@@ -118,11 +118,13 @@ bool Image::prepare()
   /// y a la vez dentro de un DockWidget.
 
     setContextMenuPolicy(Qt::DefaultContextMenu);
-    setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable  | QDockWidget::DockWidgetFloatable);
+
+    setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable  | QDockWidget::DockWidgetFloatable );
+    setAllowedAreas(Qt::AllDockWidgetAreas);
     setFloating(false);
     setFocusPolicy(Qt::FocusPolicy::StrongFocus);
 
-   scrollArea_->setWidgetResizable(false);
+   //scrollArea_->setWidgetResizable(true);
 
 
 
@@ -1462,7 +1464,7 @@ void Image::setButtonTitleBar()
   pushButtonMin->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
   pushButtonMin->setToolTip("Ocultar. Volver a mostrar desde Ventanas");
 
-  icon = pushButtonMin->style()->standardIcon(QStyle::SP_TitleBarCloseButton, 0,pushButtonClose);
+  icon = pushButtonClose->style()->standardIcon(QStyle::SP_TitleBarCloseButton, 0,pushButtonClose);
   pushButtonClose->setIcon(icon);
   pushButtonClose->setIconSize(QSize(10,10));
   pushButtonClose->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
