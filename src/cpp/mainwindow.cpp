@@ -212,7 +212,6 @@ void MainWindow::on_actionGamma_triggered()
       connect(dialogGamma,(&QDialog::finished),[=](int result){
 
         delete imageForKeepOriginal;
-
       });
 
 
@@ -238,16 +237,23 @@ void MainWindow::on_actionEcualizar_triggered()
 void MainWindow::grayScale(bool ntsc,bool ochobits)
 {
   Image * borrador;
+  QString formato;
+
+  if (ntsc)
+    formato = "Gris NTSC ";
+   else
+     formato = "Gris PAL ";
+
   if (ochobits)
-    {
-     borrador = findImageAndNew(focus_,"Gris 8 Bits");
+    {           
+      borrador = findImageAndNew(focus_,formato + " 8 bits");
      if (borrador!= nullptr)
        borrador->toGray(ntsc,true);
      }
 
   else
     {
-    borrador = findImageAndNew(focus_,"Gris RGB32 Bits");
+    borrador = findImageAndNew(focus_,formato+ " RGB 32 Bits");
     if (borrador!= nullptr)
       borrador->toGray(ntsc,false);
     }
@@ -339,10 +345,9 @@ void MainWindow::on_actionEspecificacion_triggered()
 /// \brief MainWindow::deleteImage
 /// \param name
 ///
-void MainWindow::deleteImage(QString name)
+void MainWindow::deleteImage(QString name,bool noDelete)
 {
    QMap<QString, Image *>::iterator it = images_.begin();
-  Image *  imagen = nullptr;
 
 qDebug() << name;
 
@@ -356,8 +361,8 @@ qDebug() << name;
           }
       else  if (it.key()==name)
       {
-
-              delete it.value();
+             if (!noDelete)
+                delete it.value();
               images_.erase(it);
 
       }
@@ -468,7 +473,10 @@ void MainWindow::on_actionChangeMap_triggered()
       apply_ = false;
       connect(pushButtonApply,(&QPushButton::clicked),[=](bool checked){
 
-          borrador->toMapChange(findImage(comboBoxTarget->currentText()));
+          if (!borrador->toMapChange(findImage(comboBoxTarget->currentText())))
+             deleteImage(focus_ + "_Mapa de Cambios"); ///borro el objeto en caso de que se haya producido algún error durante
+          ///el mapa de cambios, por ejemplo porque las imágenes tuvieran tamaños diferentes
+
           apply_ =  true;
           dialogCambios->close();
 
@@ -535,8 +543,11 @@ void MainWindow::on_actionDiferencia_de_Imagenes_triggered()
       apply_ = false;
       connect(pushButtonApply,(&QPushButton::clicked),[=](bool checked){
 
-          borrador->toDifference(findImage(comboBoxTarget->currentText()));
-          apply_ = true;
+          if (borrador->toDifference(findImage(comboBoxTarget->currentText())))
+              apply_ = true;
+          else
+              apply_ = false;
+
           dialogDifference->close();
 
 

@@ -41,8 +41,6 @@ public:
     QAction *actionRGB32_PAL;
     QAction *actionInformacion;
     QAction *actionSuavizado;
-    QAction *actionscas;
-    QAction *actiondas;
     QAction *actionChangeMap;
     QAction *actionDiferencia_de_Imagenes;
     QAction *actionTransformaci_n_Lineal_Por_tramos;
@@ -126,10 +124,6 @@ public:
         actionInformacion->setIcon(icon7);
         actionSuavizado = new QAction(MainWindow);
         actionSuavizado->setObjectName(QString::fromUtf8("actionSuavizado"));
-        actionscas = new QAction(MainWindow);
-        actionscas->setObjectName(QString::fromUtf8("actionscas"));
-        actiondas = new QAction(MainWindow);
-        actiondas->setObjectName(QString::fromUtf8("actiondas"));
         actionChangeMap = new QAction(MainWindow);
         actionChangeMap->setObjectName(QString::fromUtf8("actionChangeMap"));
         QIcon icon8;
@@ -241,15 +235,33 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionOpenFiles->setToolTip(QApplication::translate("MainWindow", "Cargar Imagen", nullptr));
 #endif // QT_NO_TOOLTIP
+#ifndef QT_NO_SHORTCUT
+        actionOpenFiles->setShortcut(QApplication::translate("MainWindow", "Alt+A", nullptr));
+#endif // QT_NO_SHORTCUT
         actionSaveFile->setText(QApplication::translate("MainWindow", "Salvar", nullptr));
 #ifndef QT_NO_TOOLTIP
         actionSaveFile->setToolTip(QApplication::translate("MainWindow", "Guardar imagen en fichero", nullptr));
 #endif // QT_NO_TOOLTIP
+#ifndef QT_NO_SHORTCUT
+        actionSaveFile->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", nullptr));
+#endif // QT_NO_SHORTCUT
         actionExit->setText(QApplication::translate("MainWindow", "Salir", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionExit->setShortcut(QApplication::translate("MainWindow", "Alt+X", nullptr));
+#endif // QT_NO_SHORTCUT
         actionAbout->setText(QApplication::translate("MainWindow", "Acerca de . . .", nullptr));
         actionBrilloyContraste->setText(QApplication::translate("MainWindow", "Brillo y Contraste", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionBrilloyContraste->setShortcut(QApplication::translate("MainWindow", "Alt+B", nullptr));
+#endif // QT_NO_SHORTCUT
         actionHistograma_absoluto->setText(QApplication::translate("MainWindow", "Histograma Absoluto", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionHistograma_absoluto->setShortcut(QApplication::translate("MainWindow", "Alt+H", nullptr));
+#endif // QT_NO_SHORTCUT
         actionHistograma_Acumulativo->setText(QApplication::translate("MainWindow", "Histograma Acumulativo", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionHistograma_Acumulativo->setShortcut(QApplication::translate("MainWindow", "Ctrl+H", nullptr));
+#endif // QT_NO_SHORTCUT
         actionNTSC8Bits->setText(QApplication::translate("MainWindow", "8 bit NTSC", nullptr));
         actionPAL8Bits->setText(QApplication::translate("MainWindow", "8 bit PAL", nullptr));
         actionEntropia->setText(QApplication::translate("MainWindow", "Entrop\303\255a (Solo Gris)", nullptr));
@@ -257,7 +269,13 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionGamma->setToolTip(QApplication::translate("MainWindow", "Calcular Funcion Gamma", nullptr));
 #endif // QT_NO_TOOLTIP
+#ifndef QT_NO_SHORTCUT
+        actionGamma->setShortcut(QApplication::translate("MainWindow", "Alt+G", nullptr));
+#endif // QT_NO_SHORTCUT
         actionEcualizar->setText(QApplication::translate("MainWindow", "Ecualizar", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionEcualizar->setShortcut(QApplication::translate("MainWindow", "Alt+E", nullptr));
+#endif // QT_NO_SHORTCUT
         actionEspecificacion->setText(QApplication::translate("MainWindow", "Especificaci\303\263n", nullptr));
         actionRGB32_NTSC->setText(QApplication::translate("MainWindow", "RGB32 NTSC", nullptr));
         actionRGB32_PAL->setText(QApplication::translate("MainWindow", "RGB32 PAL", nullptr));
@@ -265,14 +283,15 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionInformacion->setToolTip(QApplication::translate("MainWindow", "Informaci\303\263n sobre la imagen seleccionada", nullptr));
 #endif // QT_NO_TOOLTIP
+#ifndef QT_NO_SHORTCUT
+        actionInformacion->setShortcut(QApplication::translate("MainWindow", "Alt+I", nullptr));
+#endif // QT_NO_SHORTCUT
         actionSuavizado->setText(QApplication::translate("MainWindow", "Suavizado", nullptr));
-        actionscas->setText(QApplication::translate("MainWindow", "scas", nullptr));
-        actiondas->setText(QApplication::translate("MainWindow", "das", nullptr));
-        actionChangeMap->setText(QApplication::translate("MainWindow", "Mapa de Cambios", nullptr));
+        actionChangeMap->setText(QApplication::translate("MainWindow", "Mapa de Cambios (Solo Gris)", nullptr));
 #ifndef QT_NO_TOOLTIP
-        actionChangeMap->setToolTip(QApplication::translate("MainWindow", "Diferencias entre 2 im\303\241genes", nullptr));
+        actionChangeMap->setToolTip(QApplication::translate("MainWindow", "Mapa de Cambios entre 2 im\303\241genes", nullptr));
 #endif // QT_NO_TOOLTIP
-        actionDiferencia_de_Imagenes->setText(QApplication::translate("MainWindow", "Diferencia de Im\303\241genes", nullptr));
+        actionDiferencia_de_Imagenes->setText(QApplication::translate("MainWindow", "Diferencia de Im\303\241genes (Solo Gris)", nullptr));
         actionTransformaci_n_Lineal_Por_tramos->setText(QApplication::translate("MainWindow", "Transformaci\303\263n Lineal Por tramos", nullptr));
 #ifndef QT_NO_TOOLTIP
         actionTransformaci_n_Lineal_Por_tramos->setToolTip(QApplication::translate("MainWindow", "Transformaci\303\263n Lineal por Tramos", nullptr));

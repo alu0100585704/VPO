@@ -22,6 +22,8 @@
 #include <qmessagebox.h>
 #include <QMouseEvent>
 #include <events.h>
+#include <QSpacerItem>
+#include <Qmap>
 
 QT_CHARTS_USE_NAMESPACE
 
@@ -64,13 +66,14 @@ public:
   QChartView * toHistograma(bool acumulativo);   ///true si quiero el acumulativo o false si quiero el absoluto
 
   QImage *getImage();
-  void setImage(QImage &imagen);  
+  void setImage(QImage *imagen); ///no la copia y coge posesión del la imagen pasada como argumeto
+  void setImage(QImage &imagen); ///copia la imagen.
   Events * filterEvents_;
 
 
    QLabel * label_;
    QChartView * barGraphics_;
-   QImage * image_,imageGray8bits_;
+   QImage * image_;
    QPixmap * pixmapImage_;
    QScrollArea * scrollArea_;
    QWidget * dockWidgetContents_;
@@ -122,7 +125,7 @@ private:
   void calcular_probabilidad_absoluto();
   void calcular_probabilidad_acumulativo();
   void calcular_entropia();
-  void indicarCambios(int value, QImage *diferencia);
+  void indicarCambios(int value, QImage *original, QImage *diferencia);
   void setButtonTitleBar();
 
 };

@@ -48,17 +48,17 @@ Image::Image(QString title, QChartView *image, MainWindow *parent):
   parent_(parent)
 {
 
+  setButtonTitleBar(); ///configuro barra de titulos nueva.
   ///Preparo Dock widget acoplado pero con posibilidad de ser flotante
   /// Lo hago dentro de un QLabel que a la vez está dentro de un QScroolArea
   /// y a la vez dentro de un DockWidget.
 
   setMinimumHeight(50);
   setMinimumWidth(50);
-  setMaximumWidth(1024);
-  setMaximumHeight(768);
+  setMaximumWidth(1680);
+  setMaximumHeight(1024);
 
-  setGeometry(0,0,1024,768);
-  //barGraphics_->setGeometry(0,0,500,500);
+  setGeometry(0,0,800,600);
 
 
 
@@ -72,28 +72,34 @@ Image::Image(QString title, QChartView *image, MainWindow *parent):
 
 }
 
-void Image::setButtonTitleBar()
+Image::~Image()
 {
-  QWidget * barNew = new QWidget();
-  QLabel *label = new QLabel(this);
-  QLabel *label2 = new QLabel(this);
-  QHBoxLayout * layout = new QHBoxLayout(this);
-  barNew->setLayout(layout);
-  layout->addWidget(label);
-  layout->addWidget(label2);
-  QPushButton * button = new QPushButton();
-  layout->addWidget(button);
-  label->setText("hola");
-  label2->setText("adios");
 
-  QIcon icon = button->style()->standardIcon(QStyle::SP_TitleBarMaxButton, 0,button);
-  button->setIcon( icon );
-  setTitleBarWidget(barNew);
+
+
+    qDebug() << "Destruyendo Image pixmapimage";
+  if (pixmapImage_!= nullptr)
+      delete pixmapImage_;
+
+  qDebug() << "Destruyendo Image image_";
+
+  if (image_ != nullptr)
+    delete image_;
+
+  qDebug() << "Destruyendo Image barGraphics_";
+  if (barGraphics_ != nullptr)
+    delete barGraphics_;
+
+    qDebug() << "Destructor Image";
+  if (filterEvents_ !=nullptr)
+    delete filterEvents_;
 
 }
+
+
 bool Image::prepare()
 {
-  ///setButtonTitleBar(); ///configuro barra de titulos nueva.
+  setButtonTitleBar(); ///configuro barra de titulos nueva.
   ///
   label_= new QLabel(this);
   pixmapImage_= new QPixmap();
@@ -143,29 +149,6 @@ bool Image::prepare()
 
 }
 
-Image::~Image()
-{
-
-
-
-    qDebug() << "Destruyendo Image pixmapimage";
-  if (pixmapImage_!= nullptr)
-      delete pixmapImage_;
-
-  qDebug() << "Destruyendo Image image_";
-
-  if (image_ != nullptr)
-    delete image_;
-
-  qDebug() << "Destruyendo Image barGraphics_";
-  if (barGraphics_ != nullptr)
-    delete barGraphics_;
-
-    qDebug() << "Destructor Image";
-  if (filterEvents_ !=nullptr)
-    delete filterEvents_;
-
-}
 
 void Image::updateImage()
 {
@@ -190,10 +173,10 @@ void Image::updateImage()
 
 
   if (width_ <1024)
-      setMaximumWidth(width_+6);
+      setMaximumWidth(width_+8);
 
   if (height_<768)
-      setMaximumHeight(height_+25);
+      setMaximumHeight(height_+50);
 
 
   *pixmapImage_ = pixmapImage_->fromImage(*image_);
@@ -940,8 +923,7 @@ void Image::toGray(bool ntsc,bool ochobits)
                     target->setPixel(j,i,qRgb(tmpGray,tmpGray,tmpGray)); ///En rgb, pongo los tres colores al mismo valor
 
               }
-          setImage(*target);
-          delete target;
+          setImage(target);
 
 }
 ///Función Ecualizacón. Caso específico de especificación de histograma
@@ -1182,9 +1164,11 @@ bool Image::toMapChange(Image *imagen)
   else
     {
       delete borradorOriginal;
-       return false;
+      return false;
     }
 
+  QImage * target = new QImage(width_,height_,QImage::Format_RGB32); ///para poder indicar el mapa de cambios, si o si, cambio este objeto a imagen a color
+  ///puesto que si fuera gris 8 bits, no prodría.
 
       QDialog *dialog = new QDialog(this);
       QSpinBox * spin = new QSpinBox(dialog);
@@ -1206,8 +1190,9 @@ bool Image::toMapChange(Image *imagen)
       histograma->setMinimumHeight(250);
       histograma->setMinimumWidth(250);
       layout->addWidget(histograma);
-      setImage(*borradorOriginal); ///vuelvo  a establecer la imagen original, puesto que la diferencia me modificó el objecto. Ya la imagen diferencia la tengo guardada en borradorDiferencia
-      indicarCambios(255,borradorDiferencia); ///primero muestro la imagen sin cambios, o sea, con umbral máximo.
+
+      setImage(target); ///stablecer la imagen a color con los cambios posibles, puesto que la diferencia me modificó el objecto. Ya la imagen diferencia la tengo guardada en borradorDiferencia
+      indicarCambios(255,borradorOriginal, borradorDiferencia); ///primero muestro la imagen sin cambios, o sea, con umbral máximo.
 
 
 
@@ -1217,9 +1202,8 @@ bool Image::toMapChange(Image *imagen)
 
       connect(spin,QOverload<int>::of(&QSpinBox::valueChanged),[=](int d){
 
-          setImage(*borradorOriginal);
           ///
-          indicarCambios(spin->value(),borradorDiferencia); ///función privada que pinta en rojo los pixeles en base al umbral seleccionado
+          indicarCambios(spin->value(),borradorOriginal,borradorDiferencia); ///función privada que pinta en rojo los pixeles en base al umbral seleccionado
 
       });
 
@@ -1239,26 +1223,17 @@ bool Image::toMapChange(Image *imagen)
 /// \brief Image::indicarCambios
 /// \param value
 ///
-void Image::indicarCambios(int value, QImage * diferencia)
+void Image::indicarCambios(int value, QImage * original,QImage * diferencia)
 {
 
   for (int i=0; i < height_; i++)
       for (int j=0; j < width_; j++)
         {
-          if (isGray_)
-
-            if (format_ == QImage::Format_Indexed8)
-               {
+          if (original->allGray())  ///durante la operación de diferencia, ya se comprobó que la imagen diferencia también fuera del mismo tipo.
                  if (qRed(diferencia->pixel(j,i)) >= value)
-                      image_->setPixel(j,i,255); ///pongo a blanco, si es diferente
-               }
-
-            else
-              {
-                if (qRed(diferencia->pixel(j,i)) >= value)
-                    image_->setPixel(j,i,qRgb(255,0,0)); ///En rgb,pongo en rojo las diferencias
-
-              }
+                      image_->setPixel(j,i,qRgb(255,0,0)); ///pongo a rojo, si es diferente Aqui la imagen destino realmente es una RGB  para poder pintar el rojo
+                 else
+                      image_->setPixel(j,i,qRgb(qRed(original->pixel(j,i)),qRed(original->pixel(j,i)),qRed(original->pixel(j,i))));
           else {
               ///imagen a color
               ///
@@ -1277,7 +1252,7 @@ updateImage();
 bool Image::toDifference(Image *imagen)
 {
   int borrador;
-  if ((width_*height_) == (imagen->width_*height_)) ///si son del mismo tamaño, puedo operar
+  if (((width_*height_) == (imagen->width_*height_)) && (isGray_ == imagen->isGray_) && (format_ == imagen->format_)) ///si son del mismo tamaño, tipo de formato y si son gris o no. puedo operar
     for (int i=0; i < height_; i++)
       for (int j=0; j < width_; j++)
         {
@@ -1302,7 +1277,7 @@ bool Image::toDifference(Image *imagen)
        }
   else
      {
-      QMessageBox::warning(nullptr,QString::fromUtf8("Atención: Tamaños de imagen diferentes"),QString::fromUtf8("No se puede realizar la diferencia en tamaños de imágenes diferentes.\nSeleccione otra imagen"));
+      QMessageBox::warning(nullptr,QString::fromUtf8("Atención: Tamaños o Tipos de imagen diferentes"),QString::fromUtf8("No se puede realizar la diferencia de imágenes diferentes.\nSeleccione otra imagen"));
       return false;
     }
 updateImage();
@@ -1316,13 +1291,32 @@ QImage *Image::getImage()
   QImage * tmp =new QImage(*image_);
   return tmp;
 }
+///
+/// \brief Image::setImage
+/// \param imagen
+///Esta función toma posesión de la imagen y simplemente sustituye un puntero por otro
+/// y libera la memoria. Muy rápido
+void Image::setImage(QImage *imagen)
+{
+  delete image_; ///borro imagen anterior
+  ///asigno a imagen nueva. Tomo posesión de la imagen, ya se liberará al destruirse el objeto.
+  image_  = imagen;
 
+  updateImage();
+}
+///
+/// \brief Image::setImage
+/// \param imagen
+///Esta función copia una imagen en este objeto. Es lenta pero mantiene simepre la imagen
+/// pasada como argumento intacta. Es lenta y no toma posesión de la imagen pasada.
 void Image::setImage(QImage &imagen)
 {
+
   *image_  = imagen;
 
   updateImage();
 }
+
 
 QChartView *Image::toHistograma(bool acumulativo)
 {  
@@ -1434,7 +1428,75 @@ QChartView *Image::toHistograma(bool acumulativo)
 
 }
 
+void Image::setButtonTitleBar()
+{
+  QWidget * barNew = new QWidget(this);
+  QLabel *label = new QLabel(barNew);
+  QHBoxLayout * layout = new QHBoxLayout(barNew);
+  QPushButton * pushButtonMax = new QPushButton(barNew);
+  QPushButton * pushButtonMin = new QPushButton(barNew);
+  QPushButton * pushButtonClose = new QPushButton(barNew);
 
+
+  barNew->setLayout(layout);
+  layout->addWidget(label);
+  layout->addWidget(pushButtonMin);
+  layout->addWidget(pushButtonMax);
+  layout->addWidget(pushButtonClose);
+  label->setText(title_);
+  label->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Fixed);
+  label->setAlignment(Qt::AlignLeft);
+
+
+///preparo iconos
+///
+  QIcon icon = pushButtonMax->style()->standardIcon(QStyle::SP_TitleBarMaxButton, 0,pushButtonMax);
+  pushButtonMax->setIcon( icon );
+  pushButtonMax->setIconSize(QSize(10,10));
+  pushButtonMax->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+  pushButtonMax->setToolTip("Maximizar");
+
+  icon = pushButtonMin->style()->standardIcon(QStyle::SP_TitleBarMinButton, 0,pushButtonMin);
+  pushButtonMin->setIcon(icon);
+  pushButtonMin->setIconSize(QSize(10,10));
+  pushButtonMin->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+  pushButtonMin->setToolTip("Ocultar. Volver a mostrar desde Ventanas");
+
+  icon = pushButtonMin->style()->standardIcon(QStyle::SP_TitleBarCloseButton, 0,pushButtonClose);
+  pushButtonClose->setIcon(icon);
+  pushButtonClose->setIconSize(QSize(10,10));
+  pushButtonClose->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+  pushButtonMax->setToolTip("Cerrar");
+
+  setTitleBarWidget(barNew);
+
+  ///ahora preparo los conectores lambda para reaccionar
+  ///
+
+  connect(pushButtonMax,(&QPushButton::clicked),[=](bool checked){
+
+      if (!isFloating())
+         setFloating(true); ///la tengo que poner flotante para poder maximizarla.
+
+        setGeometry(x(),y(),width_+8,height_+50);
+
+
+  });
+  connect(pushButtonMin,(&QPushButton::clicked),[=](bool checked){
+
+     close();
+  });
+
+  connect(pushButtonClose,(&QPushButton::clicked),[=](bool checked){
+
+      parent_->deleteImage(title_,true);
+      deleteLater();
+
+
+  });
+
+
+}
 Image::Punto::Punto():
   countGreen_(0),
   countRed_(0),
@@ -1452,3 +1514,4 @@ Image::Punto::~Punto()
 {
 
 }
+

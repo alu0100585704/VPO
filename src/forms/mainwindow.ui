@@ -149,6 +149,9 @@
    <property name="toolTip">
     <string>Cargar Imagen</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+A</string>
+   </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
    </property>
@@ -164,6 +167,9 @@
    <property name="toolTip">
     <string>Guardar imagen en fichero</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="actionExit">
    <property name="icon">
@@ -172,6 +178,9 @@
    </property>
    <property name="text">
     <string>Salir</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+X</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -187,6 +196,9 @@
    <property name="text">
     <string>Brillo y Contraste</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+B</string>
+   </property>
   </action>
   <action name="actionHistograma_absoluto">
    <property name="icon">
@@ -196,6 +208,9 @@
    <property name="text">
     <string>Histograma Absoluto</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+H</string>
+   </property>
   </action>
   <action name="actionHistograma_Acumulativo">
    <property name="icon">
@@ -204,6 +219,9 @@
    </property>
    <property name="text">
     <string>Histograma Acumulativo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
    </property>
   </action>
   <action name="actionNTSC8Bits">
@@ -232,10 +250,16 @@
    <property name="toolTip">
     <string>Calcular Funcion Gamma</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+G</string>
+   </property>
   </action>
   <action name="actionEcualizar">
    <property name="text">
     <string>Ecualizar</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+E</string>
    </property>
   </action>
   <action name="actionEspecificacion">
@@ -264,20 +288,13 @@
    <property name="toolTip">
     <string>Información sobre la imagen seleccionada</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+I</string>
+   </property>
   </action>
   <action name="actionSuavizado">
    <property name="text">
     <string>Suavizado</string>
-   </property>
-  </action>
-  <action name="actionscas">
-   <property name="text">
-    <string>scas</string>
-   </property>
-  </action>
-  <action name="actiondas">
-   <property name="text">
-    <string>das</string>
    </property>
   </action>
   <action name="actionChangeMap">
@@ -286,10 +303,10 @@
      <normaloff>:/Recursos/iconos/mapa de cambios.png</normaloff>:/Recursos/iconos/mapa de cambios.png</iconset>
    </property>
    <property name="text">
-    <string>Mapa de Cambios</string>
+    <string>Mapa de Cambios (Solo Gris)</string>
    </property>
    <property name="toolTip">
-    <string>Diferencias entre 2 imágenes</string>
+    <string>Mapa de Cambios entre 2 imágenes</string>
    </property>
   </action>
   <action name="actionDiferencia_de_Imagenes">
@@ -298,7 +315,7 @@
      <normaloff>:/Recursos/iconos/diferencia de imagenes.png</normaloff>:/Recursos/iconos/diferencia de imagenes.png</iconset>
    </property>
    <property name="text">
-    <string>Diferencia de Imágenes</string>
+    <string>Diferencia de Imágenes (Solo Gris)</string>
    </property>
   </action>
   <action name="actionTransformaci_n_Lineal_Por_tramos">

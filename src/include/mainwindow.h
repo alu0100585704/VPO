@@ -42,7 +42,7 @@ public:
 
     QString focus_; //nombre de la imagen que tiene le foco actualmente        
     QLabel statusPermanentMessage_,information_;
-
+    void deleteImage(QString name, bool noDelete=false);
 private slots:
 
     void on_actionOpenFiles_triggered();
@@ -80,18 +80,18 @@ private slots:
 
     void on_actionDiferencia_de_Imagenes_triggered();
 
+
 private:
     Image * findImageAndNew(QString name, QString newTitle, bool toHistograma = false, bool tipoHistograma = false);
     Image * findImage(QString name);
     void grayScale(bool ntsc, bool ochobits);
-    void deleteImage(QString name);
 
 
-    Ui::MainWindow *ui;
-    QMap<QString, Image *> images_;
+
+    Ui::MainWindow *ui;    
     BrilloYContraste * dialog_;
     bool apply_; ///para cuadros de dialogos, saber cuando se apretó un boton o no
-
+    QMap<QString, Image *> images_;
 
 };
 
