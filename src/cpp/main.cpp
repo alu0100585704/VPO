@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QCoreApplication>
 #include <QTextCodec>
+#include <QObject>
 int main(int argc, char *argv[])
 {
 
@@ -15,7 +16,8 @@ int main(int argc, char *argv[])
 
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8") );
     w.setWindowIcon(QIcon(":/Recursos/Images/RMpixel ico 64x64.png"));
-    w.setWindowTitle("VPO: Mi FotoVision");
+
+    w.setWindowTitle(QObject::tr("VPO: Mi FotoVision"));
     w.show();
     return a.exec();
 }
