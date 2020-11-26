@@ -1039,7 +1039,7 @@ void Image::toHistogramaEspecificado(Image *targetHistograma)
     {
       QVector <int> Lut(256);
       double tmp,a,b;
-      int j=0;
+      int k;
       ///preparo la nueva LUT
       for (int i=0;i < 256; i++)
         {
@@ -1047,20 +1047,20 @@ void Image::toHistogramaEspecificado(Image *targetHistograma)
           ///
           ///busco su correspondiente en el histograma destino.
           ///
-          j=1;
-          while (tmp > targetHistograma->histograma_acumulado_[j].probabilidadGray_)
-              j++;
+          k=1;
+          while (tmp > targetHistograma->histograma_acumulado_[k].probabilidadGray_)
+              k++;
 
 
-           a = tmp - targetHistograma->histograma_acumulado_[j-1].probabilidadGray_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
-           b = targetHistograma->histograma_acumulado_[j].probabilidadGray_ - tmp ;///resto al valor del pixel superior, el valor encontrado
+           a = tmp - targetHistograma->histograma_acumulado_[k-1].probabilidadGray_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
+           b = targetHistograma->histograma_acumulado_[k].probabilidadGray_ - tmp ;///resto al valor del pixel superior, el valor encontrado
 
            ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca más al pixel, ya sea, el anterior o el posterior
 
            if (a <= b )
-             Lut[i] = j-1; ///me quedo con el pixel con probabilidad justo anterior
+             Lut[i] = k-1; ///me quedo con el pixel con probabilidad justo anterior
            if (a > b)
-             Lut[i] = j; ///lo convierto al pixel con probabilidad un poco superior.         
+             Lut[i] = k; ///lo convierto al pixel con probabilidad un poco superior.
         }
 
 
@@ -1083,7 +1083,7 @@ void Image::toHistogramaEspecificado(Image *targetHistograma)
      QVector<int>  LutBlue(256);
 
      double tmpRed,tmpGreen,tmpBlue,a,b;
-     int j=0;
+     int k;
      ///preparo la LUT
       for (int i=0;i < 256; i++)
         {
@@ -1091,56 +1091,56 @@ void Image::toHistogramaEspecificado(Image *targetHistograma)
           ///
           ///busco su correspondiente en el histograma destino.
           ///
-          j=1;
-          while (tmpRed > targetHistograma->histograma_acumulado_[j].probabilidadRed_)
-              j++;
+          k=1;
+          while (tmpRed > targetHistograma->histograma_acumulado_[k].probabilidadRed_)
+              k++;
 
-           a = tmpRed - targetHistograma->histograma_acumulado_[j-1].probabilidadRed_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
-           b = targetHistograma->histograma_acumulado_[j].probabilidadRed_ - tmpRed ;///resto al valor del pixel superior, el valor encontrado
+           a = tmpRed - targetHistograma->histograma_acumulado_[k-1].probabilidadRed_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
+           b = targetHistograma->histograma_acumulado_[k].probabilidadRed_ - tmpRed ;///resto al valor del pixel superior, el valor encontrado
 
            ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca más al pixel, ya sea, el anterior o el posterior
 
            if (a <= b )
-             LutRed[i] = j-1; ///me quedo con el pixel con probabilidad justo anterior
+             LutRed[i] = k-1; ///me quedo con el pixel con probabilidad justo anterior
            if (a > b)
-             LutRed[i] = j; ///lo convierto al pixel con probabilidad un poco superior.
+             LutRed[i] = k; ///lo convierto al pixel con probabilidad un poco superior.
 
 
            tmpGreen = histograma_acumulado_[i].probabilidadGreen_;
            ///
            ///busco su correspondiente en el histograma destino.
            ///
-           j=0;
-           while (tmpGreen > targetHistograma->histograma_acumulado_[j].probabilidadGreen_)
-               j++;
+           k=1;
+           while (tmpGreen > targetHistograma->histograma_acumulado_[k].probabilidadGreen_)
+               k++;
 
-            a = tmpGreen - targetHistograma->histograma_acumulado_[j-1].probabilidadGreen_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
-            b = targetHistograma->histograma_acumulado_[j].probabilidadGreen_ - tmpGreen ;///resto al valor del pixel superior, el valor encontrado
+            a = tmpGreen - targetHistograma->histograma_acumulado_[k-1].probabilidadGreen_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
+            b = targetHistograma->histograma_acumulado_[k].probabilidadGreen_ - tmpGreen ;///resto al valor del pixel superior, el valor encontrado
 
             ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca más al pixel, ya sea, el anterior o el posterior
 
             if (a <= b )
-              LutGreen[i] = j-1; ///me quedo con el pixel con probabilidad justo anterior
+              LutGreen[i] = k-1; ///me quedo con el pixel con probabilidad justo anterior
             if (a > b)
-              LutGreen[i] = j; ///lo convierto al pixel con probabilidad un poco superior.
+              LutGreen[i] = k; ///lo convierto al pixel con probabilidad un poco superior.
 
             tmpBlue = histograma_acumulado_[i].probabilidadBlue_;
             ///
             ///busco su correspondiente en el histograma destino.
             ///
-            j=0;
-            while (tmpBlue > targetHistograma->histograma_acumulado_[j].probabilidadBlue_)
-                j++;
+            k=1;
+            while (tmpBlue > targetHistograma->histograma_acumulado_[k].probabilidadBlue_)
+                k++;
 
-             a = tmpBlue - targetHistograma->histograma_acumulado_[j-1].probabilidadBlue_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
-             b = targetHistograma->histograma_acumulado_[j].probabilidadBlue_ - tmpBlue ;///resto al valor del pixel superior, el valor encontrado
+             a = tmpBlue - targetHistograma->histograma_acumulado_[k-1].probabilidadBlue_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
+             b = targetHistograma->histograma_acumulado_[k].probabilidadBlue_ - tmpBlue ;///resto al valor del pixel superior, el valor encontrado
 
              ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca más al pixel, ya sea, el anterior o el posterior
 
              if (a <= b )
-               LutBlue[i] = j-1; ///me quedo con el pixel con probabilidad justo anterior
+               LutBlue[i] = k-1; ///me quedo con el pixel con probabilidad justo anterior
              if (a > b)
-               LutBlue[i] = j; ///lo convierto al pixel con probabilidad un poco superior.
+               LutBlue[i] = k; ///lo convierto al pixel con probabilidad un poco superior.
 
 
         }

@@ -592,5 +592,5 @@ void MainWindow::on_actionDiferencia_de_Imagenes_triggered()
 
 void MainWindow::on_actionAbout_triggered()
 {
-    QMessageBox::information(this,"Acerca de . . .",QString("Realizado por Juan Siverio Rojas.\nPráctica 1 y 3 para Visión por Computador\n4ª Ingeniería Informática\nItinerario Ingeniería de computadores\n"));
+    QMessageBox::information(this,"Acerca de . . .",QString("Realizado por Juan Siverio Rojas.\n* Práctica 1 y 3 para Visión por Computador\n* 4ª Ingeniería Informática\n* Itinerario Ingeniería de Computadores\n"));
 }
