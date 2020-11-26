@@ -1047,9 +1047,10 @@ void Image::toHistogramaEspecificado(Image *targetHistograma)
           ///
           ///busco su correspondiente en el histograma destino.
           ///
-          j=0;
+          j=1;
           while (tmp > targetHistograma->histograma_acumulado_[j].probabilidadGray_)
               j++;
+
 
            a = tmp - targetHistograma->histograma_acumulado_[j-1].probabilidadGray_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
            b = targetHistograma->histograma_acumulado_[j].probabilidadGray_ - tmp ;///resto al valor del pixel superior, el valor encontrado
@@ -1090,7 +1091,7 @@ void Image::toHistogramaEspecificado(Image *targetHistograma)
           ///
           ///busco su correspondiente en el histograma destino.
           ///
-          j=0;
+          j=1;
           while (tmpRed > targetHistograma->histograma_acumulado_[j].probabilidadRed_)
               j++;
 
@@ -1470,7 +1471,7 @@ void Image::setButtonTitleBar()
   pushButtonClose->setIcon(icon);
   pushButtonClose->setIconSize(QSize(10,10));
   pushButtonClose->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-  pushButtonMax->setToolTip("Cerrar");
+  pushButtonClose->setToolTip("Cerrar");
 
   setTitleBarWidget(barNew);
 
