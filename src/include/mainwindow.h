@@ -81,6 +81,8 @@ private slots:
     void on_actionDiferencia_de_Imagenes_triggered();
 
 
+    void on_actionAbout_triggered();
+
 private:
     Image * findImageAndNew(QString name, QString newTitle, bool toHistograma = false, bool tipoHistograma = false);
     Image * findImage(QString name);
@@ -90,7 +92,7 @@ private:
 
     Ui::MainWindow *ui;    
     BrilloYContraste * dialog_;
-    bool apply_; ///para cuadros de dialogos, saber cuando se apretó un boton o no
+    bool apply_; ///para cuadros de dialogos, saber cuando se apretï¿½ un boton o no
     QMap<QString, Image *> images_;
 
 };

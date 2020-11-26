@@ -66,7 +66,7 @@ public:
   QChartView * toHistograma(bool acumulativo);   ///true si quiero el acumulativo o false si quiero el absoluto
 
   QImage *getImage();
-  void setImage(QImage *imagen); ///no la copia y coge posesión del la imagen pasada como argumeto
+  void setImage(QImage *imagen); ///no la copia y coge posesiÃ³n del la imagen pasada como argumeto
   void setImage(QImage &imagen); ///copia la imagen.
   Events * filterEvents_;
 
@@ -94,24 +94,24 @@ public:
    double entropia_;
 
    double brillo_gray_;  ///media del histograma
-   double contraste_gray_; ///desviación típica del histograma
+   double contraste_gray_; ///desviaciÃ³n tÃ­pica del histograma
 
    double brillo_green_;  ///media del histograma
-   double contraste_green_; ///desviación típica del histograma
+   double contraste_green_; ///desviaciÃ³n tÃ­pica del histograma
 
    double brillo_blue_;  ///media del histograma
-   double contraste_blue_; ///desviación típica del histograma
+   double contraste_blue_; ///desviaciÃ³n tÃ­pica del histograma
 
    double brillo_red_;  ///media del histograma
-   double contraste_red_; ///desviación típica del histograma
+   double contraste_red_; ///desviaciÃ³n tÃ­pica del histograma
 
    int pixelsGrayTo0, pixelsGrayTo255;
    int pixelsRedTo0, pixelsRedTo255;
    int pixelsGreenTo0, pixelsGreenTo255;
    int pixelsBlueTo0, pixelsBlueTo255;
 
-   int redValueMax_,redValueMin_,greenValueMax_,greenValueMin_,blueValueMax_,blueValueMin_,grayValueMax_,grayValueMin_; ///almacena los valores máximos y mínimos de cada color Se averigua durante la creación del histograma.
-   ///atributos que indican tono de color con más pixeles y tono de color con menos pixeles en cada banda.
+   int redValueMax_,redValueMin_,greenValueMax_,greenValueMin_,blueValueMax_,blueValueMin_,grayValueMax_,grayValueMin_; ///almacena los valores mÃ¡ximos y mÃ­nimos de cada color Se averigua durante la creaciÃ³n del histograma.
+   ///atributos que indican tono de color con mÃ¡s pixeles y tono de color con menos pixeles en cada banda.
    unsigned int toneGrayWidthMorePixels_,toneGrayWidthLessPixels_,toneRedWidthMorePixels_,toneRedWidthLessPixels_,toneGreenWidthMorePixels_,toneGreenWidthLessPixels_,toneBlueWidthMorePixels_,toneBlueWidthLessPixels_;
 
 private:

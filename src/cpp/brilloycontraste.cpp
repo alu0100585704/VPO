@@ -23,7 +23,7 @@ BrilloYContraste::~BrilloYContraste()
 void BrilloYContraste::setImage(Image *imagen)
 {
   imagen_ = imagen;
-  imageForKeepOriginal_=imagen_->getImage();  ///esta se usará para mantener la relación siempre con la imagen original.
+  imageForKeepOriginal_=imagen_->getImage();  ///esta se usarÃ¡ para mantener la relaciÃ³n siempre con la imagen original.
                   ///ya que si siempre modificamos la misma, se va degradando hasta desaparecer practicamente.
   ui->checkBoxKeepOriginal->setChecked(true);
 

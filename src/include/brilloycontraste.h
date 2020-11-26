@@ -67,18 +67,18 @@ private:
   QImage * imageForKeepOriginal_;
 
   double brillo_gray_;  ///media del histograma
-  double contraste_gray_; ///desviaci髇 t韕ica del histograma
+  double contraste_gray_; ///desviaci贸n t铆pica del histograma
 
   double brillo_green_;  ///media del histograma
-  double contraste_green_; ///desviaci髇 t韕ica del histograma
+  double contraste_green_; ///desviaci贸n t铆pica del histograma
 
   double brillo_blue_;  ///media del histograma
-  double contraste_blue_; ///desviaci髇 t韕ica del histograma
+  double contraste_blue_; ///desviaci贸n t铆pica del histograma
 
   double brillo_red_;  ///media del histograma
-  double contraste_red_; ///desviaci髇 t韕ica del histograma
+  double contraste_red_; ///desviaci贸n t铆pica del histograma
 
-  bool keepOriginal_; ///todo los cambios los realiza en relaci髇 al brillo y contraste original.
+  bool keepOriginal_; ///todo los cambios los realiza en relaci贸n al brillo y contraste original.
   bool realTime_; ///realiza los cambios directamente, sin necesidad de presionar aplicar
 };
 

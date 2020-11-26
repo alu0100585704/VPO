@@ -5,7 +5,7 @@ QT_CHARTS_USE_NAMESPACE
 
 Image::Image(const QString fileImage,MainWindow * parent) :
       QDockWidget(fileImage,parent),
-  //aqui fileImage tambiÈn es el titulo de la ventana
+  //aqui fileImage tambi√É¬©n es el titulo de la ventana
     nameFile_(fileImage),
     title_(fileImage),
     image_(new QImage(fileImage)),
@@ -50,7 +50,7 @@ Image::Image(QString title, QChartView *image, MainWindow *parent):
 
   setButtonTitleBar(); ///configuro barra de titulos nueva.
   ///Preparo Dock widget acoplado pero con posibilidad de ser flotante
-  /// Lo hago dentro de un QLabel que a la vez est· dentro de un QScroolArea
+  /// Lo hago dentro de un QLabel que a la vez est√° dentro de un QScroolArea
   /// y a la vez dentro de un DockWidget.
 
   setMinimumHeight(50);
@@ -114,7 +114,7 @@ bool Image::prepare()
 
 
   ///Preparo Dock widget acoplado pero con posibilidad de ser flotante
-  /// Lo hago dentro de un QLabel que a la vez est· dentro de un QScroolArea
+  /// Lo hago dentro de un QLabel que a la vez est√° dentro de un QScroolArea
   /// y a la vez dentro de un DockWidget.
 
     setContextMenuPolicy(Qt::DefaultContextMenu);
@@ -190,7 +190,7 @@ void Image::updateImage()
   format_=image_->format();
 
   if (format_ == QImage::Format_Indexed8)
-    isGray_=true; ///si est· en formato 8 bits, asume que ser·n solo 256 colores y
+    isGray_=true; ///si est√° en formato 8 bits, asume que ser√°n solo 256 colores y
   ///los trato igual que si fueran grises
   else
     isGray_ = image_->isGrayscale();
@@ -241,7 +241,7 @@ void Image::calcular_histograma()
 
         if (isGray_)
           {
-            ///actualizo los valores de pixel m·ximo y mÌnimos.
+            ///actualizo los valores de pixel m√°ximo y m√≠nimos.
             if (qRed(valor)> grayValueMax_)
                 grayValueMax_=qRed(valor);
 
@@ -278,7 +278,7 @@ void Image::calcular_histograma()
 
      }
 
- ///ahora averiguo que tono de cada banda tiene m·s y menos pÌxeles asignados.
+ ///ahora averiguo que tono de cada banda tiene m√°s y menos p√≠xeles asignados.
  ///
  toneBlueWidthLessPixels_=0;
  toneBlueWidthMorePixels_=0;
@@ -292,8 +292,8 @@ void Image::calcular_histograma()
  double tmpMax = 0;
  double tmpMin = 0xFFFFFFFFFFFF;  ///equivalente a infinito
 
- for (int i=grayValueMin_; i <=grayValueMax_; i++)  ///miro solo desde el primer valor con pixeles hasta el ˙ltimo con pixeles,
-   ///que no tiene porquÈ coincidir con todo el rango [0,255]
+ for (int i=grayValueMin_; i <=grayValueMax_; i++)  ///miro solo desde el primer valor con pixeles hasta el √∫ltimo con pixeles,
+   ///que no tiene porqu√© coincidir con todo el rango [0,255]
      {
           if (histograma_[i].countGray_ >= tmpMax)
             {
@@ -313,8 +313,8 @@ void Image::calcular_histograma()
  tmpMax = 0;
  tmpMin = 0xFFFFFFFFFFFF;
 
- for (int i=redValueMin_; i <=redValueMax_; i++)  ///miro solo desde el primer valor con pixeles hasta el ˙ltimo con pixeles,
-   ///que no tiene porquÈ coincidir con todo el rango [0,255]
+ for (int i=redValueMin_; i <=redValueMax_; i++)  ///miro solo desde el primer valor con pixeles hasta el √∫ltimo con pixeles,
+   ///que no tiene porqu√© coincidir con todo el rango [0,255]
      {
           if (histograma_[i].countRed_ >= tmpMax)
             {
@@ -332,8 +332,8 @@ void Image::calcular_histograma()
  tmpMax = 0;
  tmpMin = 0xFFFFFFFFFFFF;
 
- for (int i=greenValueMin_; i <=greenValueMax_; i++)  ///miro solo desde el primer valor con pixeles hasta el ˙ltimo con pixeles,
-   ///que no tiene porquÈ coincidir con todo el rango [0,255]
+ for (int i=greenValueMin_; i <=greenValueMax_; i++)  ///miro solo desde el primer valor con pixeles hasta el √∫ltimo con pixeles,
+   ///que no tiene porqu√© coincidir con todo el rango [0,255]
      {
 
           if (histograma_[i].countGreen_ >= tmpMax)
@@ -352,8 +352,8 @@ void Image::calcular_histograma()
       }
  tmpMax = 0;
  tmpMin = 0xFFFFFFFFFFFF;
- for (int i=blueValueMin_; i <=blueValueMax_; i++)  ///miro solo desde el primer valor con pixeles hasta el ˙ltimo con pixeles,
-   ///que no tiene porquÈ coincidir con todo el rango [0,255]
+ for (int i=blueValueMin_; i <=blueValueMax_; i++)  ///miro solo desde el primer valor con pixeles hasta el √∫ltimo con pixeles,
+   ///que no tiene porqu√© coincidir con todo el rango [0,255]
      {
           if (histograma_[i].countBlue_ >= tmpMax)
             {
@@ -485,7 +485,7 @@ void Image::calcular_contraste()
       contraste_gray_ = sqrt(contraste_gray_);
       contraste_gray_=round(contraste_gray_);
       if (contraste_gray_ < 1)
-        contraste_gray_ =1; ///no dejo que el contraste sea nunca cero, porque para los calculos de brillo y contraste podrÌa fallar las divisiones.
+        contraste_gray_ =1; ///no dejo que el contraste sea nunca cero, porque para los calculos de brillo y contraste podr√≠a fallar las divisiones.
     }
   else {
       contraste_green_ = contraste_green_ / (width_* height_);
@@ -552,7 +552,7 @@ void Image::calcular_probabilidad_acumulativo()
 
 void Image::calcular_entropia()
 {
-  ///fÛrmula:
+  ///f√≥rmula:
   /// E= - sumatorio(0-255) p(i) * log2 P(i)
   /// donde p es la probabilidad del histograma absoluto y P probabilidad del histograma acumulado.
   double logaritmo,tmp;
@@ -572,7 +572,7 @@ void Image::calcular_entropia()
            }
        }
      else
-          entropia_=0; ///sinifica que no la he hecho. no se como serÌa para color
+          entropia_=0; ///sinifica que no la he hecho. no se como ser√≠a para color
 
 
     }
@@ -580,13 +580,13 @@ void Image::calcular_entropia()
 
 }
 
-///funciÛn Gamma
+///funci√≥n Gamma
 ///
 
 ///
 void Image::funcionGamma(double value)
 {
-  ///FÛrmula funciona Gamma utilizada
+  ///F√≥rmula funciona Gamma utilizada
   /// ((Vin/255)^gamma) * 255 = Vout
   ///  Se hace con redondeo y rango entre 0 -255
   ///
@@ -684,7 +684,7 @@ void Image::funcionGamma(double value)
 
 void Image::brilloYContrasteGris(double brilloNuevoGris, double contrasteNuevoGris)
 {
-  ///uso la fÛrmula de la recta para obtener una nueva LUT acorde a el nuevo
+  ///uso la f√≥rmula de la recta para obtener una nueva LUT acorde a el nuevo
   /// brillo y contraste
   /// y= Ax + B
   /// A= contraste nuevo / contraste actual
@@ -749,7 +749,7 @@ void Image::brilloYContrasteGris(double brilloNuevoGris, double contrasteNuevoGr
 
 void Image::brilloYContrasteColor(double brilloNuevoRed, double contrasteNuevoRed,double brilloNuevoGreen, double contrasteNuevoGreen,double brilloNuevoBlue, double contrasteNuevoBlue)
 {
-  ///uso la fÛrmula de la recta para obtener una nueva LUT acorde a el nuevo
+  ///uso la f√≥rmula de la recta para obtener una nueva LUT acorde a el nuevo
   /// brillo y contraste
   /// y= Ax + B
   /// A= contraste nuevo / contraste actual
@@ -873,11 +873,11 @@ return  true;
 /// \param ntsc
 /// \return
 ///Debuelve un QImage con la imagen en formato 256 colores,8 bits y escala de grises
-/// El receptor ser· el encargado crear su delete
+/// El receptor ser√° el encargado crear su delete
 /// Convierte la imagen a escala de grises formato 8 bits
 void Image::toGray(bool ntsc,bool ochobits)
 {
-  ///Se puede convertir de color RGB a gris RGB o gris ocho bits. TAmbiÈn de gris RGB a gris ocho bits o bien
+  ///Se puede convertir de color RGB a gris RGB o gris ocho bits. TAmbi√©n de gris RGB a gris ocho bits o bien
   /// de gris ocho bits a gris RGB.
   double coeficienteRed,coeficienteGreen,coeficienteBlue;
   QImage * target;
@@ -928,12 +928,12 @@ void Image::toGray(bool ntsc,bool ochobits)
           setImage(target);
 
 }
-///FunciÛn EcualizacÛn. Caso especÌfico de especificaciÛn de histograma
+///Funci√≥n Ecualizac√≥n. Caso espec√≠fico de especificaci√≥n de histograma
 ///
 ///
 void Image::toEcualizer()
 {
-  ///FÛrmula
+  ///F√≥rmula
   /// m=2^8
   /// vout= max[0,round((m/size)*Histograma acumulado(Vin) -1
   ///
@@ -1025,15 +1025,15 @@ void Image::toEcualizer()
  updateImage();
 }
 ///
-/// EspecificaciÛn de histograma.
+/// Especificaci√≥n de histograma.
 /// \brief Image::toHistogramaEspecificado
 /// \param targetHistograma
 ///
 void Image::toHistogramaEspecificado(Image *targetHistograma)
 {
-  ///FÛrmula
+  ///F√≥rmula
   /// vout= histogramaAcumulado_imagen_destino^-1[HistogramaAcumulado_imagen_origen(vin)]
-  ///AquÌ trabajo con los histogramas normalizados para no depender y tener que controlar los tamaÒos
+  ///Aqu√≠ trabajo con los histogramas normalizados para no depender y tener que controlar los tama√±os
   /// e la imagen.
  if (isGray_)
     {
@@ -1054,7 +1054,7 @@ void Image::toHistogramaEspecificado(Image *targetHistograma)
            a = tmp - targetHistograma->histograma_acumulado_[j-1].probabilidadGray_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
            b = targetHistograma->histograma_acumulado_[j].probabilidadGray_ - tmp ;///resto al valor del pixel superior, el valor encontrado
 
-           ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca m·s al pixel, ya sea, el anterior o el posterior
+           ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca m√°s al pixel, ya sea, el anterior o el posterior
 
            if (a <= b )
              Lut[i] = j-1; ///me quedo con el pixel con probabilidad justo anterior
@@ -1097,7 +1097,7 @@ void Image::toHistogramaEspecificado(Image *targetHistograma)
            a = tmpRed - targetHistograma->histograma_acumulado_[j-1].probabilidadRed_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
            b = targetHistograma->histograma_acumulado_[j].probabilidadRed_ - tmpRed ;///resto al valor del pixel superior, el valor encontrado
 
-           ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca m·s al pixel, ya sea, el anterior o el posterior
+           ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca m√°s al pixel, ya sea, el anterior o el posterior
 
            if (a <= b )
              LutRed[i] = j-1; ///me quedo con el pixel con probabilidad justo anterior
@@ -1116,7 +1116,7 @@ void Image::toHistogramaEspecificado(Image *targetHistograma)
             a = tmpGreen - targetHistograma->histograma_acumulado_[j-1].probabilidadGreen_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
             b = targetHistograma->histograma_acumulado_[j].probabilidadGreen_ - tmpGreen ;///resto al valor del pixel superior, el valor encontrado
 
-            ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca m·s al pixel, ya sea, el anterior o el posterior
+            ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca m√°s al pixel, ya sea, el anterior o el posterior
 
             if (a <= b )
               LutGreen[i] = j-1; ///me quedo con el pixel con probabilidad justo anterior
@@ -1134,7 +1134,7 @@ void Image::toHistogramaEspecificado(Image *targetHistograma)
              a = tmpBlue - targetHistograma->histograma_acumulado_[j-1].probabilidadBlue_; ///resto al valor el resultado de probabiliad del pixel justo anterior.
              b = targetHistograma->histograma_acumulado_[j].probabilidadBlue_ - tmpBlue ;///resto al valor del pixel superior, el valor encontrado
 
-             ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca m·s al pixel, ya sea, el anterior o el posterior
+             ///me quedo con la distancia menor, o sea, la probabilidad que  se acerca m√°s al pixel, ya sea, el anterior o el posterior
 
              if (a <= b )
                LutBlue[i] = j-1; ///me quedo con el pixel con probabilidad justo anterior
@@ -1170,7 +1170,7 @@ bool Image::toMapChange(Image *imagen)
     }
 
   QImage * target = new QImage(width_,height_,QImage::Format_RGB32); ///para poder indicar el mapa de cambios, si o si, cambio este objeto a imagen a color
-  ///puesto que si fuera gris 8 bits, no prodrÌa.
+  ///puesto que si fuera gris 8 bits, no prodr√≠a.
 
       QDialog *dialog = new QDialog(this);
       QSpinBox * spin = new QSpinBox(dialog);
@@ -1193,8 +1193,8 @@ bool Image::toMapChange(Image *imagen)
       histograma->setMinimumWidth(250);
       layout->addWidget(histograma);
 
-      setImage(target); ///stablecer la imagen a color con los cambios posibles, puesto que la diferencia me modificÛ el objecto. Ya la imagen diferencia la tengo guardada en borradorDiferencia
-      indicarCambios(255,borradorOriginal, borradorDiferencia); ///primero muestro la imagen sin cambios, o sea, con umbral m·ximo.
+      setImage(target); ///stablecer la imagen a color con los cambios posibles, puesto que la diferencia me modific√≥ el objecto. Ya la imagen diferencia la tengo guardada en borradorDiferencia
+      indicarCambios(255,borradorOriginal, borradorDiferencia); ///primero muestro la imagen sin cambios, o sea, con umbral m√°ximo.
 
 
 
@@ -1205,7 +1205,7 @@ bool Image::toMapChange(Image *imagen)
       connect(spin,QOverload<int>::of(&QSpinBox::valueChanged),[=](int d){
 
           ///
-          indicarCambios(spin->value(),borradorOriginal,borradorDiferencia); ///funciÛn privada que pinta en rojo los pixeles en base al umbral seleccionado
+          indicarCambios(spin->value(),borradorOriginal,borradorDiferencia); ///funci√≥n privada que pinta en rojo los pixeles en base al umbral seleccionado
 
       });
 
@@ -1231,7 +1231,7 @@ void Image::indicarCambios(int value, QImage * original,QImage * diferencia)
   for (int i=0; i < height_; i++)
       for (int j=0; j < width_; j++)
         {
-          if (original->allGray())  ///durante la operaciÛn de diferencia, ya se comprobÛ que la imagen diferencia tambiÈn fuera del mismo tipo.
+          if (original->allGray())  ///durante la operaci√≥n de diferencia, ya se comprob√≥ que la imagen diferencia tambi√©n fuera del mismo tipo.
                  if (qRed(diferencia->pixel(j,i)) >= value)
                       image_->setPixel(j,i,qRgb(255,0,0)); ///pongo a rojo, si es diferente Aqui la imagen destino realmente es una RGB  para poder pintar el rojo
                  else
@@ -1254,7 +1254,7 @@ updateImage();
 bool Image::toDifference(Image *imagen)
 {
   int borrador;
-  if (((width_*height_) == (imagen->width_*height_)) && (isGray_ == imagen->isGray_) && (format_ == imagen->format_)) ///si son del mismo tamaÒo, tipo de formato y si son gris o no. puedo operar
+  if (((width_*height_) == (imagen->width_*height_)) && (isGray_ == imagen->isGray_) && (format_ == imagen->format_)) ///si son del mismo tama√±o, tipo de formato y si son gris o no. puedo operar
     for (int i=0; i < height_; i++)
       for (int j=0; j < width_; j++)
         {
@@ -1279,15 +1279,15 @@ bool Image::toDifference(Image *imagen)
        }
   else
      {
-      QMessageBox::warning(nullptr,QString::fromUtf8("AtenciÛn: TamaÒos o Tipos de imagen diferentes"),QString::fromUtf8("No se puede realizar la diferencia de im·genes diferentes.\nSeleccione otra imagen"));
+      QMessageBox::warning(nullptr,QString::fromUtf8("Atenci√≥n: Tama√±os o Tipos de imagen diferentes"),QString::fromUtf8("No se puede realizar la diferencia de im√°genes diferentes.\nSeleccione otra imagen"));
       return false;
     }
 updateImage();
 return true;
 }
 
-///Devuelvo una copia de la imagen en formato QImage. El receptor se encargar·
-/// de su destrucciÛn
+///Devuelvo una copia de la imagen en formato QImage. El receptor se encargar√°
+/// de su destrucci√≥n
 QImage *Image::getImage()
 {
   QImage * tmp =new QImage(*image_);
@@ -1296,12 +1296,12 @@ QImage *Image::getImage()
 ///
 /// \brief Image::setImage
 /// \param imagen
-///Esta funciÛn toma posesiÛn de la imagen y simplemente sustituye un puntero por otro
-/// y libera la memoria. Muy r·pido
+///Esta funci√≥n toma posesi√≥n de la imagen y simplemente sustituye un puntero por otro
+/// y libera la memoria. Muy r√°pido
 void Image::setImage(QImage *imagen)
 {
   delete image_; ///borro imagen anterior
-  ///asigno a imagen nueva. Tomo posesiÛn de la imagen, ya se liberar· al destruirse el objeto.
+  ///asigno a imagen nueva. Tomo posesi√≥n de la imagen, ya se liberar√° al destruirse el objeto.
   image_  = imagen;
 
   updateImage();
@@ -1309,8 +1309,8 @@ void Image::setImage(QImage *imagen)
 ///
 /// \brief Image::setImage
 /// \param imagen
-///Esta funciÛn copia una imagen en este objeto. Es lenta pero mantiene simepre la imagen
-/// pasada como argumento intacta. Es lenta y no toma posesiÛn de la imagen pasada.
+///Esta funci√≥n copia una imagen en este objeto. Es lenta pero mantiene simepre la imagen
+/// pasada como argumento intacta. Es lenta y no toma posesi√≥n de la imagen pasada.
 void Image::setImage(QImage &imagen)
 {
 
@@ -1333,8 +1333,9 @@ QChartView *Image::toHistograma(bool acumulativo)
   QValueAxis * axisY =new QValueAxis();
 
   axisX->setRange(0,255);
-  ///axisX->setTickCount(7);
-  ///axisY->setTickCount(20);
+ /// axisX->applyNiceNumbers();
+  axisX->setTickCount(7);
+  axisY->setTickCount(10);
   axisY->setTitleText("Cantidad de Pixels");
   chart->addAxis(axisX,Qt::AlignBottom);
   chart->addAxis(axisY, Qt::AlignLeft);
@@ -1343,7 +1344,7 @@ QChartView *Image::toHistograma(bool acumulativo)
   chart->legend()->setAlignment(Qt::AlignBottom);
 
   if (acumulativo)
-      axisY->setRange(0,width_*height_); ///ajusto el rango Y del histograma al m·ximo valor que realmente puede alcanzar , en caso del acumulativo, el tamaÒo total de la imagen
+      axisY->setRange(0,width_*height_); ///ajusto el rango Y del histograma al m√°ximo valor que realmente puede alcanzar , en caso del acumulativo, el tama√±o total de la imagen
 
   if (isGray_)
     {      
@@ -1352,7 +1353,7 @@ QChartView *Image::toHistograma(bool acumulativo)
       linesGray->setColor(Qt::black);
 
       if (!acumulativo)
-          axisY->setRange(0,histograma_[toneGrayWidthMorePixels_].countGray_); ///ajusto el rango Y del histograma al m·ximo valor que realmente puede alcanzar
+          axisY->setRange(0,histograma_[toneGrayWidthMorePixels_].countGray_); ///ajusto el rango Y del histograma al m√°ximo valor que realmente puede alcanzar
 
         for (int i=0; i < 256; i++)
           if (acumulativo)
@@ -1368,23 +1369,23 @@ QChartView *Image::toHistograma(bool acumulativo)
 
 
       if (!acumulativo)
-      ///AquÌ busco la escala bas·ndome en el tono con mayor n˙mero de pixeles, ya que muestro las tres
-      /// gr·ficas RGB simult·neamente.
+      ///Aqu√≠ busco la escala bas√°ndome en el tono con mayor n√∫mero de pixeles, ya que muestro las tres
+      /// gr√°ficas RGB simult√°neamente.
           if (toneRedWidthMorePixels_>=toneGreenWidthMorePixels_)
               if (toneRedWidthMorePixels_>=toneBlueWidthMorePixels_)
-                  axisY->setRange(0,histograma_[toneRedWidthMorePixels_].countRed_); ///ajusto el rango Y del histograma al m·ximo valor que realmente puede alcanzar
+                  axisY->setRange(0,histograma_[toneRedWidthMorePixels_].countRed_); ///ajusto el rango Y del histograma al m√°ximo valor que realmente puede alcanzar
 
               else if (toneGreenWidthMorePixels_>=toneBlueWidthMorePixels_)
-                     axisY->setRange(0,histograma_[toneGreenWidthMorePixels_].countGreen_); ///ajusto el rango Y del histograma al m·ximo valor que realmente puede alcanzar
+                     axisY->setRange(0,histograma_[toneGreenWidthMorePixels_].countGreen_); ///ajusto el rango Y del histograma al m√°ximo valor que realmente puede alcanzar
 
               else
-                axisY->setRange(0,histograma_[toneBlueWidthMorePixels_].countBlue_); ///ajusto el rango Y del histograma al m·ximo valor que realmente puede alcanzar
+                axisY->setRange(0,histograma_[toneBlueWidthMorePixels_].countBlue_); ///ajusto el rango Y del histograma al m√°ximo valor que realmente puede alcanzar
 
             else if (toneGreenWidthMorePixels_>=toneBlueWidthMorePixels_)
-                   axisY->setRange(0,histograma_[toneGreenWidthMorePixels_].countGreen_); ///ajusto el rango Y del histograma al m·ximo valor que realmente puede alcanzar
+                   axisY->setRange(0,histograma_[toneGreenWidthMorePixels_].countGreen_); ///ajusto el rango Y del histograma al m√°ximo valor que realmente puede alcanzar
 
             else
-              axisY->setRange(0,histograma_[toneBlueWidthMorePixels_].countBlue_); ///ajusto el rango Y del histograma al m·ximo valor que realmente puede alcanzar
+              axisY->setRange(0,histograma_[toneBlueWidthMorePixels_].countBlue_); ///ajusto el rango Y del histograma al m√°ximo valor que realmente puede alcanzar
 
 
           QLineSeries *linesRed = new QLineSeries();
@@ -1422,6 +1423,7 @@ QChartView *Image::toHistograma(bool acumulativo)
        }
 
 
+  axisY->applyNiceNumbers();
 
   QChartView * chartview = new QChartView(chart);
   chartview->setRenderHint(QPainter::Antialiasing);
