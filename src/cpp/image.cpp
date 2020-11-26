@@ -1,4 +1,4 @@
-#include <image.h>
+﻿#include <image.h>
 #include <mainwindow.h>
 
 QT_CHARTS_USE_NAMESPACE

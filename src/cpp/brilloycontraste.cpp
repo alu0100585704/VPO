@@ -1,4 +1,4 @@
-#include "brilloycontraste.h"
+﻿#include "brilloycontraste.h"
 #include "ui_brilloycontraste.h"
 
 BrilloYContraste::BrilloYContraste(QWidget *parent) :

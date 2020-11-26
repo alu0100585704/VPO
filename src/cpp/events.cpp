@@ -1,4 +1,4 @@
-#include "events.h"
+﻿#include "events.h"
 #include <image.h>
 #include <mainwindow.h>
 Events::Events(Image * parent) :

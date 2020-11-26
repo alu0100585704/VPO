@@ -1,4 +1,4 @@
-#ifndef EVENTS_H
+﻿#ifndef EVENTS_H
 #define EVENTS_H
 
 #include <QObject>

@@ -1,4 +1,4 @@
-#ifndef BRILLOYCONTRASTE_H
+﻿#ifndef BRILLOYCONTRASTE_H
 #define BRILLOYCONTRASTE_H
 
 #include <QDialog>

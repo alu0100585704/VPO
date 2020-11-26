@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+Ôªø#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -71,7 +71,7 @@ void MainWindow::on_actionOpenFiles_triggered()
 
 ///
 /// \brief MainWindow::on_actionSaveFile_triggered
-///funciÛn que graba imagen a disco
+///funci√≥n que graba imagen a disco
 void MainWindow::on_actionSaveFile_triggered()
 {
 
@@ -88,7 +88,7 @@ void MainWindow::on_actionSaveFile_triggered()
 
 
 }
-///Devuelve puntero clase Image, con la imagen encontrada. nullptr si no se encontrÛ.
+///Devuelve puntero clase Image, con la imagen encontrada. nullptr si no se encontr√≥.
 /// name Qstring con nombre de la imagen.
 /// \brief findImage
 /// \param name
@@ -115,8 +115,8 @@ Image * MainWindow::findImage(QString name)
 
   return imagen;
 }
-///Devuelve puntero Image con una copia de la imagen buscada, con un nuevo tÌtulo.
-/// Si toHistograma es true , devuelve una claes Imagen que contiene el histrograma absoluto o acumulado seg˙n tipoHistograma
+///Devuelve puntero Image con una copia de la imagen buscada, con un nuevo t√≠tulo.
+/// Si toHistograma es true , devuelve una claes Imagen que contiene el histrograma absoluto o acumulado ser√°n tipoHistograma
 /// \brief findImage
 ///
 Image * MainWindow::findImageAndNew(QString name, QString newTitle, bool toHistograma,bool tipoHistograma)
@@ -185,7 +185,7 @@ void MainWindow::on_actionEntropia_triggered()
 {
 
   if (findImage(focus_) != nullptr)
-          QMessageBox::information(this,"Entropia",QString("Valor para %1: %2").arg(focus_).arg(findImage(focus_)->entropia_));
+          QMessageBox::information(this,"Entrop√≠a",QString("Valor para %1: %2").arg(focus_).arg(findImage(focus_)->entropia_));
 
 
 }
@@ -203,7 +203,7 @@ void MainWindow::on_actionGamma_triggered()
       QHBoxLayout * layout = new QHBoxLayout(dialogGamma);
 
       dialogGamma->setWindowTitle(QString("Valor Gamma para %1").arg(focus_));
-      label->setText("Introduzca valor para la funciÛn Gamma\n\nValores > 1 Mejora contraste en zona clara\nValores < 1 Mejora contraste en la zona oscura");
+      label->setText("Introduzca valor para la funci√≥n Gamma\n\nValores > 1 Mejora contraste en zona clara\nValores < 1 Mejora contraste en la zona oscura");
       layout->addWidget(label);
       layout->addWidget(valor);
       dialogGamma->setLayout(layout);
@@ -318,7 +318,7 @@ void MainWindow::on_actionEspecificacion_triggered()
 
       while (it!=images_.end())
         {
-          if ((it.key()!=focus_) && (!it.key().contains("histograma",Qt::CaseInsensitive))) ///agrego al combo solo las im·genes que no sean esta misma y que no sean histogramas
+          if ((it.key()!=focus_) && (!it.key().contains("histograma",Qt::CaseInsensitive))) ///agrego al combo solo las im√°genes que no sean esta misma y que no sean histogramas
               comboBoxTargetHistograma->addItem(it.key());
           ++it;
         }
@@ -327,7 +327,7 @@ void MainWindow::on_actionEspecificacion_triggered()
       {
 
       pushButtonApply->setText("Aplicar");
-      label->setText("Selecciona una imagen desde las ya abiertas.\nEl Histograma Destino ser· el que tenga la imagen seleccionada.");
+      label->setText("Selecciona una imagen desde las ya abiertas.\nEl Histograma Destino ser√° el que tenga la imagen seleccionada.");
       layout->addWidget(label);
       layout->addWidget(comboBoxTargetHistograma);
       layout->addWidget(pushButtonApply);
@@ -357,7 +357,7 @@ void MainWindow::on_actionEspecificacion_triggered()
     }
 
 }
-/// Elimino del vector de im·genes la imagen indicada o todas si name est· vacÌo
+/// Elimino del vector de im√°genes la imagen indicada o todas si name est√° vac√≥o
 /// \brief MainWindow::deleteImage
 /// \param name
 ///
@@ -436,14 +436,14 @@ void MainWindow::on_actionInformacion_triggered()
 
           }
 
-       information = information + QString::fromUtf8("\n\nValor entropÌa: ") + QString::number(borrador->entropia_);
+       information = information + QString::fromUtf8("\n\nValor entrop√≠a: ") + QString::number(borrador->entropia_);
        information = information + "\n\Ancho: " + QString::number(borrador->width_) + " pixels";
        information = information + "\nAlto: " + QString::number(borrador->height_) + " pixels";
        information = information + "\nTotal de Pixels: " + QString::number(borrador->height_ * borrador->width_) + " pixels";
 
 
 
-       QMessageBox::information(this,QString::fromUtf8("InformaciÛn"),information);
+       QMessageBox::information(this,QString::fromUtf8("Informaci√≥n"),information);
      }
 
 
@@ -469,7 +469,7 @@ void MainWindow::on_actionChangeMap_triggered()
 
       while (it!=images_.end())
         {
-          if ((it.key()!=focus_) && (it.key()!=focus_ + "_Mapa de Cambios") && (!it.key().contains("histograma",Qt::CaseInsensitive))) ///agrego al combo solo las im·genes que no sean esta misma y que no sean histogramas
+          if ((it.key()!=focus_) && (it.key()!=focus_ + "_Mapa de Cambios") && (!it.key().contains("histograma",Qt::CaseInsensitive))) ///agrego al combo solo las im√°genes que no sean esta misma y que no sean histogramas
               comboBoxTarget->addItem(it.key());
           ++it;
         }
@@ -478,7 +478,7 @@ void MainWindow::on_actionChangeMap_triggered()
       {
 
       pushButtonApply->setText("Aplicar");
-      label->setText("Selecciona una imagen desde las ya abiertas.\nEl Mapa de Cambios(pixeles de diferencia) se mostrar·n en rojo en la imagen resultante");
+      label->setText("Selecciona una imagen desde las ya abiertas.\nEl Mapa de Cambios(pixeles de diferencia) se mostrar√°n en rojo en la imagen resultante");
       layout->addWidget(label);
       layout->addWidget(comboBoxTarget);
       layout->addWidget(pushButtonApply);
@@ -490,8 +490,8 @@ void MainWindow::on_actionChangeMap_triggered()
       connect(pushButtonApply,(&QPushButton::clicked),[=](bool checked){
 
           if (!borrador->toMapChange(findImage(comboBoxTarget->currentText())))
-             deleteImage(focus_ + "_Mapa de Cambios"); ///borro el objeto en caso de que se haya producido alg˙n error durante
-          ///el mapa de cambios, por ejemplo porque las im·genes tuvieran tamaÒos diferentes
+             deleteImage(focus_ + "_Mapa de Cambios"); ///borro el objeto en caso de que se haya producido alg√∫n error durante
+          ///el mapa de cambios, por ejemplo porque las im√°genes tuvieran tama√°os diferentes
 
           apply_ =  true;
           dialogCambios->close();
@@ -512,7 +512,7 @@ void MainWindow::on_actionChangeMap_triggered()
       }
       else
       {
-        QMessageBox::warning(nullptr,QString::fromUtf8("AtenciÛn: Falta imagen para comparar"),"Debe abrir por lo menos otra imagen con la que comparar");
+        QMessageBox::warning(nullptr,QString::fromUtf8("Atenci√≥n: Falta imagen para comparar"),"Debe abrir por lo menos otra imagen con la que comparar");
         deleteImage(focus_ + "_Mapa de Cambios");
       }
 
@@ -539,7 +539,7 @@ void MainWindow::on_actionDiferencia_de_Imagenes_triggered()
 
       while (it!=images_.end())
         {
-          if ((it.key()!=focus_) &&  (it.key()!=focus_ + "_Diferencia") && (!it.key().contains("histograma",Qt::CaseInsensitive))) ///agrego al combo solo las im·genes que no sean esta misma y que no sean histogramas
+          if ((it.key()!=focus_) &&  (it.key()!=focus_ + "_Diferencia") && (!it.key().contains("histograma",Qt::CaseInsensitive))) ///agrego al combo solo las im√°genes que no sean esta misma y que no sean histogramas
               comboBoxTarget->addItem(it.key());
           ++it;
         }
@@ -548,13 +548,13 @@ void MainWindow::on_actionDiferencia_de_Imagenes_triggered()
       {
 
       pushButtonApply->setText("Aplicar");
-      label->setText("Selecciona una imagen desde las ya abiertas.\nLa imagen final ser· la diferencia entre la imagen origen y la seleccionada");
+      label->setText("Selecciona una imagen desde las ya abiertas.\nLa imagen final ser√° la diferencia entre la imagen origen y la seleccionada");
       layout->addWidget(label);
       layout->addWidget(comboBoxTarget);
       layout->addWidget(pushButtonApply);
 
 
-      dialogDifference->setWindowTitle(QString::fromUtf8("Diferencia de Im·genes"));
+      dialogDifference->setWindowTitle(QString::fromUtf8("Diferencia de Im√°genes"));
 
       apply_ = false;
       connect(pushButtonApply,(&QPushButton::clicked),[=](bool checked){
@@ -583,7 +583,7 @@ void MainWindow::on_actionDiferencia_de_Imagenes_triggered()
       }
       else
       {
-        QMessageBox::warning(nullptr,QString::fromUtf8("AtenciÛn: Falta imagen con la que realizar la diferencia"),"Debe abrir por lo menos otra imagen");
+        QMessageBox::warning(nullptr,QString::fromUtf8("Atenci√≥n: Falta imagen con la que realizar la diferencia"),"Debe abrir por lo menos otra imagen");
         deleteImage(focus_ + "_Diferencia");
       }
 
