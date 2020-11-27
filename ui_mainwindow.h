@@ -65,6 +65,8 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(930, 696);
         MainWindow->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        MainWindow->setDockNestingEnabled(true);
+        MainWindow->setDockOptions(QMainWindow::AllowNestedDocks|QMainWindow::AnimatedDocks);
         actionOpenFiles = new QAction(MainWindow);
         actionOpenFiles->setObjectName(QString::fromUtf8("actionOpenFiles"));
         QIcon icon;

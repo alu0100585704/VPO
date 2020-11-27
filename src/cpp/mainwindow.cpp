@@ -57,8 +57,8 @@ void MainWindow::on_actionOpenFiles_triggered()
                  if (file.exists())
                        {
                         Image *imagen= new Image(filenames[i],this);
-                        ui->menuVentanas->addAction(imagen->toggleViewAction());
-                        addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,imagen,Qt::Orientation::Vertical);
+                        ui->menuVentanas->addAction(imagen->toggleViewAction());                       
+                        addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea,imagen,Qt::Orientation::Horizontal);
                         images_.insert(filenames[i],imagen);
                        }
                 else
@@ -136,8 +136,8 @@ Image * MainWindow::findImageAndNew(QString name, QString newTitle, bool toHisto
                   imagen = new Image(QString("%1_%2").arg(name).arg(newTitle),it.value()->toHistograma(tipoHistograma),this);
 
               images_.insert(QString("%1_%2").arg(name).arg(newTitle),imagen);
-              ui->menuVentanas->addAction(imagen->toggleViewAction());
-              addDockWidget(Qt::DockWidgetArea::TopDockWidgetArea,imagen,Qt::Orientation::Vertical);
+              ui->menuVentanas->addAction(imagen->toggleViewAction());        
+                   addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea,imagen,Qt::Orientation::Horizontal);
         }
       ++it;
     }

@@ -117,15 +117,14 @@ bool Image::prepare()
   /// Lo hago dentro de un QLabel que a la vez está dentro de un QScroolArea
   /// y a la vez dentro de un DockWidget.
 
-    setContextMenuPolicy(Qt::DefaultContextMenu);
+    //setContextMenuPolicy(Qt::DefaultContextMenu);
 
     setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetClosable  | QDockWidget::DockWidgetFloatable );
     setAllowedAreas(Qt::AllDockWidgetAreas);
     setFloating(false);
     setFocusPolicy(Qt::FocusPolicy::StrongFocus);
 
-   //scrollArea_->setWidgetResizable(true);
-
+  scrollArea_->setWidgetResizable(false);
 
 
     if (image_->isNull())
