@@ -68,8 +68,9 @@ public:
   QImage *getImage();
   void setImage(QImage *imagen); ///no la copia y coge posesión del la imagen pasada como argumeto
   void setImage(QImage &imagen); ///copia la imagen.
-  Events * filterEvents_;
+  void updateImage();
 
+  Events * filterEvents_;
 
    QLabel * label_;
    QChartView * barGraphics_;
@@ -117,7 +118,6 @@ public:
 private:
   bool lutGray8bitsPrepare();
   bool prepare();
-  void updateImage();
   void calcular_histograma();
   void calcular_histograma_acumulado();
   void calcular_brillo();

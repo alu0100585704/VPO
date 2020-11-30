@@ -91,6 +91,7 @@ Image::~Image()
     delete barGraphics_;
 
     qDebug() << "Destructor Image";
+
   if (filterEvents_ !=nullptr)
     delete filterEvents_;
 
