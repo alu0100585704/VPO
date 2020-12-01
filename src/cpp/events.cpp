@@ -6,7 +6,8 @@ Events::Events(Image * parent) :
   parent_(parent),
   buttonPressed_(false),
   painter_(new QPainter()),
-  original_(nullptr)
+  original_(nullptr),
+  roiSelected_(false)
 {
 
 
@@ -40,12 +41,16 @@ bool Events::eventFilter(QObject *watched, QEvent *event)
 
       if (buttonPressed_)
         {
-          xF_ = x;
-          yF_ = y;
+          xF_ = x-xI_;
+          yF_ = y-yI_; ///el rectángulo funciona en base a su ancho y alto, no a las posiciones
 
-         if   ((abs(xF_-xI_) > 10) || (abs(yF_-yI_)>10)) ///solo en caso de que haya recortado un pedazo minimo
+       if ((xF_ > 0) && (yF_ >0) )  ///no entro si tengo algún valor negativo.
+         if   ((xF_ > 10) || (yF_>10) || (roiSelected_)) ///solo en caso de que haya recortado un pedazo minimo, o ya se haya comenzado el recorte
            {
+            if (!roiSelected_)
+                      original_ = parent_->getImage(); ///guardo la imagen original
 
+             roiSelected_=true;
              parent_->setImage(*original_);
 
              if (!painter_->isActive())
@@ -71,10 +76,10 @@ bool Events::eventFilter(QObject *watched, QEvent *event)
       parent_->parent_->focus_ = parent_->title_;
       parent_->parent_->statusPermanentMessage_.setText(QString("| Imagen Seleccionada : %1  ").arg(parent_->title_));
 
+      roiSelected_ = false;
       xI_ = mouseEvent->x();
       yI_ = mouseEvent->y();
       buttonPressed_ = true; ///indico que tengo el botón presionado para si se quiere recortar imagen.
-      original_ = parent_->getImage(); ///guardo la imagen original
 
       qDebug() << xI_ << " " << yI_ <<" " << "boton presionado";
       return true;
@@ -82,22 +87,30 @@ bool Events::eventFilter(QObject *watched, QEvent *event)
   else if (event->type() == QMouseEvent::MouseButtonRelease) {
         QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
 
-        xF_ =  mouseEvent->x();
-        yF_ = mouseEvent->y();
         buttonPressed_ = false; ///indico que tengo el botón presionado para si se quiere recortar imagen.
 
-        parent_->setImage(*original_);
-        parent_->updateImage();
+        if (roiSelected_)
+          {
+
+              roiSelected_ = false;
+              parent_->setImage(*original_);
+              parent_->updateImage();
+              delete original_; ///borro la copia original.
+              original_ = nullptr;
+
+              if (painter_->isActive())
+                painter_->end(); ///por si acaso esta activo el painter.
+
+              if (QMessageBox::question(nullptr,QString::fromUtf8("Región de interés Seleccionada"),QString::fromUtf8("¿Desea crear una imagen nueva a partir de la región seleccionada?"),QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No, QMessageBox::StandardButton::No)  == QMessageBox::StandardButton::Yes)
+                    ///creo imagen nueva solo de la regíon seleccionada
+                    ///
+                    parent_->parent_->roiImage(xI_,yI_,xF_,yF_,parent_);
+          }
 
 
 
   qDebug() << xI_ << " " << yI_ << "boton liberado" << xF_ << " " << yF_;
-        if (painter_->isActive())
-          painter_->end();
 
-        ///creo imagen nueva solo de la regíon seleccionada
-        ///
-        parent_->parent_->roiImage(xI_,yI_,xF_,yF_,parent_);
         return true;
       }
   else {

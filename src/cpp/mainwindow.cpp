@@ -615,7 +615,7 @@ void MainWindow::on_actionAbout_triggered()
 /// Región de interés de la imagen
 void MainWindow::roiImage(int xi, int yi, int xf, int yf, Image *imagen)
 {
-  QImage * borrador = &imagen->image_->copy(xi,yi,xf,yf);
+  QImage * borrador = new QImage(imagen->image_->copy(xi,yi,xf,yf));
   Image * roiImage = new Image(QString("ROI de: %1").arg(imagen->title_),borrador,this);
   appendImage(QString("ROI de: %1").arg(imagen->title_),roiImage);
 }
