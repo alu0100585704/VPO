@@ -63,7 +63,7 @@ public:
   void toHistogramaEspecificado(Image * targetHistograma);
   bool toMapChange(Image * imagen);
   bool toDifference(Image *imagen);
-  QChartView * toHistograma(bool acumulativo);   ///true si quiero el acumulativo o false si quiero el absoluto
+  QChartView * toHistograma(bool acumulativo);   ///true si quiero el acumulativo o false si quiero el absoluto  
 
   QImage *getImage();
   void setImage(QImage *imagen); ///no la copia y coge posesión del la imagen pasada como argumeto

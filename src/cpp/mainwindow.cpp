@@ -56,7 +56,7 @@ void MainWindow::on_actionOpenFiles_triggered()
                 QFile file(filenames[i]);
                  if (file.exists())
                        {
-                        Image *imagen= new Image(filenames[i],this);
+                        Image *imagen= new Image(filenames[i],this);                       
                         ui->menuVentanas->addAction(imagen->toggleViewAction());                       
                         addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea,imagen,Qt::Orientation::Horizontal);
                         images_.insert(filenames[i],imagen);
@@ -135,9 +135,7 @@ Image * MainWindow::findImageAndNew(QString name, QString newTitle, bool toHisto
               else
                   imagen = new Image(QString("%1_%2").arg(name).arg(newTitle),it.value()->toHistograma(tipoHistograma),this);
 
-              images_.insert(QString("%1_%2").arg(name).arg(newTitle),imagen);
-              ui->menuVentanas->addAction(imagen->toggleViewAction());        
-                   addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea,imagen,Qt::Orientation::Horizontal);
+              appendImage(QString("%1_%2").arg(name).arg(newTitle),imagen);
         }
       ++it;
     }
@@ -386,6 +384,18 @@ qDebug() << name;
     }
 
 }
+///
+/// \brief MainWindow::appendImage
+/// \param title
+/// \param imagen
+/// Agrego imagen al vector de imágenes y al menu ventanas.
+void MainWindow::appendImage(QString title, Image *imagen)
+{
+
+  images_.insert(title,imagen);
+  ui->menuVentanas->addAction(imagen->toggleViewAction());
+       addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea,imagen,Qt::Orientation::Horizontal);
+}
 
 void MainWindow::on_actionInformacion_triggered()
 {
@@ -593,4 +603,19 @@ void MainWindow::on_actionDiferencia_de_Imagenes_triggered()
 void MainWindow::on_actionAbout_triggered()
 {
     QMessageBox::information(this,"Acerca de . . .",QString("Realizado por Juan Siverio Rojas.\n* Práctica 1 y 3 para Visión por Computador\n* 4ª Ingeniería Informática\n* Itinerario Ingeniería de Computadores\n"));
+}
+
+///
+////// \brief MainWindow::roiImage
+////// \param xi
+////// \param yi
+////// \param xf
+////// \param yf
+////// \param imagen
+/// Región de interés de la imagen
+void MainWindow::roiImage(int xi, int yi, int xf, int yf, Image *imagen)
+{
+  QImage * borrador = &imagen->image_->copy(xi,yi,xf,yf);
+  Image * roiImage = new Image(QString("ROI de: %1").arg(imagen->title_),borrador,this);
+  appendImage(QString("ROI de: %1").arg(imagen->title_),roiImage);
 }

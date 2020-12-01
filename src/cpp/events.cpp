@@ -96,10 +96,8 @@ bool Events::eventFilter(QObject *watched, QEvent *event)
           painter_->end();
 
         ///creo imagen nueva solo de la regíon seleccionada
-        Image * roiImage;
-        roiImage = new Image(QString("ROI de: %1").arg(parent_->title_),&parent_->image_->copy(xI_,yI_,xF_,yF_) ,parent_->parent_); ///padre es mainwindow
-        parent_->parent_->images_.insert(QString("ROI de: %1").arg(parent_->title_),roiImage);
-
+        ///
+        parent_->parent_->roiImage(xI_,yI_,xF_,yF_,parent_);
         return true;
       }
   else {

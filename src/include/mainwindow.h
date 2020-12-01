@@ -43,6 +43,9 @@ public:
     QString focus_; //nombre de la imagen que tiene le foco actualmente        
     QLabel statusPermanentMessage_,information_;
     void deleteImage(QString name, bool noDelete=false);
+    void appendImage(QString title, Image * imagen);
+    void roiImage(int xi, int yi, int xf, int yf, Image * imagen);/// prepara una imagen de la región de interés especificada
+
 private slots:
 
     void on_actionOpenFiles_triggered();
@@ -96,5 +99,7 @@ private:
     QMap<QString, Image *> images_;
 
 };
+
+
 
 #endif // MAINWINDOW_H
