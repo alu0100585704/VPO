@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'brilloycontraste.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.10
+** Created by: Qt User Interface Compiler version 5.12.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -95,6 +95,7 @@ public:
         sizePolicy1.setHeightForWidth(lineEditBrilloGris->sizePolicy().hasHeightForWidth());
         lineEditBrilloGris->setSizePolicy(sizePolicy1);
         lineEditBrilloGris->setStyleSheet(QString::fromUtf8(""));
+        lineEditBrilloGris->setInputMethodHints(Qt::ImhNone);
 
         gridLayout->addWidget(lineEditBrilloGris, 6, 1, 1, 1);
 
@@ -343,6 +344,7 @@ public:
     void retranslateUi(QWidget *BrilloYContraste)
     {
         BrilloYContraste->setWindowTitle(QApplication::translate("BrilloYContraste", "Form", nullptr));
+        lineEditBrilloGris->setText(QString());
         progressBarGrayTo0->setFormat(QApplication::translate("BrilloYContraste", "%p%", nullptr));
         pixelsLostTo255->setText(QApplication::translate("BrilloYContraste", "Pixels ajustados a 255:", nullptr));
         labelContraste->setText(QApplication::translate("BrilloYContraste", "<html><head/><body><p>Contraste Actual:</p></body></html>", nullptr));

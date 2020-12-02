@@ -55,10 +55,10 @@ Image::Image(QString title, QChartView *image, MainWindow *parent):
 
   setMinimumHeight(50);
   setMinimumWidth(50);
-  setMaximumWidth(1680);
+  setMaximumWidth(1280);
   setMaximumHeight(1024);
 
-  setGeometry(0,0,800,600);
+  setGeometry(0,0,640,480);
 
 
 
@@ -95,47 +95,6 @@ Image::~Image()
   if (filterEvents_ !=nullptr)
     delete filterEvents_;
 
-}
-
-///
-/// \brief Image::newTramos
-///
-void Image::newTramos()
-{
-  tramos_.clear();
-}
-///
-/// \brief Image::appendTramo
-/// \param xI
-/// \param yI_
-/// \param xF_
-/// \param yF_
-///
-bool Image::appendTramo(double xI, double yI, double xF, double yF)
-{
-
-  Tramo tramo;
-
-  if (xF<xI)
-    {
-      QMessageBox::warning(nullptr,"Eror: Rango incorrecto.","Valor para X final no puede ser menor que X Inicial.");
-      return false;
-    }
-  if (tramos_.size()>0)
-    if (xI < tramos_[tramos_.size()-1].xF_)
-        {
-          QMessageBox::warning(nullptr,"Eror: Rango incorrecto.",QString::fromUtf8("Valor para X inicial se superpone con el rango anterior.\nRango debe de comenzar como mínimo en el %1").arg(tramos_[tramos_.size()-1].xF_));
-          return false;
-        }
-
-
-  tramo.xI_ = xI;
-  tramo.yI_ = yI;
-  tramo.xF_ = xF;
-  tramo.yF_ = yF;
-
-  tramos_.append(tramo);
-  return true;
 }
 
 
@@ -208,17 +167,17 @@ void Image::updateImage()
 
   setMinimumHeight(50);
   setMinimumWidth(50);
-  setMaximumWidth(1024);
-  setMaximumHeight(768);
+  setMaximumWidth(1280);
+  setMaximumHeight(1024);
 
   width_=image_->width();
   height_=image_->height();
 
 
-  if (width_ <1024)
+  if (width_ <1280)
       setMaximumWidth(width_+8);
 
-  if (height_<768)
+  if (height_<1024)
       setMaximumHeight(height_+50);
 
 
@@ -1239,8 +1198,6 @@ bool Image::toMapChange(Image *imagen)
       indicarCambios(255,borradorOriginal, borradorDiferencia); ///primero muestro la imagen sin cambios, o sea, con umbral máximo.
 
 
-
-
       dialog->show();
       histograma->show();
 
@@ -1341,6 +1298,48 @@ int Image::functionRect(int numeroTramo, int x)
 
 return round(borrador);
 }
+
+///
+/// \brief Image::newTramos
+///
+void Image::newTramos()
+{
+  tramos_.clear();
+}
+///
+/// \brief Image::appendTramo
+/// \param xI
+/// \param yI_
+/// \param xF_
+/// \param yF_
+///
+bool Image::appendTramo(double xI, double yI, double xF, double yF)
+{
+
+  Tramo tramo;
+
+  if (xF<xI)
+    {
+      QMessageBox::warning(this,"Eror: Rango incorrecto.","Valor para X final no puede ser menor que X Inicial.");
+      return false;
+    }
+  if (tramos_.size()>0)
+    if (xI < tramos_[tramos_.size()-1].xF_)
+        {
+          QMessageBox::warning(this,"Eror: Rango incorrecto.",QString::fromUtf8("Valor para X inicial se superpone con el rango anterior.\nRango debe de comenzar como mínimo en el %1").arg(tramos_[tramos_.size()-1].xF_));
+          return false;
+        }
+
+
+  tramo.xI_ = xI;
+  tramo.yI_ = yI;
+  tramo.xF_ = xF;
+  tramo.yF_ = yF;
+
+  tramos_.append(tramo);
+  return true;
+}
+
 ///
 /// \brief Image::toLinealTransform
 /// \param imagen
@@ -1475,10 +1474,14 @@ QChartView *Image::toHistograma(bool acumulativo)
         for (int i=0; i < 256; i++)
           if (acumulativo)
             linesGray->append(i,histograma_acumulado_[i].countGray_);
+
           else
             linesGray->append(i,histograma_[i].countGray_);
 
      chart->addSeries(linesGray);
+     linesGray->attachAxis(axisX); ///restablezco las proporciones de los ejes
+     linesGray->attachAxis(axisY);
+
      axisX->setTitleText(QString("Brillo : %1 | Contraste %2").arg(brillo_gray_).arg(contraste_gray_));
     }
   else
@@ -1535,6 +1538,18 @@ QChartView *Image::toHistograma(bool acumulativo)
           chart->addSeries(linesRed);
           chart->addSeries(linesGreen);
           chart->addSeries(linesBlue);
+
+          linesRed->attachAxis(axisX); ///restablezco las proporciones de los ejes
+          linesRed->attachAxis(axisY);
+
+          linesGreen->attachAxis(axisX); ///restablezco las proporciones de los ejes
+          linesGreen->attachAxis(axisY);
+
+          linesBlue->attachAxis(axisX); ///restablezco las proporciones de los ejes
+          linesBlue->attachAxis(axisY);
+
+
+
           axisX->setTitleText(QString("Rojo: Brillo %1 y Contraste %2 | Verde: Brillo %3 y Contraste %4 | Azul: Brillo %5 y Contraste %6").arg(brillo_red_).arg(contraste_red_).arg(brillo_green_).arg(contraste_green_).arg(brillo_blue_).arg(contraste_blue_));
 
        }
@@ -1601,7 +1616,10 @@ void Image::setButtonTitleBar()
       if (!isFloating())
          setFloating(true); ///la tengo que poner flotante para poder maximizarla.
 
-        setGeometry(x(),y(),width_+8,height_+50);
+      if (isBarGraphics_)
+          setGeometry(x(),y(),640,480); ///si es un histograma, aumento hasta este valor, aún se podría aumentar o disminuir manualmente mediante el ratón
+      else
+        setGeometry(x(),y(),width_+8,height_+50);  ///aumento hasta el máximo de la imagen, sin superar los límites establecidos, en cuyo caso se activará el scrool.
 
 
   });

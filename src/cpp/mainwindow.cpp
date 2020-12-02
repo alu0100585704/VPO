@@ -634,31 +634,73 @@ void MainWindow::on_actionTransformaci_n_Lineal_Por_tramos_triggered()
       QVBoxLayout * layoutV = new QVBoxLayout();
       QLabel * label = new QLabel();
       QHBoxLayout * layoutH = new QHBoxLayout();
-      QLineEdit * xI = new QLineEdit();
-      QLineEdit * yI = new QLineEdit();
-      QLineEdit * xF = new QLineEdit();
-      QLineEdit * yF = new QLineEdit();
+      QSpinBox * xI = new QSpinBox();
+      QLabel * labelxI = new QLabel();
+      QSpinBox * yI = new QSpinBox();
+      QLabel * labelyI = new QLabel();
+      QSpinBox * xF = new QSpinBox();
+      QLabel * labelxF = new QLabel();
+      QSpinBox * yF = new QSpinBox();
+      QLabel * labelyF = new QLabel();
       QPushButton * pushButtonAppendTramo = new QPushButton("Agregar Tramo");
       QPushButton * pushButtonApply = new QPushButton("Aplicar");
 
-
+      labelxI->setText("X Inicial ");
+      labelxF->setText("X Final ");
+      labelyI->setText("Y Inicial ");
+      labelyF->setText("Y Final ");
+      layoutH->addWidget(labelxI);
       layoutH->addWidget(xI);
+      layoutH->addWidget(labelxF);
       layoutH->addWidget(xF);
+      layoutH->addWidget(labelyI);
       layoutH->addWidget(yI);
+      layoutH->addWidget(labelyF);
       layoutH->addWidget(yF);
+
+      xI->setMinimum(0);
+      xF->setMinimum(0);
+      yI->setMinimum(0);
+      yF->setMinimum(0);
+
+      xI->setMaximum(255);
+      xF->setMaximum(255);
+      yI->setMaximum(255);
+      yF->setMaximum(255);
+
       layoutH->addWidget(pushButtonAppendTramo);
       label->setText("Introduzca tramos de valores delimitados para la transformación.\nPuede agregar más de un tramo");
       layoutV->addWidget(label);
       layoutV->addLayout(layoutH);
       layoutV->addWidget(pushButtonApply);
 
+      ///preparación del área de histograma.
+
+      QChart * chart = new QChart();
+
+      QValueAxis * axisX =new QValueAxis();
+      QValueAxis * axisY =new QValueAxis();
+      axisX->setRange(0,255);
+      axisX->setTitleText("Color de pixel");
+      axisY->setRange(0,255);
+      axisY->setTitleText("Color de pixel");
+      chart->setTitle("Tramos definidos");
+      chart->addAxis(axisX,Qt::AlignBottom);
+      chart->addAxis(axisY, Qt::AlignLeft);
+      chart->legend()->setVisible(true);
+      chart->legend()->setAlignment(Qt::AlignBottom);
+
+
+      QChartView *histograma = new QChartView(chart);
+      histograma->setRenderHint(QPainter::Antialiasing);
+
+      layoutV->addWidget(histograma);
+      histograma->setMinimumHeight(350);
+      histograma->setMinimumWidth(350);
+
+
       dialog->setLayout(layoutV);
       dialog->setWindowTitle(QString::fromUtf8("Transformación lineal por tramos"));
-
-      xI->setPlaceholderText("X Inicial");
-      yI->setPlaceholderText("Y Inicial");
-      xF->setPlaceholderText("X Final");
-      yF->setPlaceholderText("Y Final");
 
       apply_ = false;
       borrador->newTramos(); ///para a segurarme que comenzamos desde cero.
@@ -674,15 +716,29 @@ void MainWindow::on_actionTransformaci_n_Lineal_Por_tramos_triggered()
       });
       connect(pushButtonAppendTramo,(&QPushButton::clicked),[=](bool checked){
 
+         if  (borrador->appendTramo(xI->text().toDouble(),yI->text().toDouble(),xF->text().toDouble(),yF->text().toDouble()))
+           {
+              QLineSeries * linesPixelsCambian = new QLineSeries();
+
+              linesPixelsCambian->append(xI->text().toInt(),yI->text().toInt());
+              linesPixelsCambian->append(xF->text().toInt(),yF->text().toInt());
+              linesPixelsCambian->setName(QString("Tramo [%1, %2]").arg(xI->text().toInt()).arg(xF->text().toInt()));
+
+              chart->addSeries(linesPixelsCambian);
+              linesPixelsCambian->attachAxis(axisX); ///restablezco las proporciones de los ejes
+              linesPixelsCambian->attachAxis(axisY);
+
+            xI->setMinimum(xF->text().toInt());
+
+           }
+
 
 
       });
 
       connect(dialog,(&QDialog::finished),[=](int result){
-          if (!apply_)
-            delete borrador;
-
-          dialog->close();
+          if (!apply_)            
+            delete borrador;          
 
       });
 

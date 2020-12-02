@@ -44,6 +44,12 @@
      <property name="styleSheet">
       <string notr="true"/>
      </property>
+     <property name="inputMethodHints">
+      <set>Qt::ImhNone</set>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
     </widget>
    </item>
    <item row="8" column="3">
