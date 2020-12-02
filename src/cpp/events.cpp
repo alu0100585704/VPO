@@ -101,7 +101,7 @@ bool Events::eventFilter(QObject *watched, QEvent *event)
               if (painter_->isActive())
                 painter_->end(); ///por si acaso esta activo el painter.
 
-              if (QMessageBox::question(nullptr,QString::fromUtf8("Región de interés Seleccionada"),QString::fromUtf8("¿Desea crear una imagen nueva a partir de la región seleccionada?"),QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No, QMessageBox::StandardButton::No)  == QMessageBox::StandardButton::Yes)
+              if (QMessageBox::question(parent_,QString::fromUtf8("Región de interés Seleccionada"),QString::fromUtf8("¿Desea crear una imagen nueva a partir de la región seleccionada?"),QMessageBox::StandardButton::Yes | QMessageBox::StandardButton::No, QMessageBox::StandardButton::No)  == QMessageBox::StandardButton::Yes)
                     ///creo imagen nueva solo de la regíon seleccionada
                     ///
                     parent_->parent_->roiImage(xI_,yI_,xF_,yF_,parent_);

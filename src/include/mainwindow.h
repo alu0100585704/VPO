@@ -16,6 +16,7 @@
 #include <QVBoxLayout>
 #include <qpushbutton.h>
 #include <qcombobox.h>
+#include <qlineedit.h>
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -85,6 +86,8 @@ private slots:
 
 
     void on_actionAbout_triggered();
+
+    void on_actionTransformaci_n_Lineal_Por_tramos_triggered();
 
 private:
     Image * findImageAndNew(QString name, QString newTitle, bool toHistograma = false, bool tipoHistograma = false);

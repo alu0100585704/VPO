@@ -97,6 +97,47 @@ Image::~Image()
 
 }
 
+///
+/// \brief Image::newTramos
+///
+void Image::newTramos()
+{
+  tramos_.clear();
+}
+///
+/// \brief Image::appendTramo
+/// \param xI
+/// \param yI_
+/// \param xF_
+/// \param yF_
+///
+bool Image::appendTramo(double xI, double yI, double xF, double yF)
+{
+
+  Tramo tramo;
+
+  if (xF<xI)
+    {
+      QMessageBox::warning(nullptr,"Eror: Rango incorrecto.","Valor para X final no puede ser menor que X Inicial.");
+      return false;
+    }
+  if (tramos_.size()>0)
+    if (xI < tramos_[tramos_.size()-1].xF_)
+        {
+          QMessageBox::warning(nullptr,"Eror: Rango incorrecto.",QString::fromUtf8("Valor para X inicial se superpone con el rango anterior.\nRango debe de comenzar como mínimo en el %1").arg(tramos_[tramos_.size()-1].xF_));
+          return false;
+        }
+
+
+  tramo.xI_ = xI;
+  tramo.yI_ = yI;
+  tramo.xF_ = xF;
+  tramo.yF_ = yF;
+
+  tramos_.append(tramo);
+  return true;
+}
+
 
 bool Image::prepare()
 {
@@ -1280,11 +1321,86 @@ bool Image::toDifference(Image *imagen)
        }
   else
      {
-      QMessageBox::warning(nullptr,QString::fromUtf8("Atención: Tamaños o Tipos de imagen diferentes"),QString::fromUtf8("No se puede realizar la diferencia de imágenes diferentes.\nSeleccione otra imagen"));
+      QMessageBox::warning(this,QString::fromUtf8("Atención: Tamaños o Tipos de imagen diferentes"),QString::fromUtf8("No se puede realizar la diferencia de imágenes diferentes.\nSeleccione otra imagen"));
       return false;
     }
 updateImage();
 return true;
+}
+///
+/// \brief functionRect
+/// \param numeroTramo
+/// \return
+///dándo el número de tramo, y valor para x, me devuelve su correspondiente basándose en la función de la recta.
+int Image::functionRect(int numeroTramo, int x)
+{
+  double borrador;
+     borrador = (tramos_[numeroTramo].yF_ - tramos_[numeroTramo].yI_) / (tramos_[numeroTramo].xF_ - tramos_[numeroTramo].xI_);
+     borrador = borrador * x;
+     borrador = borrador + tramos_[numeroTramo].yI_;
+
+return round(borrador);
+}
+///
+/// \brief Image::toLinealTransform
+/// \param imagen
+/// \return
+///Transformación lineal por tramos. los tramos deben de haberse definido previamente mediante
+/// newTramos() y appendTramos()
+
+bool Image::toLinealTransform()
+{
+  int pixel;
+ if (tramos_.size()>0)  ///solo si se ha definido algún tramo.
+  {
+      for (int i=0; i < height_; i++)  ////recorreo toda la imagen y voy a cambiar valor de pixel por valor de pixel.
+        for (int j=0; j < width_; j++)
+          {
+            ///tengo que comprobar si el valor del pixel cogido, corresponde a algún tramo definido, y si es así
+            /// aplicarle la transformación según la ecuación de la recta de ese tramo.
+            ///
+            ///
+            if (isGray_)
+                  pixel = qRed(image_->pixel(j,i));
+
+            else {
+                ///imagen a color
+                ///
+              }
+
+            bool pixelInTramo = false;
+            int k=0; ///para recorrel los tramos posibles.
+            while ((!pixelInTramo) && (k< tramos_.size()))
+            {
+              if ((pixel >= tramos_[k].xI_) && (pixel <= tramos_[k].xF_))
+                {
+                  pixelInTramo = true;
+                  pixel = functionRect(k,pixel); ///llamo a la funciona de la recta para obtener su nuevo valor
+                }
+              k++;
+            }
+
+            if (isGray_)
+              if (format_ == QImage::Format_Indexed8)
+                   image_->setPixel(j,i,pixel);
+              else
+                  image_->setPixel(j,i,qRgb(pixel,pixel,pixel)); ///En rgb, pongo los tres colores al mismo valor
+
+            else {
+                ///imagen a color
+                ///
+              }
+
+          }
+
+      updateImage();
+      return true;
+   }
+ else
+   {
+     QMessageBox::warning(this,QString::fromUtf8("Atención: Tramo no definido"),QString::fromUtf8("\nNo se puede realizar la operación porque aún no se ha definido ningún tramo.\nAgregue como mínimo uno."));
+     return false;
+   }
 }
 
 ///Devuelvo una copia de la imagen en formato QImage. El receptor se encargará
@@ -1449,8 +1565,10 @@ void Image::setButtonTitleBar()
   layout->addWidget(pushButtonMax);
   layout->addWidget(pushButtonClose);
   label->setText(title_);
+  label->setToolTip(title_);
   label->setSizePolicy(QSizePolicy::Minimum,QSizePolicy::Fixed);
   label->setAlignment(Qt::AlignLeft);
+
 
 
 ///preparo iconos
@@ -1520,3 +1638,16 @@ Image::Punto::~Punto()
 
 }
 
+Image::Tramo::Tramo():
+  xI_(0),
+  yI_(0),
+  xF_(0),
+  yF_(0)
+{
+
+}
+
+Image::Tramo::~Tramo()
+{
+
+}

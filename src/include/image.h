@@ -54,7 +54,19 @@ public:
 
 };
 
+ class Tramo
+{
+ public:
+    Tramo();
+    ~Tramo();
 
+   double xI_,yI_;
+   double xF_,yF_;
+
+};
+  void newTramos(); ///inicializa el vector de Tramos, para comenzar a agregar nuevos, o  sea, borra los viejos.
+  bool appendTramo(double xI, double yI, double xF, double yF);
+  int functionRect(int numeroTramo, int x);
   void funcionGamma(double value);
   void brilloYContrasteGris(double brilloNuevoGris, double contrasteNuevoGris);
   void brilloYContrasteColor(double brilloNuevoRed, double contrasteNuevoRed,double brilloNuevoGreen, double contrasteNuevoGreen,double brilloNuevoBlue, double contrasteNuevoBlue);
@@ -63,6 +75,7 @@ public:
   void toHistogramaEspecificado(Image * targetHistograma);
   bool toMapChange(Image * imagen);
   bool toDifference(Image *imagen);
+  bool toLinealTransform();
   QChartView * toHistograma(bool acumulativo);   ///true si quiero el acumulativo o false si quiero el absoluto  
 
   QImage *getImage();
@@ -70,8 +83,9 @@ public:
   void setImage(QImage &imagen); ///copia la imagen.
   void updateImage();
 
-  Events * filterEvents_;
 
+   Events * filterEvents_;
+   QVector<Tramo> tramos_;
    QLabel * label_;
    QChartView * barGraphics_;
    QImage * image_;

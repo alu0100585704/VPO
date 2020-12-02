@@ -561,8 +561,8 @@ void MainWindow::on_actionDiferencia_de_Imagenes_triggered()
       label->setText("Selecciona una imagen desde las ya abiertas.\nLa imagen final será la diferencia entre la imagen origen y la seleccionada");
       layout->addWidget(label);
       layout->addWidget(comboBoxTarget);
-      layout->addWidget(pushButtonApply);
-
+      layout->addWidget(pushButtonApply);      
+      dialogDifference->setLayout(layout);
 
       dialogDifference->setWindowTitle(QString::fromUtf8("Diferencia de Imágenes"));
 
@@ -593,7 +593,7 @@ void MainWindow::on_actionDiferencia_de_Imagenes_triggered()
       }
       else
       {
-        QMessageBox::warning(nullptr,QString::fromUtf8("Atención: Falta imagen con la que realizar la diferencia"),"Debe abrir por lo menos otra imagen");
+        QMessageBox::warning(this,QString::fromUtf8("Atención: Falta imagen con la que realizar la diferencia"),"Debe abrir por lo menos otra imagen");
         deleteImage(focus_ + "_Diferencia");
       }
 
@@ -618,4 +618,76 @@ void MainWindow::roiImage(int xi, int yi, int xf, int yf, Image *imagen)
   QImage * borrador = new QImage(imagen->image_->copy(xi,yi,xf,yf));
   Image * roiImage = new Image(QString("ROI de: %1").arg(imagen->title_),borrador,this);
   appendImage(QString("ROI de: %1").arg(imagen->title_),roiImage);
+}
+///
+/// \brief MainWindow::on_actionTransformaci_n_Lineal_Por_tramos_triggered
+///
+void MainWindow::on_actionTransformaci_n_Lineal_Por_tramos_triggered()
+{
+  Image * borrador;
+
+  borrador= findImageAndNew(focus_,QString::fromUtf8("Tramos Lineales"));
+
+  if (borrador!= nullptr)
+    {
+      QDialog * dialog = new QDialog(this);
+      QVBoxLayout * layoutV = new QVBoxLayout();
+      QLabel * label = new QLabel();
+      QHBoxLayout * layoutH = new QHBoxLayout();
+      QLineEdit * xI = new QLineEdit();
+      QLineEdit * yI = new QLineEdit();
+      QLineEdit * xF = new QLineEdit();
+      QLineEdit * yF = new QLineEdit();
+      QPushButton * pushButtonAppendTramo = new QPushButton("Agregar Tramo");
+      QPushButton * pushButtonApply = new QPushButton("Aplicar");
+
+
+      layoutH->addWidget(xI);
+      layoutH->addWidget(xF);
+      layoutH->addWidget(yI);
+      layoutH->addWidget(yF);
+      layoutH->addWidget(pushButtonAppendTramo);
+      label->setText("Introduzca tramos de valores delimitados para la transformación.\nPuede agregar más de un tramo");
+      layoutV->addWidget(label);
+      layoutV->addLayout(layoutH);
+      layoutV->addWidget(pushButtonApply);
+
+      dialog->setLayout(layoutV);
+      dialog->setWindowTitle(QString::fromUtf8("Transformación lineal por tramos"));
+
+      xI->setPlaceholderText("X Inicial");
+      yI->setPlaceholderText("Y Inicial");
+      xF->setPlaceholderText("X Final");
+      yF->setPlaceholderText("Y Final");
+
+      apply_ = false;
+      borrador->newTramos(); ///para a segurarme que comenzamos desde cero.
+
+      connect(pushButtonApply,(&QPushButton::clicked),[=](bool checked){
+
+          if (borrador->toLinealTransform())
+              apply_ = true;
+
+          dialog->close();
+
+
+      });
+      connect(pushButtonAppendTramo,(&QPushButton::clicked),[=](bool checked){
+
+
+
+      });
+
+      connect(dialog,(&QDialog::finished),[=](int result){
+          if (!apply_)
+            delete borrador;
+
+          dialog->close();
+
+      });
+
+      dialog->exec();
+     }
+
+
 }
