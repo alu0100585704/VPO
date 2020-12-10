@@ -728,7 +728,7 @@ void MainWindow::on_actionTransformaci_n_Lineal_Por_tramos_triggered()
               linesPixelsCambian->attachAxis(axisX); ///restablezco las proporciones de los ejes
               linesPixelsCambian->attachAxis(axisY);
 
-            xI->setMinimum(xF->text().toInt());
+            xI->setMinimum(xF->text().toInt()+1);
 
            }
 

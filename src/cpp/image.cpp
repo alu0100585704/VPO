@@ -1291,12 +1291,15 @@ return true;
 ///dándo el número de tramo, y valor para x, me devuelve su correspondiente basándose en la función de la recta.
 int Image::functionRect(int numeroTramo, int x)
 {
-  double borrador;
-     borrador = (tramos_[numeroTramo].yF_ - tramos_[numeroTramo].yI_) / (tramos_[numeroTramo].xF_ - tramos_[numeroTramo].xI_);
-     borrador = borrador * x;
-     borrador = borrador + tramos_[numeroTramo].yI_;
+  double pendiente,borrador1,alturaB,nuevoValor;
 
-return round(borrador);
+     pendiente = (tramos_[numeroTramo].yF_ - tramos_[numeroTramo].yI_) / (tramos_[numeroTramo].xF_ - tramos_[numeroTramo].xI_);
+     borrador1 = pendiente * tramos_[numeroTramo].xI_;
+     alturaB = tramos_[numeroTramo].yI_ - borrador1;
+
+       nuevoValor =(pendiente * x) + alturaB;
+
+return (int) round(nuevoValor);
 }
 
 ///
