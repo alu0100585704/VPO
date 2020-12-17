@@ -747,3 +747,69 @@ void MainWindow::on_actionTransformaci_n_Lineal_Por_tramos_triggered()
 
 
 }
+
+
+void MainWindow::on_actionEspejoVertical_triggered()
+{
+  Image * borrador;
+  borrador = findImageAndNew(focus_,"Espejo Vertical");
+
+  if (borrador != nullptr)
+       borrador->toEspejoVertical();
+}
+
+void MainWindow::on_actionEspejoHorizontal_triggered()
+{
+  Image * borrador;
+  borrador = findImageAndNew(focus_,"Espejo Horizontal");
+
+  if (borrador != nullptr)
+       borrador->toEspejoHorizontal();
+}
+
+
+void MainWindow::on_actionEspejoTraspuesta_triggered()
+{
+  Image * borrador;
+  borrador = findImageAndNew(focus_,"Transpuesta");
+
+  if (borrador != nullptr)
+       borrador->toTransposed();
+
+}
+
+void MainWindow::on_actionRotacion90Izq_triggered()
+{
+  Image * borrador;
+  borrador = findImageAndNew(focus_,"Rotada Izquierda");
+
+  if (borrador != nullptr)
+       borrador->toRotate90Left();
+
+}
+
+void MainWindow::on_actionRotacion90Derecha_triggered()
+{
+  Image * borrador;
+  borrador = findImageAndNew(focus_,"Rotada Derecha");
+
+  if (borrador != nullptr)
+       borrador->toRotate90Right();
+
+
+}
+
+void MainWindow::on_actionEscalado_triggered()
+{
+
+}
+
+void MainWindow::on_actionRotacionAIquierda_triggered()
+{
+
+}
+
+void MainWindow::on_actionRotacionADerecha_triggered()
+{
+
+}

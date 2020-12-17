@@ -44,6 +44,14 @@ public:
     QAction *actionChangeMap;
     QAction *actionDiferencia_de_Imagenes;
     QAction *actionTransformaci_n_Lineal_Por_tramos;
+    QAction *actionEspejoTraspuesta;
+    QAction *actionEspejoVertical;
+    QAction *actionEspejoHorizontal;
+    QAction *actionRotacion90Izq;
+    QAction *actionRotacion90Derecha;
+    QAction *actionEscalado;
+    QAction *actionRotacionAIquierda;
+    QAction *actionRotacionADerecha;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuArchivo;
@@ -52,9 +60,11 @@ public:
     QMenu *menuEfectos;
     QMenu *menuHistograma;
     QMenu *menuLineales;
-    QMenu *menuEscala_de_Grises_2;
     QMenu *menuNo_Lineales;
     QMenu *menuFiltros;
+    QMenu *menuEscala_de_Grises;
+    QMenu *menuGeom_tricos;
+    QMenu *menuTransormaci_n_con_interpolaci_n;
     QMenu *menuInformaci_n;
     QStatusBar *statusBar;
     QToolBar *toolBar;
@@ -141,6 +151,46 @@ public:
         QIcon icon10;
         icon10.addFile(QString::fromUtf8(":/Recursos/iconos/transformacion_lineal_tramos.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionTransformaci_n_Lineal_Por_tramos->setIcon(icon10);
+        actionEspejoTraspuesta = new QAction(MainWindow);
+        actionEspejoTraspuesta->setObjectName(QString::fromUtf8("actionEspejoTraspuesta"));
+        QIcon icon11;
+        icon11.addFile(QString::fromUtf8("../qrc/Recursos/iconos/transpuesta.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionEspejoTraspuesta->setIcon(icon11);
+        actionEspejoVertical = new QAction(MainWindow);
+        actionEspejoVertical->setObjectName(QString::fromUtf8("actionEspejoVertical"));
+        QIcon icon12;
+        icon12.addFile(QString::fromUtf8("../qrc/Recursos/iconos/espejo vertical.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionEspejoVertical->setIcon(icon12);
+        actionEspejoHorizontal = new QAction(MainWindow);
+        actionEspejoHorizontal->setObjectName(QString::fromUtf8("actionEspejoHorizontal"));
+        QIcon icon13;
+        icon13.addFile(QString::fromUtf8("../qrc/Recursos/iconos/espejo horizontal.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionEspejoHorizontal->setIcon(icon13);
+        actionRotacion90Izq = new QAction(MainWindow);
+        actionRotacion90Izq->setObjectName(QString::fromUtf8("actionRotacion90Izq"));
+        QIcon icon14;
+        icon14.addFile(QString::fromUtf8("../qrc/Recursos/iconos/Rotar 90 izquierda.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionRotacion90Izq->setIcon(icon14);
+        actionRotacion90Derecha = new QAction(MainWindow);
+        actionRotacion90Derecha->setObjectName(QString::fromUtf8("actionRotacion90Derecha"));
+        QIcon icon15;
+        icon15.addFile(QString::fromUtf8("../qrc/Recursos/iconos/Rotar 90 derecha.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionRotacion90Derecha->setIcon(icon15);
+        actionEscalado = new QAction(MainWindow);
+        actionEscalado->setObjectName(QString::fromUtf8("actionEscalado"));
+        QIcon icon16;
+        icon16.addFile(QString::fromUtf8("../qrc/Recursos/iconos/escalar.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionEscalado->setIcon(icon16);
+        actionRotacionAIquierda = new QAction(MainWindow);
+        actionRotacionAIquierda->setObjectName(QString::fromUtf8("actionRotacionAIquierda"));
+        QIcon icon17;
+        icon17.addFile(QString::fromUtf8("../qrc/Recursos/iconos/rotacion izquierda.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionRotacionAIquierda->setIcon(icon17);
+        actionRotacionADerecha = new QAction(MainWindow);
+        actionRotacionADerecha->setObjectName(QString::fromUtf8("actionRotacionADerecha"));
+        QIcon icon18;
+        icon18.addFile(QString::fromUtf8("../qrc/Recursos/iconos/rotacion derecha.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionRotacionADerecha->setIcon(icon18);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -159,12 +209,16 @@ public:
         menuHistograma->setObjectName(QString::fromUtf8("menuHistograma"));
         menuLineales = new QMenu(menuEfectos);
         menuLineales->setObjectName(QString::fromUtf8("menuLineales"));
-        menuEscala_de_Grises_2 = new QMenu(menuLineales);
-        menuEscala_de_Grises_2->setObjectName(QString::fromUtf8("menuEscala_de_Grises_2"));
         menuNo_Lineales = new QMenu(menuEfectos);
         menuNo_Lineales->setObjectName(QString::fromUtf8("menuNo_Lineales"));
         menuFiltros = new QMenu(menuEfectos);
         menuFiltros->setObjectName(QString::fromUtf8("menuFiltros"));
+        menuEscala_de_Grises = new QMenu(menuEfectos);
+        menuEscala_de_Grises->setObjectName(QString::fromUtf8("menuEscala_de_Grises"));
+        menuGeom_tricos = new QMenu(menuEfectos);
+        menuGeom_tricos->setObjectName(QString::fromUtf8("menuGeom_tricos"));
+        menuTransormaci_n_con_interpolaci_n = new QMenu(menuEfectos);
+        menuTransormaci_n_con_interpolaci_n->setObjectName(QString::fromUtf8("menuTransormaci_n_con_interpolaci_n"));
         menuInformaci_n = new QMenu(menuBar);
         menuInformaci_n->setObjectName(QString::fromUtf8("menuInformaci_n"));
         MainWindow->setMenuBar(menuBar);
@@ -185,28 +239,44 @@ public:
         menuArchivo->addSeparator();
         menuArchivo->addAction(actionExit);
         menuAyuda->addAction(actionAbout);
+        menuEfectos->addAction(menuEscala_de_Grises->menuAction());
+        menuEfectos->addSeparator();
         menuEfectos->addAction(menuHistograma->menuAction());
         menuEfectos->addSeparator();
         menuEfectos->addAction(menuLineales->menuAction());
         menuEfectos->addSeparator();
         menuEfectos->addAction(menuNo_Lineales->menuAction());
+        menuEfectos->addSeparator();
         menuEfectos->addAction(menuFiltros->menuAction());
+        menuEfectos->addSeparator();
+        menuEfectos->addAction(menuGeom_tricos->menuAction());
+        menuEfectos->addSeparator();
+        menuEfectos->addAction(menuTransormaci_n_con_interpolaci_n->menuAction());
         menuHistograma->addAction(actionEcualizar);
         menuHistograma->addAction(actionEspecificacion);
-        menuLineales->addAction(menuEscala_de_Grises_2->menuAction());
         menuLineales->addSeparator();
         menuLineales->addAction(actionBrilloyContraste);
         menuLineales->addAction(actionTransformaci_n_Lineal_Por_tramos);
         menuLineales->addSeparator();
-        menuEscala_de_Grises_2->addAction(actionRGB32_NTSC);
-        menuEscala_de_Grises_2->addAction(actionNTSC8Bits);
-        menuEscala_de_Grises_2->addSeparator();
-        menuEscala_de_Grises_2->addAction(actionRGB32_PAL);
-        menuEscala_de_Grises_2->addAction(actionPAL8Bits);
         menuNo_Lineales->addAction(actionGamma);
         menuNo_Lineales->addAction(actionDiferencia_de_Imagenes);
         menuNo_Lineales->addAction(actionChangeMap);
         menuFiltros->addAction(actionSuavizado);
+        menuEscala_de_Grises->addSeparator();
+        menuEscala_de_Grises->addAction(actionRGB32_NTSC);
+        menuEscala_de_Grises->addAction(actionNTSC8Bits);
+        menuEscala_de_Grises->addSeparator();
+        menuEscala_de_Grises->addAction(actionRGB32_PAL);
+        menuEscala_de_Grises->addAction(actionPAL8Bits);
+        menuGeom_tricos->addAction(actionEspejoTraspuesta);
+        menuGeom_tricos->addAction(actionEspejoVertical);
+        menuGeom_tricos->addAction(actionEspejoHorizontal);
+        menuGeom_tricos->addAction(actionRotacion90Izq);
+        menuGeom_tricos->addAction(actionRotacion90Derecha);
+        menuGeom_tricos->addSeparator();
+        menuTransormaci_n_con_interpolaci_n->addAction(actionEscalado);
+        menuTransormaci_n_con_interpolaci_n->addAction(actionRotacionAIquierda);
+        menuTransormaci_n_con_interpolaci_n->addAction(actionRotacionADerecha);
         menuInformaci_n->addAction(actionHistograma_absoluto);
         menuInformaci_n->addAction(actionHistograma_Acumulativo);
         menuInformaci_n->addAction(actionEntropia);
@@ -223,7 +293,18 @@ public:
         toolBar->addAction(actionTransformaci_n_Lineal_Por_tramos);
         toolBar->addAction(actionInformacion);
         toolBar->addSeparator();
+        toolBar->addAction(actionEspejoTraspuesta);
+        toolBar->addAction(actionEspejoVertical);
+        toolBar->addAction(actionEspejoHorizontal);
+        toolBar->addAction(actionRotacion90Izq);
+        toolBar->addAction(actionRotacion90Derecha);
+        toolBar->addSeparator();
+        toolBar->addAction(actionEscalado);
+        toolBar->addAction(actionRotacionADerecha);
+        toolBar->addAction(actionRotacionAIquierda);
+        toolBar->addSeparator();
         toolBar->addAction(actionExit);
+        toolBar->addSeparator();
 
         retranslateUi(MainWindow);
 
@@ -298,15 +379,61 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionTransformaci_n_Lineal_Por_tramos->setToolTip(QApplication::translate("MainWindow", "Transformaci\303\263n Lineal por Tramos", nullptr));
 #endif // QT_NO_TOOLTIP
+        actionEspejoTraspuesta->setText(QApplication::translate("MainWindow", "Traspuesta", nullptr));
+#ifndef QT_NO_TOOLTIP
+        actionEspejoTraspuesta->setToolTip(QApplication::translate("MainWindow", "Traspuesta de la Imagen", nullptr));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_SHORTCUT
+        actionEspejoTraspuesta->setShortcut(QApplication::translate("MainWindow", "Alt+T", nullptr));
+#endif // QT_NO_SHORTCUT
+        actionEspejoVertical->setText(QApplication::translate("MainWindow", "Espejo Vertical", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionEspejoVertical->setShortcut(QApplication::translate("MainWindow", "Alt+V", nullptr));
+#endif // QT_NO_SHORTCUT
+        actionEspejoHorizontal->setText(QApplication::translate("MainWindow", "Espejo Horizontal", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionEspejoHorizontal->setShortcut(QApplication::translate("MainWindow", "Alt+H", nullptr));
+#endif // QT_NO_SHORTCUT
+        actionRotacion90Izq->setText(QApplication::translate("MainWindow", "Rotaci\303\263n 90 \302\272 Izquierda", nullptr));
+#ifndef QT_NO_TOOLTIP
+        actionRotacion90Izq->setToolTip(QApplication::translate("MainWindow", "Rotaci\303\263n 90\302\272 a Izquierda", nullptr));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_SHORTCUT
+        actionRotacion90Izq->setShortcut(QApplication::translate("MainWindow", "Alt+I", nullptr));
+#endif // QT_NO_SHORTCUT
+        actionRotacion90Derecha->setText(QApplication::translate("MainWindow", "Rotaci\303\263n 90 \302\272 Derecha", nullptr));
+#ifndef QT_NO_TOOLTIP
+        actionRotacion90Derecha->setToolTip(QApplication::translate("MainWindow", "Rotaci\303\263n 90 \302\272 a  Derecha", nullptr));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_SHORTCUT
+        actionRotacion90Derecha->setShortcut(QApplication::translate("MainWindow", "Alt+D", nullptr));
+#endif // QT_NO_SHORTCUT
+        actionEscalado->setText(QApplication::translate("MainWindow", "Escalado", nullptr));
+#ifndef QT_NO_TOOLTIP
+        actionEscalado->setToolTip(QApplication::translate("MainWindow", "Escalar Imagen", nullptr));
+#endif // QT_NO_TOOLTIP
+#ifndef QT_NO_SHORTCUT
+        actionEscalado->setShortcut(QApplication::translate("MainWindow", "Alt+E", nullptr));
+#endif // QT_NO_SHORTCUT
+        actionRotacionAIquierda->setText(QApplication::translate("MainWindow", "Rotaci\303\263n a Iquierda", nullptr));
+#ifndef QT_NO_TOOLTIP
+        actionRotacionAIquierda->setToolTip(QApplication::translate("MainWindow", "Rotaci\303\263n a Iquierda con Interpolado", nullptr));
+#endif // QT_NO_TOOLTIP
+        actionRotacionADerecha->setText(QApplication::translate("MainWindow", "Rotaci\303\263n a Derecha", nullptr));
+#ifndef QT_NO_TOOLTIP
+        actionRotacionADerecha->setToolTip(QApplication::translate("MainWindow", "Rotaci\303\263n a Derecha con Interpolado", nullptr));
+#endif // QT_NO_TOOLTIP
         menuArchivo->setTitle(QApplication::translate("MainWindow", "Archivo", nullptr));
         menuAyuda->setTitle(QApplication::translate("MainWindow", "Ayuda", nullptr));
         menuVentanas->setTitle(QApplication::translate("MainWindow", "Ventanas", nullptr));
         menuEfectos->setTitle(QApplication::translate("MainWindow", "Efectos", nullptr));
         menuHistograma->setTitle(QApplication::translate("MainWindow", "Histograma", nullptr));
         menuLineales->setTitle(QApplication::translate("MainWindow", "Lineales", nullptr));
-        menuEscala_de_Grises_2->setTitle(QApplication::translate("MainWindow", "Escala de Grises", nullptr));
         menuNo_Lineales->setTitle(QApplication::translate("MainWindow", "No Lineales", nullptr));
         menuFiltros->setTitle(QApplication::translate("MainWindow", "Filtros", nullptr));
+        menuEscala_de_Grises->setTitle(QApplication::translate("MainWindow", "Escala de Grises", nullptr));
+        menuGeom_tricos->setTitle(QApplication::translate("MainWindow", "Geom\303\251tricos", nullptr));
+        menuTransormaci_n_con_interpolaci_n->setTitle(QApplication::translate("MainWindow", "Transormaci\303\263n con interpolado", nullptr));
         menuInformaci_n->setTitle(QApplication::translate("MainWindow", "Ver", nullptr));
         toolBar->setWindowTitle(QApplication::translate("MainWindow", "toolBar", nullptr));
     } // retranslateUi

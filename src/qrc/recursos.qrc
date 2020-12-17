@@ -20,5 +20,13 @@
         <file>Recursos/iconos/diferencia de imagenes.png</file>
         <file>Recursos/iconos/mapa de cambios.png</file>
         <file>Recursos/iconos/transformacion_lineal_tramos.png</file>
+        <file>Recursos/iconos/espejo horizontal.png</file>
+        <file>Recursos/iconos/espejo vertical.png</file>
+        <file>Recursos/iconos/rotacion derecha.png</file>
+        <file>Recursos/iconos/rotacion izquierda.png</file>
+        <file>Recursos/iconos/Rotar 90 derecha.png</file>
+        <file>Recursos/iconos/Rotar 90 izquierda.png</file>
+        <file>Recursos/iconos/escalar.png</file>
+        <file>Recursos/iconos/transpuesta.png</file>
     </qresource>
 </RCC>

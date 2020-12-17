@@ -89,6 +89,25 @@ private slots:
 
     void on_actionTransformaci_n_Lineal_Por_tramos_triggered();
 
+
+
+    void on_actionEspejoVertical_triggered();
+
+    void on_actionEspejoHorizontal_triggered();
+
+
+    void on_actionEspejoTraspuesta_triggered();
+
+    void on_actionRotacion90Izq_triggered();
+
+    void on_actionRotacion90Derecha_triggered();
+
+    void on_actionEscalado_triggered();
+
+    void on_actionRotacionAIquierda_triggered();
+
+    void on_actionRotacionADerecha_triggered();
+
 private:
     Image * findImageAndNew(QString name, QString newTitle, bool toHistograma = false, bool tipoHistograma = false);
     Image * findImage(QString name);

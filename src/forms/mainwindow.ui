@@ -67,17 +67,6 @@
      <property name="title">
       <string>Lineales</string>
      </property>
-     <widget class="QMenu" name="menuEscala_de_Grises_2">
-      <property name="title">
-       <string>Escala de Grises</string>
-      </property>
-      <addaction name="actionRGB32_NTSC"/>
-      <addaction name="actionNTSC8Bits"/>
-      <addaction name="separator"/>
-      <addaction name="actionRGB32_PAL"/>
-      <addaction name="actionPAL8Bits"/>
-     </widget>
-     <addaction name="menuEscala_de_Grises_2"/>
      <addaction name="separator"/>
      <addaction name="actionBrilloyContraste"/>
      <addaction name="actionTransformaci_n_Lineal_Por_tramos"/>
@@ -97,12 +86,49 @@
      </property>
      <addaction name="actionSuavizado"/>
     </widget>
+    <widget class="QMenu" name="menuEscala_de_Grises">
+     <property name="title">
+      <string>Escala de Grises</string>
+     </property>
+     <addaction name="separator"/>
+     <addaction name="actionRGB32_NTSC"/>
+     <addaction name="actionNTSC8Bits"/>
+     <addaction name="separator"/>
+     <addaction name="actionRGB32_PAL"/>
+     <addaction name="actionPAL8Bits"/>
+    </widget>
+    <widget class="QMenu" name="menuGeom_tricos">
+     <property name="title">
+      <string>Geométricos</string>
+     </property>
+     <addaction name="actionEspejoTraspuesta"/>
+     <addaction name="actionEspejoVertical"/>
+     <addaction name="actionEspejoHorizontal"/>
+     <addaction name="actionRotacion90Izq"/>
+     <addaction name="actionRotacion90Derecha"/>
+     <addaction name="separator"/>
+    </widget>
+    <widget class="QMenu" name="menuTransormaci_n_con_interpolaci_n">
+     <property name="title">
+      <string>Transormación con interpolado</string>
+     </property>
+     <addaction name="actionEscalado"/>
+     <addaction name="actionRotacionAIquierda"/>
+     <addaction name="actionRotacionADerecha"/>
+    </widget>
+    <addaction name="menuEscala_de_Grises"/>
+    <addaction name="separator"/>
     <addaction name="menuHistograma"/>
     <addaction name="separator"/>
     <addaction name="menuLineales"/>
     <addaction name="separator"/>
     <addaction name="menuNo_Lineales"/>
+    <addaction name="separator"/>
     <addaction name="menuFiltros"/>
+    <addaction name="separator"/>
+    <addaction name="menuGeom_tricos"/>
+    <addaction name="separator"/>
+    <addaction name="menuTransormaci_n_con_interpolaci_n"/>
    </widget>
    <widget class="QMenu" name="menuInformaci_n">
     <property name="title">
@@ -142,7 +168,18 @@
    <addaction name="actionTransformaci_n_Lineal_Por_tramos"/>
    <addaction name="actionInformacion"/>
    <addaction name="separator"/>
+   <addaction name="actionEspejoTraspuesta"/>
+   <addaction name="actionEspejoVertical"/>
+   <addaction name="actionEspejoHorizontal"/>
+   <addaction name="actionRotacion90Izq"/>
+   <addaction name="actionRotacion90Derecha"/>
+   <addaction name="separator"/>
+   <addaction name="actionEscalado"/>
+   <addaction name="actionRotacionADerecha"/>
+   <addaction name="actionRotacionAIquierda"/>
+   <addaction name="separator"/>
    <addaction name="actionExit"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionOpenFiles">
    <property name="icon">
@@ -334,6 +371,114 @@
    </property>
    <property name="toolTip">
     <string>Transformación Lineal por Tramos</string>
+   </property>
+  </action>
+  <action name="actionEspejoTraspuesta">
+   <property name="icon">
+    <iconset>
+     <normaloff>../qrc/Recursos/iconos/transpuesta.png</normaloff>../qrc/Recursos/iconos/transpuesta.png</iconset>
+   </property>
+   <property name="text">
+    <string>Traspuesta</string>
+   </property>
+   <property name="toolTip">
+    <string>Traspuesta de la Imagen</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+T</string>
+   </property>
+  </action>
+  <action name="actionEspejoVertical">
+   <property name="icon">
+    <iconset>
+     <normaloff>../qrc/Recursos/iconos/espejo vertical.png</normaloff>../qrc/Recursos/iconos/espejo vertical.png</iconset>
+   </property>
+   <property name="text">
+    <string>Espejo Vertical</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+V</string>
+   </property>
+  </action>
+  <action name="actionEspejoHorizontal">
+   <property name="icon">
+    <iconset>
+     <normaloff>../qrc/Recursos/iconos/espejo horizontal.png</normaloff>../qrc/Recursos/iconos/espejo horizontal.png</iconset>
+   </property>
+   <property name="text">
+    <string>Espejo Horizontal</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+H</string>
+   </property>
+  </action>
+  <action name="actionRotacion90Izq">
+   <property name="icon">
+    <iconset>
+     <normaloff>../qrc/Recursos/iconos/Rotar 90 izquierda.png</normaloff>../qrc/Recursos/iconos/Rotar 90 izquierda.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rotación 90 º Izquierda</string>
+   </property>
+   <property name="toolTip">
+    <string>Rotación 90º a Izquierda</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+I</string>
+   </property>
+  </action>
+  <action name="actionRotacion90Derecha">
+   <property name="icon">
+    <iconset>
+     <normaloff>../qrc/Recursos/iconos/Rotar 90 derecha.png</normaloff>../qrc/Recursos/iconos/Rotar 90 derecha.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rotación 90 º Derecha</string>
+   </property>
+   <property name="toolTip">
+    <string>Rotación 90 º a  Derecha</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+D</string>
+   </property>
+  </action>
+  <action name="actionEscalado">
+   <property name="icon">
+    <iconset>
+     <normaloff>../qrc/Recursos/iconos/escalar.png</normaloff>../qrc/Recursos/iconos/escalar.png</iconset>
+   </property>
+   <property name="text">
+    <string>Escalado</string>
+   </property>
+   <property name="toolTip">
+    <string>Escalar Imagen</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+E</string>
+   </property>
+  </action>
+  <action name="actionRotacionAIquierda">
+   <property name="icon">
+    <iconset>
+     <normaloff>../qrc/Recursos/iconos/rotacion izquierda.png</normaloff>../qrc/Recursos/iconos/rotacion izquierda.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rotación a Iquierda</string>
+   </property>
+   <property name="toolTip">
+    <string>Rotación a Iquierda con Interpolado</string>
+   </property>
+  </action>
+  <action name="actionRotacionADerecha">
+   <property name="icon">
+    <iconset>
+     <normaloff>../qrc/Recursos/iconos/rotacion derecha.png</normaloff>../qrc/Recursos/iconos/rotacion derecha.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rotación a Derecha</string>
+   </property>
+   <property name="toolTip">
+    <string>Rotación a Derecha con Interpolado</string>
    </property>
   </action>
  </widget>

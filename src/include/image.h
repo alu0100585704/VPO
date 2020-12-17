@@ -72,6 +72,11 @@ public:
   void brilloYContrasteColor(double brilloNuevoRed, double contrasteNuevoRed,double brilloNuevoGreen, double contrasteNuevoGreen,double brilloNuevoBlue, double contrasteNuevoBlue);
   void toGray(bool ntsc,bool ochobits);
   void toEcualizer();
+  void toEspejoVertical();
+  void toEspejoHorizontal();
+  void toRotate90Left();
+  void toRotate90Right();
+  void toTransposed();
   void toHistogramaEspecificado(Image * targetHistograma);
   bool toMapChange(Image * imagen);
   bool toDifference(Image *imagen);
@@ -103,7 +108,7 @@ public:
    QVector<Punto> histograma_acumulado_;
    QString nameFile_;
    QString title_;
-   int format_;
+   QImage::Format format_;
    int width_,height_;  //medida de la imagen
    MainWindow * parent_;
    double entropia_;

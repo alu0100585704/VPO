@@ -1024,6 +1024,144 @@ void Image::toEcualizer()
 
  updateImage();
 }
+
+void Image::toEspejoVertical()
+{
+int pixelDraftIndexed8;
+QRgb pixelDraftRgb32;
+
+  for (int i=0; i < height_ / 2; i++) ///recorreo hasta la mitad de la imagen.
+      for (int j=0; j < width_; j++)
+        {
+          if (format_ == QImage::Format_Indexed8)
+            {
+              ///en una sola iteración, intercambio los pixeles de una fila con otra
+               pixelDraftIndexed8 = qRed(image_->pixel(j,height_ -1 -i)); ///salvaguardo el pixel que voy a intercambiar
+               image_->setPixel(j,height_- 1 - i,qRed(image_->pixel(j,i))); ///intercambio valor de pixel
+               image_->setPixel(j,i,pixelDraftIndexed8); ///intercambio valor de pixel
+            }
+
+           else
+            {
+              ///en una sola iteración, intercambio los pixeles de una fila con otra
+               pixelDraftRgb32 = image_->pixel(j,height_ -1 -i); ///salvaguardo el pixel que voy a intercambiar
+               image_->setPixel(j,height_- 1 - i,image_->pixel(j,i)); ///intercambio valor de pixel
+               image_->setPixel(j,i,pixelDraftRgb32); ///intercambio valor de pixel
+
+            }
+
+        }
+  updateImage();
+}
+
+void Image::toEspejoHorizontal()
+{
+  int pixelDraftIndexed8;
+  QRgb pixelDraftRgb32;
+
+    for (int i=0; i < width_ / 2; i++) ///recorreo hasta la mitad de la imagen.
+        for (int j=0; j < height_; j++)
+          {
+            if (format_ == QImage::Format_Indexed8)
+              {
+                ///en una sola iteración, intercambio los pixeles de una fila con otra
+                 pixelDraftIndexed8 = qRed(image_->pixel(width_ -1 -i,j)); ///salvaguardo el pixel que voy a intercambiar
+                 image_->setPixel(width_ - 1 - i, j, qRed(image_->pixel(i,j))); ///intercambio valor de pixel
+                 image_->setPixel(i,j,pixelDraftIndexed8); ///intercambio valor de pixel
+              }
+
+             else
+              {
+                ///en una sola iteración, intercambio los pixeles de una fila con otra
+                 pixelDraftRgb32 = image_->pixel(width_ -1 -i,j); ///salvaguardo el pixel que voy a intercambiar
+                 image_->setPixel(width_ - 1 - i, j, image_->pixel(i,j)); ///intercambio valor de pixel
+                 image_->setPixel(i,j,pixelDraftRgb32); ///intercambio valor de pixel
+
+              }
+
+          }
+    updateImage();
+}
+
+void Image::toRotate90Left()
+{
+  QImage * borrador;
+
+      borrador =new QImage(height_,width_, format_); ///creo espacio para la imagen resultante con el ancho y alto invertido
+      ///Asigno la LUT de grises a la imagen nueva en caso de que sea de 8 bits
+   if (format_ == QImage::Format_Indexed8)
+      borrador->setColorTable(lutGray8bits_);
+
+
+  for (int i=0; i < height_; i++) ///recorreo hasta la mitad de la imagen.
+      for (int j= width_ - 1; j >= 0; j--)
+        {
+          if (format_ == QImage::Format_Indexed8)
+               borrador->setPixel(i, width_ -1 - j, qRed(image_->pixel(j,i)));
+
+           else
+              ///en una sola iteración, intercambio los pixeles de una fila con otra
+              borrador->setPixel(i, width_ -1 - j, image_->pixel(j,i));
+
+        }
+
+  setImage(borrador); ///apunto a la nueva imagen ya rotada.
+  updateImage();
+}
+
+void Image::toRotate90Right()
+{
+   QImage * borrador;
+
+       borrador =new QImage(height_,width_, format_); ///creo espacio para la imagen resultante con el ancho y alto invertido
+       ///Asigno la LUT de grises a la imagen nueva en caso de que sea de 8 bits
+    if (format_ == QImage::Format_Indexed8)
+       borrador->setColorTable(lutGray8bits_);
+
+
+   for (int i=0; i < height_; i++) ///recorreo hasta la mitad de la imagen.
+       for (int j=0; j < width_; j++)
+         {
+           if (format_ == QImage::Format_Indexed8)
+                borrador->setPixel(height_ -1 - i, j, qRed(image_->pixel(j,i)));
+
+            else
+               ///en una sola iteración, intercambio los pixeles de una fila con otra
+               borrador->setPixel(height_ -1 - i, j, image_->pixel(j,i));
+
+         }
+
+   setImage(borrador); ///apunto a la nueva imagen ya rotada.
+   updateImage();
+
+
+}
+
+void Image::toTransposed()
+{
+  QImage * borrador;
+
+      borrador =new QImage(height_,width_, format_); ///creo espacio para la imagen resultante con el ancho y alto invertido
+      ///Asigno la LUT de grises a la imagen nueva en caso de que sea de 8 bits
+   if (format_ == QImage::Format_Indexed8)
+      borrador->setColorTable(lutGray8bits_);
+
+
+  for (int i=0; i < height_; i++) ///recorreo hasta la mitad de la imagen.
+      for (int j=0; j < width_; j++)
+        {
+          if (format_ == QImage::Format_Indexed8)
+               borrador->setPixel(i, j, qRed(image_->pixel(j,i)));
+
+           else
+              ///en una sola iteración, intercambio los pixeles de una fila con otra
+              borrador->setPixel(i, j, image_->pixel(j,i));
+
+        }
+
+  setImage(borrador); ///apunto a la nueva imagen ya rotada.
+  updateImage();
+}
 ///
 /// Especificación de histograma.
 /// \brief Image::toHistogramaEspecificado
