@@ -2,7 +2,7 @@
 #define EVENTS_H
 
 #include <QObject>
-//#include <image.h>
+
 #include <QMouseEvent>
 #include <QDebug>
 #include <QtCharts/qchartview.h>

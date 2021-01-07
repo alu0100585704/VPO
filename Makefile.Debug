@@ -14,10 +14,10 @@ CXX           = g++
 DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -DQT_DEPRECATED_WARNINGS -DQT_CHARTS_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -fno-keep-inline-dllexport -g -Wall -W -Wextra $(DEFINES)
 CXXFLAGS      = -fno-keep-inline-dllexport -g -std=gnu++11 -Wall -W -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I. -Isrc\include -Ilibs\include -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\include -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\include\QtCharts -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\include\QtWidgets -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\include\QtGui -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\include\QtANGLE -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\include\QtCore -Itmp\moc -I. -I\include -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\mkspecs\win32-g++ 
+INCPATH       = -I. -Isrc\include -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\include -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\include\QtCharts -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\include\QtWidgets -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\include\QtGui -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\include\QtANGLE -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\include\QtCore -Itmp\moc -I. -I\include -I..\..\Qt\Qt5.12.0\5.12.0\mingw73_64\mkspecs\win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        C:\git\VPO\libs\mingwx64\opencv412\dll\libopencv_core412.dll C:\git\VPO\libs\mingwx64\opencv412\dll\libopencv_highgui412.dll C:\git\VPO\libs\mingwx64\opencv412\dll\libopencv_imgcodecs412.dll C:\git\VPO\libs\mingwx64\opencv412\dll\libopencv_imgproc412.dll C:\git\VPO\libs\mingwx64\opencv412\dll\libopencv_features2d412.dll C:\git\VPO\libs\mingwx64\opencv412\dll\libopencv_calib3d412.dll C:\git\VPO\libs\mingwx64\opencv412\dll\libopencv_videoio412.dll -LC:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib C:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib\libQt5Chartsd.a C:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib\libQt5Widgetsd.a C:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib\libQt5Guid.a C:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib\libQt5Cored.a  -lmingw32 C:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib\libqtmaind.a -LC:\openssl\lib -LC:\Utils\my_sql\mysql-5.6.11-winx64\lib -LC:\Utils\postgresql\pgsql\lib -lshell32 -LC:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib C:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib\libQt5Cored.a 
+LIBS        =        -LC:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib C:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib\libQt5Chartsd.a C:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib\libQt5Widgetsd.a C:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib\libQt5Guid.a C:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib\libQt5Cored.a  -lmingw32 C:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib\libqtmaind.a -LC:\openssl\lib -LC:\Utils\my_sql\mysql-5.6.11-winx64\lib -LC:\Utils\postgresql\pgsql\lib -lshell32 -LC:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib C:\Qt\Qt5.12.0\5.12.0\mingw73_64\lib\libQt5Cored.a 
 QMAKE         = C:\Qt\Qt5.12.0\5.12.0\mingw73_64\bin\qmake.exe
 IDC           = idc
 IDL           = midl
@@ -65,8 +65,7 @@ OBJECTS       = tmp/o/main.o \
 		tmp/o/moc_brilloycontraste.o \
 		tmp/o/moc_events.o
 
-DIST          = ../../Users/Juan \
-		Siverio.ULL/Downloads/open-file.png src\include\mainwindow.h \
+DIST          =  src\include\mainwindow.h \
 		src\include\asmopencv.h \
 		src\include\image.h \
 		src\include\brilloycontraste.h \
@@ -125,6 +124,7 @@ tmp/resources/qrc_recursos.cpp: src/qrc/recursos.qrc \
 		src/qrc/Recursos/iconos/cerrar.png \
 		src/qrc/Recursos/iconos/diferencia\ de\ imagenes.png \
 		src/qrc/Recursos/iconos/gamma.png \
+		src/qrc/Recursos/iconos/transpuesta.png \
 		src/qrc/Recursos/iconos/open\ files.png \
 		src/qrc/Recursos/iconos/transformacion_lineal_tramos.png \
 		src/qrc/Recursos/iconos/information.png \
@@ -356,48 +356,10 @@ tmp/moc/moc_mainwindow.cpp: ../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidget
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/qlineedit.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui/qtextcursor.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui/qtextformat.h \
-		libs/include/opencv2/core.hpp \
-		libs/include/opencv2/core/cvdef.h \
-		libs/include/opencv2/core/hal/interface.h \
-		libs/include/opencv2/core/cv_cpu_dispatch.h \
-		libs/include/opencv2/core/cv_cpu_helper.h \
-		libs/include/opencv2/core/hal/msa_macros.h \
-		libs/include/opencv2/core/fast_math.hpp \
-		libs/include/opencv2/core/version.hpp \
-		libs/include/opencv2/core/base.hpp \
-		libs/include/opencv2/opencv_modules.hpp \
-		libs/include/opencv2/core/cvstd.hpp \
-		libs/include/opencv2/core/cvstd_wrapper.hpp \
-		libs/include/opencv2/core/neon_utils.hpp \
-		libs/include/opencv2/core/vsx_utils.hpp \
-		libs/include/opencv2/core/check.hpp \
-		libs/include/opencv2/core/traits.hpp \
-		libs/include/opencv2/core/matx.hpp \
-		libs/include/opencv2/core/saturate.hpp \
-		libs/include/opencv2/core/types.hpp \
-		libs/include/opencv2/core/mat.hpp \
-		libs/include/opencv2/core/bufferpool.hpp \
-		libs/include/opencv2/core/mat.inl.hpp \
-		libs/include/opencv2/core/persistence.hpp \
-		libs/include/opencv2/core/operations.hpp \
-		libs/include/opencv2/core/cvstd.inl.hpp \
-		libs/include/opencv2/core/utility.hpp \
-		libs/include/opencv2/core/utils/instrumentation.hpp \
-		libs/include/opencv2/core/utils/tls.hpp \
-		libs/include/opencv2/core/optim.hpp \
-		libs/include/opencv2/core/ovx.hpp \
-		libs/include/opencv2/imgproc/imgproc.hpp \
-		libs/include/opencv2/imgproc.hpp \
-		libs/include/opencv2/highgui/highgui.hpp \
-		libs/include/opencv2/highgui.hpp \
-		libs/include/opencv2/imgcodecs.hpp \
-		libs/include/opencv2/videoio.hpp \
-		libs/include/opencv2/core/core.hpp \
-		libs/include/opencv2/video/background_segm.hpp \
 		src/include/mainwindow.h \
 		tmp/moc/moc_predefs.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/bin/moc.exe
-	C:\Qt\Qt5.12.0\5.12.0\mingw73_64\bin\moc.exe $(DEFINES) --include C:/git/VPO/tmp/moc/moc_predefs.h -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/win32-g++ -IC:/git/VPO -IC:/git/VPO/src/include -IC:/git/VPO/libs/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCharts -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.0/Tools/mingw730_64/x86_64-w64-mingw32/include src\include\mainwindow.h -o tmp\moc\moc_mainwindow.cpp
+	C:\Qt\Qt5.12.0\5.12.0\mingw73_64\bin\moc.exe $(DEFINES) --include C:/git/VPO/tmp/moc/moc_predefs.h -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/win32-g++ -IC:/git/VPO -IC:/git/VPO/src/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCharts -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.0/Tools/mingw730_64/x86_64-w64-mingw32/include src\include\mainwindow.h -o tmp\moc\moc_mainwindow.cpp
 
 tmp/moc/moc_image.cpp: ../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/qdockwidget.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -563,7 +525,7 @@ tmp/moc/moc_image.cpp: ../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/qdo
 		src/include/image.h \
 		tmp/moc/moc_predefs.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/bin/moc.exe
-	C:\Qt\Qt5.12.0\5.12.0\mingw73_64\bin\moc.exe $(DEFINES) --include C:/git/VPO/tmp/moc/moc_predefs.h -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/win32-g++ -IC:/git/VPO -IC:/git/VPO/src/include -IC:/git/VPO/libs/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCharts -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.0/Tools/mingw730_64/x86_64-w64-mingw32/include src\include\image.h -o tmp\moc\moc_image.cpp
+	C:\Qt\Qt5.12.0\5.12.0\mingw73_64\bin\moc.exe $(DEFINES) --include C:/git/VPO/tmp/moc/moc_predefs.h -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/win32-g++ -IC:/git/VPO -IC:/git/VPO/src/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCharts -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.0/Tools/mingw730_64/x86_64-w64-mingw32/include src\include\image.h -o tmp\moc\moc_image.cpp
 
 tmp/moc/moc_brilloycontraste.cpp: ../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/QDialog \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/qdialog.h \
@@ -731,7 +693,7 @@ tmp/moc/moc_brilloycontraste.cpp: ../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/Qt
 		src/include/brilloycontraste.h \
 		tmp/moc/moc_predefs.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/bin/moc.exe
-	C:\Qt\Qt5.12.0\5.12.0\mingw73_64\bin\moc.exe $(DEFINES) --include C:/git/VPO/tmp/moc/moc_predefs.h -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/win32-g++ -IC:/git/VPO -IC:/git/VPO/src/include -IC:/git/VPO/libs/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCharts -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.0/Tools/mingw730_64/x86_64-w64-mingw32/include src\include\brilloycontraste.h -o tmp\moc\moc_brilloycontraste.cpp
+	C:\Qt\Qt5.12.0\5.12.0\mingw73_64\bin\moc.exe $(DEFINES) --include C:/git/VPO/tmp/moc/moc_predefs.h -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/win32-g++ -IC:/git/VPO -IC:/git/VPO/src/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCharts -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.0/Tools/mingw730_64/x86_64-w64-mingw32/include src\include\brilloycontraste.h -o tmp\moc\moc_brilloycontraste.cpp
 
 tmp/moc/moc_events.cpp: ../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore/QObject \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore/qobject.h \
@@ -877,7 +839,7 @@ tmp/moc/moc_events.cpp: ../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore/QObje
 		src/include/events.h \
 		tmp/moc/moc_predefs.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/bin/moc.exe
-	C:\Qt\Qt5.12.0\5.12.0\mingw73_64\bin\moc.exe $(DEFINES) --include C:/git/VPO/tmp/moc/moc_predefs.h -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/win32-g++ -IC:/git/VPO -IC:/git/VPO/src/include -IC:/git/VPO/libs/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCharts -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.0/Tools/mingw730_64/x86_64-w64-mingw32/include src\include\events.h -o tmp\moc\moc_events.cpp
+	C:\Qt\Qt5.12.0\5.12.0\mingw73_64\bin\moc.exe $(DEFINES) --include C:/git/VPO/tmp/moc/moc_predefs.h -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/mkspecs/win32-g++ -IC:/git/VPO -IC:/git/VPO/src/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCharts -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtANGLE -IC:/Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++ -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include/c++/backward -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include -IC:/Qt/Qt5.12.0/Tools/mingw730_64/lib/gcc/x86_64-w64-mingw32/7.3.0/include-fixed -IC:/Qt/Qt5.12.0/Tools/mingw730_64/x86_64-w64-mingw32/include src\include\events.h -o tmp\moc\moc_events.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1101,44 +1063,6 @@ tmp/o/main.o: src/cpp/main.cpp src/include/mainwindow.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/qlineedit.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui/qtextcursor.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui/qtextformat.h \
-		libs/include/opencv2/core.hpp \
-		libs/include/opencv2/core/cvdef.h \
-		libs/include/opencv2/core/hal/interface.h \
-		libs/include/opencv2/core/cv_cpu_dispatch.h \
-		libs/include/opencv2/core/cv_cpu_helper.h \
-		libs/include/opencv2/core/hal/msa_macros.h \
-		libs/include/opencv2/core/fast_math.hpp \
-		libs/include/opencv2/core/version.hpp \
-		libs/include/opencv2/core/base.hpp \
-		libs/include/opencv2/opencv_modules.hpp \
-		libs/include/opencv2/core/cvstd.hpp \
-		libs/include/opencv2/core/cvstd_wrapper.hpp \
-		libs/include/opencv2/core/neon_utils.hpp \
-		libs/include/opencv2/core/vsx_utils.hpp \
-		libs/include/opencv2/core/check.hpp \
-		libs/include/opencv2/core/traits.hpp \
-		libs/include/opencv2/core/matx.hpp \
-		libs/include/opencv2/core/saturate.hpp \
-		libs/include/opencv2/core/types.hpp \
-		libs/include/opencv2/core/mat.hpp \
-		libs/include/opencv2/core/bufferpool.hpp \
-		libs/include/opencv2/core/mat.inl.hpp \
-		libs/include/opencv2/core/persistence.hpp \
-		libs/include/opencv2/core/operations.hpp \
-		libs/include/opencv2/core/cvstd.inl.hpp \
-		libs/include/opencv2/core/utility.hpp \
-		libs/include/opencv2/core/utils/instrumentation.hpp \
-		libs/include/opencv2/core/utils/tls.hpp \
-		libs/include/opencv2/core/optim.hpp \
-		libs/include/opencv2/core/ovx.hpp \
-		libs/include/opencv2/imgproc/imgproc.hpp \
-		libs/include/opencv2/imgproc.hpp \
-		libs/include/opencv2/highgui/highgui.hpp \
-		libs/include/opencv2/highgui.hpp \
-		libs/include/opencv2/imgcodecs.hpp \
-		libs/include/opencv2/videoio.hpp \
-		libs/include/opencv2/core/core.hpp \
-		libs/include/opencv2/video/background_segm.hpp \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/QApplication \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/qapplication.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore/qcoreapplication.h \
@@ -1346,44 +1270,6 @@ tmp/o/mainwindow.o: src/cpp/mainwindow.cpp src/include/mainwindow.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/qlineedit.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui/qtextcursor.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui/qtextformat.h \
-		libs/include/opencv2/core.hpp \
-		libs/include/opencv2/core/cvdef.h \
-		libs/include/opencv2/core/hal/interface.h \
-		libs/include/opencv2/core/cv_cpu_dispatch.h \
-		libs/include/opencv2/core/cv_cpu_helper.h \
-		libs/include/opencv2/core/hal/msa_macros.h \
-		libs/include/opencv2/core/fast_math.hpp \
-		libs/include/opencv2/core/version.hpp \
-		libs/include/opencv2/core/base.hpp \
-		libs/include/opencv2/opencv_modules.hpp \
-		libs/include/opencv2/core/cvstd.hpp \
-		libs/include/opencv2/core/cvstd_wrapper.hpp \
-		libs/include/opencv2/core/neon_utils.hpp \
-		libs/include/opencv2/core/vsx_utils.hpp \
-		libs/include/opencv2/core/check.hpp \
-		libs/include/opencv2/core/traits.hpp \
-		libs/include/opencv2/core/matx.hpp \
-		libs/include/opencv2/core/saturate.hpp \
-		libs/include/opencv2/core/types.hpp \
-		libs/include/opencv2/core/mat.hpp \
-		libs/include/opencv2/core/bufferpool.hpp \
-		libs/include/opencv2/core/mat.inl.hpp \
-		libs/include/opencv2/core/persistence.hpp \
-		libs/include/opencv2/core/operations.hpp \
-		libs/include/opencv2/core/cvstd.inl.hpp \
-		libs/include/opencv2/core/utility.hpp \
-		libs/include/opencv2/core/utils/instrumentation.hpp \
-		libs/include/opencv2/core/utils/tls.hpp \
-		libs/include/opencv2/core/optim.hpp \
-		libs/include/opencv2/core/ovx.hpp \
-		libs/include/opencv2/imgproc/imgproc.hpp \
-		libs/include/opencv2/imgproc.hpp \
-		libs/include/opencv2/highgui/highgui.hpp \
-		libs/include/opencv2/highgui.hpp \
-		libs/include/opencv2/imgcodecs.hpp \
-		libs/include/opencv2/videoio.hpp \
-		libs/include/opencv2/core/core.hpp \
-		libs/include/opencv2/video/background_segm.hpp \
 		ui_mainwindow.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/QAction \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/qaction.h \
@@ -1599,45 +1485,7 @@ tmp/o/image.o: src/cpp/image.cpp src/include/image.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore/qabstractitemmodel.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/qlineedit.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui/qtextcursor.h \
-		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui/qtextformat.h \
-		libs/include/opencv2/core.hpp \
-		libs/include/opencv2/core/cvdef.h \
-		libs/include/opencv2/core/hal/interface.h \
-		libs/include/opencv2/core/cv_cpu_dispatch.h \
-		libs/include/opencv2/core/cv_cpu_helper.h \
-		libs/include/opencv2/core/hal/msa_macros.h \
-		libs/include/opencv2/core/fast_math.hpp \
-		libs/include/opencv2/core/version.hpp \
-		libs/include/opencv2/core/base.hpp \
-		libs/include/opencv2/opencv_modules.hpp \
-		libs/include/opencv2/core/cvstd.hpp \
-		libs/include/opencv2/core/cvstd_wrapper.hpp \
-		libs/include/opencv2/core/neon_utils.hpp \
-		libs/include/opencv2/core/vsx_utils.hpp \
-		libs/include/opencv2/core/check.hpp \
-		libs/include/opencv2/core/traits.hpp \
-		libs/include/opencv2/core/matx.hpp \
-		libs/include/opencv2/core/saturate.hpp \
-		libs/include/opencv2/core/types.hpp \
-		libs/include/opencv2/core/mat.hpp \
-		libs/include/opencv2/core/bufferpool.hpp \
-		libs/include/opencv2/core/mat.inl.hpp \
-		libs/include/opencv2/core/persistence.hpp \
-		libs/include/opencv2/core/operations.hpp \
-		libs/include/opencv2/core/cvstd.inl.hpp \
-		libs/include/opencv2/core/utility.hpp \
-		libs/include/opencv2/core/utils/instrumentation.hpp \
-		libs/include/opencv2/core/utils/tls.hpp \
-		libs/include/opencv2/core/optim.hpp \
-		libs/include/opencv2/core/ovx.hpp \
-		libs/include/opencv2/imgproc/imgproc.hpp \
-		libs/include/opencv2/imgproc.hpp \
-		libs/include/opencv2/highgui/highgui.hpp \
-		libs/include/opencv2/highgui.hpp \
-		libs/include/opencv2/imgcodecs.hpp \
-		libs/include/opencv2/videoio.hpp \
-		libs/include/opencv2/core/core.hpp \
-		libs/include/opencv2/video/background_segm.hpp
+		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui/qtextformat.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tmp\o\image.o src\cpp\image.cpp
 
 tmp/o/brilloycontraste.o: src/cpp/brilloycontraste.cpp src/include/brilloycontraste.h \
@@ -2024,45 +1872,7 @@ tmp/o/events.o: src/cpp/events.cpp src/include/events.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtCore/qabstractitemmodel.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtWidgets/qlineedit.h \
 		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui/qtextcursor.h \
-		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui/qtextformat.h \
-		libs/include/opencv2/core.hpp \
-		libs/include/opencv2/core/cvdef.h \
-		libs/include/opencv2/core/hal/interface.h \
-		libs/include/opencv2/core/cv_cpu_dispatch.h \
-		libs/include/opencv2/core/cv_cpu_helper.h \
-		libs/include/opencv2/core/hal/msa_macros.h \
-		libs/include/opencv2/core/fast_math.hpp \
-		libs/include/opencv2/core/version.hpp \
-		libs/include/opencv2/core/base.hpp \
-		libs/include/opencv2/opencv_modules.hpp \
-		libs/include/opencv2/core/cvstd.hpp \
-		libs/include/opencv2/core/cvstd_wrapper.hpp \
-		libs/include/opencv2/core/neon_utils.hpp \
-		libs/include/opencv2/core/vsx_utils.hpp \
-		libs/include/opencv2/core/check.hpp \
-		libs/include/opencv2/core/traits.hpp \
-		libs/include/opencv2/core/matx.hpp \
-		libs/include/opencv2/core/saturate.hpp \
-		libs/include/opencv2/core/types.hpp \
-		libs/include/opencv2/core/mat.hpp \
-		libs/include/opencv2/core/bufferpool.hpp \
-		libs/include/opencv2/core/mat.inl.hpp \
-		libs/include/opencv2/core/persistence.hpp \
-		libs/include/opencv2/core/operations.hpp \
-		libs/include/opencv2/core/cvstd.inl.hpp \
-		libs/include/opencv2/core/utility.hpp \
-		libs/include/opencv2/core/utils/instrumentation.hpp \
-		libs/include/opencv2/core/utils/tls.hpp \
-		libs/include/opencv2/core/optim.hpp \
-		libs/include/opencv2/core/ovx.hpp \
-		libs/include/opencv2/imgproc/imgproc.hpp \
-		libs/include/opencv2/imgproc.hpp \
-		libs/include/opencv2/highgui/highgui.hpp \
-		libs/include/opencv2/highgui.hpp \
-		libs/include/opencv2/imgcodecs.hpp \
-		libs/include/opencv2/videoio.hpp \
-		libs/include/opencv2/core/core.hpp \
-		libs/include/opencv2/video/background_segm.hpp
+		../../Qt/Qt5.12.0/5.12.0/mingw73_64/include/QtGui/qtextformat.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tmp\o\events.o src\cpp\events.cpp
 
 tmp/o/qrc_recursos.o: tmp/resources/qrc_recursos.cpp 

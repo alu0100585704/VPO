@@ -71,31 +71,4 @@ RESOURCES += \
 INCLUDEPATH += $$PWD/src/include
 DEPENDPATH += $$PWD/src/include
 
-win32: INCLUDEPATH += $$PWD/libs/include
-win32: DEPENDPATH += $$PWD/libs/include
-
-#win32: LIBS += -L$$PWD/libs/mingwx64/opencv412/dll.a/ -llibopencv_core.dll
-
-win32: LIBS += $$PWD/libs/mingwx64/opencv412/dll/libopencv_core412.dll
-win32: LIBS += $$PWD/libs/mingwx64/opencv412/dll/libopencv_highgui412.dll
-win32: LIBS += $$PWD/libs/mingwx64/opencv412/dll/libopencv_imgcodecs412.dll
-win32: LIBS += $$PWD/libs/mingwx64/opencv412/dll/libopencv_imgproc412.dll
-win32: LIBS += $$PWD/libs/mingwx64/opencv412/dll/libopencv_features2d412.dll
-win32: LIBS += $$PWD/libs/mingwx64/opencv412/dll/libopencv_calib3d412.dll
-win32: LIBS += $$PWD/libs/mingwx64/opencv412/dll/libopencv_videoio412.dll
-
-
-unix:!macx: INCLUDEPATH += $$PWD/libs/include
-unix:!macx: DEPENDPATH += $$PWD/libs/include
-
-unix:!macx: LIBS += $$PWD/libs/ubuntux64/opencv412/so/libopencv_core.so.4.1
-unix:!macx: LIBS += $$PWD/libs/ubuntux64/opencv412/so/libopencv_highgui.so.4.1
-unix:!macx: LIBS += $$PWD/libs/ubuntux64/opencv412/so/libopencv_imgcodecs.so.4.1
-unix:!macx: LIBS += $$PWD/libs/ubuntux64/opencv412/so/libopencv_imgproc.so.4.1
-unix:!macx: LIBS += $$PWD/libs/ubuntux64/opencv412/so/libopencv_features2d.so.4.1
-unix:!macx: LIBS += $$PWD/libs/ubuntux64/opencv412/so/libopencv_calib3d.so.4.1
-unix:!macx: LIBS += $$PWD/libs/ubuntux64/opencv412/so/libopencv_videoio.so.4.1
-
-DISTFILES += \
-    ../../Users/Juan Siverio.ULL/Downloads/open-file.png
 
