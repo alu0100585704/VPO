@@ -375,8 +375,8 @@
   </action>
   <action name="actionEspejoTraspuesta">
    <property name="icon">
-    <iconset>
-     <normaloff>../qrc/Recursos/iconos/transpuesta.png</normaloff>../qrc/Recursos/iconos/transpuesta.png</iconset>
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/transpuesta.png</normaloff>:/Recursos/iconos/transpuesta.png</iconset>
    </property>
    <property name="text">
     <string>Traspuesta</string>
@@ -390,8 +390,8 @@
   </action>
   <action name="actionEspejoVertical">
    <property name="icon">
-    <iconset>
-     <normaloff>../qrc/Recursos/iconos/espejo vertical.png</normaloff>../qrc/Recursos/iconos/espejo vertical.png</iconset>
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/espejo vertical.png</normaloff>:/Recursos/iconos/espejo vertical.png</iconset>
    </property>
    <property name="text">
     <string>Espejo Vertical</string>
@@ -402,8 +402,8 @@
   </action>
   <action name="actionEspejoHorizontal">
    <property name="icon">
-    <iconset>
-     <normaloff>../qrc/Recursos/iconos/espejo horizontal.png</normaloff>../qrc/Recursos/iconos/espejo horizontal.png</iconset>
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/espejo horizontal.png</normaloff>:/Recursos/iconos/espejo horizontal.png</iconset>
    </property>
    <property name="text">
     <string>Espejo Horizontal</string>
@@ -414,8 +414,8 @@
   </action>
   <action name="actionRotacion90Izq">
    <property name="icon">
-    <iconset>
-     <normaloff>../qrc/Recursos/iconos/Rotar 90 izquierda.png</normaloff>../qrc/Recursos/iconos/Rotar 90 izquierda.png</iconset>
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/Rotar 90 izquierda.png</normaloff>:/Recursos/iconos/Rotar 90 izquierda.png</iconset>
    </property>
    <property name="text">
     <string>Rotación 90 º Izquierda</string>
@@ -429,8 +429,8 @@
   </action>
   <action name="actionRotacion90Derecha">
    <property name="icon">
-    <iconset>
-     <normaloff>../qrc/Recursos/iconos/Rotar 90 derecha.png</normaloff>../qrc/Recursos/iconos/Rotar 90 derecha.png</iconset>
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/Rotar 90 derecha.png</normaloff>:/Recursos/iconos/Rotar 90 derecha.png</iconset>
    </property>
    <property name="text">
     <string>Rotación 90 º Derecha</string>
@@ -444,8 +444,8 @@
   </action>
   <action name="actionEscalado">
    <property name="icon">
-    <iconset>
-     <normaloff>../qrc/Recursos/iconos/escalar.png</normaloff>../qrc/Recursos/iconos/escalar.png</iconset>
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/escalar.png</normaloff>:/Recursos/iconos/escalar.png</iconset>
    </property>
    <property name="text">
     <string>Escalado</string>
@@ -459,8 +459,8 @@
   </action>
   <action name="actionRotacionAIquierda">
    <property name="icon">
-    <iconset>
-     <normaloff>../qrc/Recursos/iconos/rotacion izquierda.png</normaloff>../qrc/Recursos/iconos/rotacion izquierda.png</iconset>
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/rotacion izquierda.png</normaloff>:/Recursos/iconos/rotacion izquierda.png</iconset>
    </property>
    <property name="text">
     <string>Rotación a Iquierda</string>
@@ -471,8 +471,8 @@
   </action>
   <action name="actionRotacionADerecha">
    <property name="icon">
-    <iconset>
-     <normaloff>../qrc/Recursos/iconos/rotacion derecha.png</normaloff>../qrc/Recursos/iconos/rotacion derecha.png</iconset>
+    <iconset resource="../qrc/recursos.qrc">
+     <normaloff>:/Recursos/iconos/rotacion derecha.png</normaloff>:/Recursos/iconos/rotacion derecha.png</iconset>
    </property>
    <property name="text">
     <string>Rotación a Derecha</string>

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.0
+** Created by: Qt User Interface Compiler version 5.12.10
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -154,42 +154,42 @@ public:
         actionEspejoTraspuesta = new QAction(MainWindow);
         actionEspejoTraspuesta->setObjectName(QString::fromUtf8("actionEspejoTraspuesta"));
         QIcon icon11;
-        icon11.addFile(QString::fromUtf8("../qrc/Recursos/iconos/transpuesta.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon11.addFile(QString::fromUtf8(":/Recursos/iconos/transpuesta.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionEspejoTraspuesta->setIcon(icon11);
         actionEspejoVertical = new QAction(MainWindow);
         actionEspejoVertical->setObjectName(QString::fromUtf8("actionEspejoVertical"));
         QIcon icon12;
-        icon12.addFile(QString::fromUtf8("../qrc/Recursos/iconos/espejo vertical.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon12.addFile(QString::fromUtf8(":/Recursos/iconos/espejo vertical.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionEspejoVertical->setIcon(icon12);
         actionEspejoHorizontal = new QAction(MainWindow);
         actionEspejoHorizontal->setObjectName(QString::fromUtf8("actionEspejoHorizontal"));
         QIcon icon13;
-        icon13.addFile(QString::fromUtf8("../qrc/Recursos/iconos/espejo horizontal.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon13.addFile(QString::fromUtf8(":/Recursos/iconos/espejo horizontal.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionEspejoHorizontal->setIcon(icon13);
         actionRotacion90Izq = new QAction(MainWindow);
         actionRotacion90Izq->setObjectName(QString::fromUtf8("actionRotacion90Izq"));
         QIcon icon14;
-        icon14.addFile(QString::fromUtf8("../qrc/Recursos/iconos/Rotar 90 izquierda.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon14.addFile(QString::fromUtf8(":/Recursos/iconos/Rotar 90 izquierda.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionRotacion90Izq->setIcon(icon14);
         actionRotacion90Derecha = new QAction(MainWindow);
         actionRotacion90Derecha->setObjectName(QString::fromUtf8("actionRotacion90Derecha"));
         QIcon icon15;
-        icon15.addFile(QString::fromUtf8("../qrc/Recursos/iconos/Rotar 90 derecha.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon15.addFile(QString::fromUtf8(":/Recursos/iconos/Rotar 90 derecha.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionRotacion90Derecha->setIcon(icon15);
         actionEscalado = new QAction(MainWindow);
         actionEscalado->setObjectName(QString::fromUtf8("actionEscalado"));
         QIcon icon16;
-        icon16.addFile(QString::fromUtf8("../qrc/Recursos/iconos/escalar.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon16.addFile(QString::fromUtf8(":/Recursos/iconos/escalar.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionEscalado->setIcon(icon16);
         actionRotacionAIquierda = new QAction(MainWindow);
         actionRotacionAIquierda->setObjectName(QString::fromUtf8("actionRotacionAIquierda"));
         QIcon icon17;
-        icon17.addFile(QString::fromUtf8("../qrc/Recursos/iconos/rotacion izquierda.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon17.addFile(QString::fromUtf8(":/Recursos/iconos/rotacion izquierda.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionRotacionAIquierda->setIcon(icon17);
         actionRotacionADerecha = new QAction(MainWindow);
         actionRotacionADerecha->setObjectName(QString::fromUtf8("actionRotacionADerecha"));
         QIcon icon18;
-        icon18.addFile(QString::fromUtf8("../qrc/Recursos/iconos/rotacion derecha.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon18.addFile(QString::fromUtf8(":/Recursos/iconos/rotacion derecha.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionRotacionADerecha->setIcon(icon18);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));

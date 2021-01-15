@@ -24,9 +24,9 @@
         <file>Recursos/iconos/espejo vertical.png</file>
         <file>Recursos/iconos/rotacion derecha.png</file>
         <file>Recursos/iconos/rotacion izquierda.png</file>
-        <file>Recursos/iconos/Rotar 90 derecha.png</file>
         <file>Recursos/iconos/Rotar 90 izquierda.png</file>
         <file>Recursos/iconos/escalar.png</file>
         <file>Recursos/iconos/transpuesta.png</file>
+        <file>Recursos/iconos/Rotar 90 derecha.png</file>
     </qresource>
 </RCC>
